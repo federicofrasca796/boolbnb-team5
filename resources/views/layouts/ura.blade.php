@@ -20,16 +20,21 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/ura.css') }}" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body>
-    <div id="app" class="vh-100">
-        <div class="">
-
-            <main class="">
-                @yield('content')
-            </main>
-        </div>
+    <div id="app">
+        <main>
+            <div class="ura-container">
+                <div class="sidebar">
+                    @include('partials.sidebar')
+                </div>
+                <div class="content">
+                    @yield('content')
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 
