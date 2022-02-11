@@ -24,3 +24,9 @@ Route::get('/dashboard', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::middleware('auth')->namespace('Ura')->name('ura.')->group(function(){
+
+    Route::resource('Apartments', ApartmentController::class);
+});
