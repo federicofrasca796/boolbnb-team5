@@ -24,3 +24,6 @@ Route::get('/dashboard', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/* Routes index and show messages */
+Route::resource('messages', 'MessageController')->only('index', 'show');
