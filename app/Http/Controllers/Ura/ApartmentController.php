@@ -25,7 +25,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('ura.apartments.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ddd($request->all());
     }
 
     /**
