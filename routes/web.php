@@ -17,13 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('guest.welcome');
 });
-Route::get('/dashboard', function () {
-    return view('ura.dashboard');
-});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/* Routes index and show messages */
-Route::resource('messages', 'MessageController')->only('index', 'show');
+
+
+
+
+Route::middleware('auth')->namespace('Ura')->name('ura.')->group(function(){
+    Route::get('/dashboard', function () {
+        return view('ura.dashboard');
+    });
+    Route::resource('Apartments', ApartmentController::class);
+  /* Routes index and show messages */
+  Route::resource('messages', 'MessageController')->only('index', 'show');
+});
+
