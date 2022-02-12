@@ -13,7 +13,9 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages = Message::orderByDesc('id')->paginate(5);
+        return view('ura.messages.index', compact('messages'));
+
     }
 
     /**
