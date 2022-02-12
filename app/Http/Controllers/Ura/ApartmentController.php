@@ -39,6 +39,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+        /* dd($request); */
         $validator = $request->validate([
             'title' => 'required|max:150',
             'thumbnail' => 'required',

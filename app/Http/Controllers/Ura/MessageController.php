@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Ura;
+use App\Http\Controllers\Controller;
 use App\Models\Message;
 
 class MessageController extends Controller

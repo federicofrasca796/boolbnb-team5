@@ -19,7 +19,7 @@
                 <th scope="row">{{ $message->id }}</th>
                 <td>{{ $message->name }}</td>
                 <td>{{ $message->mail }}</td>
-                <td><a href="{{route('messages.show', $message->id)}}">View</a></td>
+                <td><a href="{{route('ura.messages.show', $message->id)}}">View</a></td>
             </tr>
             @endforeach
         </tbody>
