@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-2">
-                <a class="btn btn-success">
+                <a class="btn btn-success" href="{{ route('ura.apartments.create') }}">
                     <i class="fas fa-plus"></i> New host
                 </a>
             </div>
