@@ -22,16 +22,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
-
-
-Route::middleware('auth')->namespace('Ura')->name('ura.')->group(function(){
+Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
     Route::get('/dashboard', function () {
         return view('ura.dashboard');
     });
-    Route::resource('Apartments', ApartmentController::class);
-  /* Routes index and show messages */
-  Route::resource('messages', 'MessageController')->only('index', 'show');
+    Route::resource('apartments', 'ApartmentController');
+    /* Routes index and show messages */
+    Route::resource('messages', 'MessageController')->only('index', 'show');
 });
-

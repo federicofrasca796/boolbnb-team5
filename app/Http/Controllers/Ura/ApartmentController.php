@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Ura;
+
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
@@ -57,7 +57,7 @@ class ApartmentController extends Controller
         $validator['slug'] = Str::slug($request->title);
         /* $validator['user_id'] = Auth::user()->id; */
         Apartment::create($validator);
-        return redirect()->route('ura.Apartments.index')->with(session()->flash('success' , 'Apartment created Succesfully'));
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment created Succesfully'));
     }
 
     /**
@@ -68,7 +68,8 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('guest.aparments.show' , compact('apartment'));
+        //ddd($apartment);
+        return view('ura.apartments.show', compact('apartment'));
     }
 
     /**
@@ -80,10 +81,11 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         /* if($apartment->user_id != Auth::user()->id){
-            // Check if user has permissions to this apartment 
-            return redirect()->back()->with(session()->flash('error' , 'Access Denied'));
+        // Check if user has permissions to this apartment
+        return redirect()->back()->with(session()->flash('error' , 'Access Denied'));
         } */
-        return view('ura.apartments.edit' , compact('apartment'));
+        //ddd($apartment);
+        return view('ura.apartments.edit', compact('apartment'));
     }
 
     /**
@@ -111,8 +113,8 @@ class ApartmentController extends Controller
 
         $validator['slug'] = Str::slug($request->title);
 
-        $apartment->update();
-        return redirect()->route('ura.Apartment.index')->with(session()->flash('success' , 'Apartment edited Succesfully'));
+        $apartment->update($validator);
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment edited Succesfully'));
     }
 
     /**
@@ -124,11 +126,11 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         /* if($apartment->user_id != Auth::user()->id){
-            // Check if user has permissions to this apartment 
-            return redirect()->back()->with(session()->flash('error' , 'Access Denied'));
+        // Check if user has permissions to this apartment
+        return redirect()->back()->with(session()->flash('error' , 'Access Denied'));
         } */
         $apartment->delete();
 
-        return redirect()->route('ura.Apartment.index')->with(session()->flash('success' , 'Apartment deleted Succesfully'));
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment deleted Succesfully'));
     }
 }
