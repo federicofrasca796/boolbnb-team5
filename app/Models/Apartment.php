@@ -2,6 +2,8 @@
 
 namespace App\Models;
 use App\User;
+use App\Models\Message;
+use App\Models\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
@@ -56,5 +58,15 @@ class Apartment extends Model
     public function message(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    /**
+     * Get all of the view for the Apartment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function view(): HasMany
+    {
+        return $this->hasMany(View::class);
     }
 }
