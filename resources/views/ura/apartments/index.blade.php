@@ -3,59 +3,60 @@
 
 @section('content')
     <div class="container my-5">
-        <h1 class="mb-5">My Apartments</h1>
-        {{-- <table class="table">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($apartments as $item)
-                        <tr>
-                            <td>{{ $item->title }}</td>
-                            <td>{{ $item->address }}</td>
-                            <td>
-                                <a href="{{ route('ura.apartments.show', $item->id) }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="{{ route('ura.apartments.edit', $item->id) }}">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>
-                                <form action="{{ route('ura.apartments.destroy', $item->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+        <div class="row justify-content-between mb-5">
+            <div class="col">
+                <h1 class="">My Apartments</h1>
+            </div>
 
+            <div class="col-2">
+                <a class="btn btn-success">
+                    <i class="fas fa-plus"></i> New host
+                </a>
+            </div>
+        </div>
 
-                </tbody>
-            </table> --}}
-
+        {{-- Generate cards for each apartment --}}
         @forelse ($apartments as $apartment)
-            {{-- <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-md-4">
+            <div class="card mb-3 w-100">
+                <div class="row g-0">
+                    {{-- Apartment thumb --}}
+                    <div class="col-md-4">
+                        <a href="{{ route('ura.apartments.show', $apartment->id) }}">
                             <img src="{{ $apartment->thumbnail }}" class="img-fluid rounded-start"
                                 alt="{{ $apartment->slug }}">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ $apartment->title }}</h4>
-                                <p class="card-text">{{ $apartment->address }}</p>
-                                <p class="card-text">
-                                    <small class="text-muted">Created on {{ $apartment->created_at }}</small>
-                                </p>
+                        </a>
+                    </div>
+                    {{-- Apartment Body --}}
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{{ route('ura.apartments.show', $apartment->id) }}">{{ $apartment->title }}</a>
+                            </h4>
+                            <p class="card-text">{{ $apartment->address }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">Created on {{ $apartment->created_at }}</small>
+                            </p>
+                            <div class="d-flex">
+                                <a href="{{ route('ura.apartments.show', $apartment->id) }}" class="btn btn-light mx-1">
+                                    <i class="fa fa-eye text-primary"></i>
+                                </a>
+                                <a href="{{ route('ura.apartments.edit', $apartment->id) }}" class="btn btn-light mx-1">
+                                    <i class="fas fa-user-edit text-secondary"></i>
+                                </a>
+                                <form action="{{ route('ura.apartments.destroy', $apartment->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-light mx-1">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
+            </div>
         @empty
+            {{-- If apartment records are empty.. --}}
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <h2 class="text-center">
                     No hostings yet. Why don't you...
@@ -64,5 +65,7 @@
             </div>
         @endforelse
 
+        {{-- Pagination --}}
+        {{-- {{ $collection->links() }} --}}
     </div>
 @endsection
