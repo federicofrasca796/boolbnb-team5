@@ -1,5 +1,7 @@
 @extends('layouts.ura')
 
+<!-- TomTom Search Style -->
+<link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css'/>
 
 @section('content')
     <div class="container">
@@ -17,10 +19,8 @@
                 <input type="text" name="title" id="title" class="form-control" placeholder="Title Here"
                     value="{{ $apartment->title }}">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="address">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-control" placeholder="address Here"
-                    value="{{ $apartment->address }}">
             </div>
             <div class="mb-3">
                 <label for="thumbnail" class="form-label">Thumbnail</label>
@@ -68,4 +68,40 @@
             <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
         </form>
     </div>
+
+    <!-- Required TomTom SearchBox Cdn -->
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js"></script>
+
+    <!-- Main Script -->
+    <!-- <script src="{{asset('js/edit-apartment-search.js')}}"></script> -->
+
+    <!-- Script for setting value to address input MUST be on blade page -->
+    <script>
+        var options = {
+        searchOptions: {
+            key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+            language: 'it-IT',
+            limit: 5
+        }
+    };
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    document.getElementById('address').append(searchBoxHTML);
+    document.querySelector('.tt-search-box-input').name = 'address';
+    document.querySelector('.tt-search-box-input').id = 'address';
+    document.querySelector('.tt-search-box-input').placeholder = 'Search your address';
+
+
+
+    /* Results Log */
+    ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
+        console.log(data.data.result.position);
+        document.getElementById('latitude').value = data.data.result.position.lat;
+        document.getElementById('longitude').value = data.data.result.position.lng;
+    });
+
+    var value = {!! json_encode($apartment->address) !!}
+    ttSearchBox.setValue(value);
+    </script>
 @endsection

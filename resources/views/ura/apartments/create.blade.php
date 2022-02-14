@@ -1,5 +1,8 @@
 @extends('layouts.ura')
 
+@section('css')
+<!-- TomTom Search Style -->
+<link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css'/>
 
 @section('content')
     <div class="container">
@@ -15,10 +18,8 @@
                 <input type="text" name="title" id="title" class="form-control" placeholder="Title Here"
                     value="{{ old('title') }}">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="address">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-control" placeholder="address Here"
-                    value="{{ old('address') }}">
             </div>
             <div class="mb-3">
                 <label for="thumbnail" class="form-label">Thumbnail</label>
@@ -66,4 +67,11 @@
             <button type="submit" class="btn btn-outline-primary btn-lg">Create</button>
         </form>
     </div>
+
+    <!-- Required TomTom SearchBox Cdn -->
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js"></script>
+
+    <!-- Main Script -->
+    <script src="{{asset('js/crud-apartment-search.js')}}"></script>
 @endsection
