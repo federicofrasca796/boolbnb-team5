@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class Apartment extends Model
@@ -32,4 +33,16 @@ class Apartment extends Model
     {
         return 'slug';
     }
+
+    /**
+    * Get all of the user for the post
+    * 
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function user(): BelongsTo   
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }
