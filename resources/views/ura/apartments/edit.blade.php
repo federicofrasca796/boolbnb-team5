@@ -1,5 +1,6 @@
 @extends('layouts.ura')
 
+@section('css')
 <!-- TomTom Search Style -->
 <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css'/>
 
