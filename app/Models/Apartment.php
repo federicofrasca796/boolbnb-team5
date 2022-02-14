@@ -34,15 +34,16 @@ class Apartment extends Model
         return 'slug';
     }
 
+
+
+
     /**
-    * Get all of the user for the post
-    * 
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
-    public function user(): BelongsTo   
+     * Get the user that owns the Apartment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-    
 }

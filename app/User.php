@@ -47,14 +47,15 @@ class User extends Authenticatable
     {
         return 'slug';
     }
-    
+
     /**
-     * Get all of the apartments for the user
-     * 
+     * Get all of the apartment for the User
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function apartments(): HasMany
+    public function apartment(): HasMany
     {
-        return $this->hasMany(Models\Apartment::class);
+        return $this->hasMany(Apartment::class);
     }
+    
 }
