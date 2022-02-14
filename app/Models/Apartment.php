@@ -4,8 +4,10 @@ namespace App\Models;
 use App\User;
 use App\Models\Message;
 use App\Models\View;
+use App\Models\Sponsor;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 
 class Apartment extends Model
@@ -68,5 +70,15 @@ class Apartment extends Model
     public function view(): HasMany
     {
         return $this->hasMany(View::class);
+    }
+
+    /**
+     * The sponsors that belong to the Apartment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sponsors(): BelongsToMany
+    {
+        return $this->belongsToMany(Sponsor::class);
     }
 }
