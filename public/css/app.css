@@ -11247,3 +11247,51 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+header {
+  height: 75px;
+  background: transparent;
+}
+header button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-family: "Josefin Sans", sans-serif;
+}
+header button.nav-item-login {
+  width: 40px;
+  height: 40px;
+}
+header button.nav-item-register {
+  padding: 0px 16px;
+}
+header button a:visited {
+  color: black;
+}
+header button:hover {
+  background: white;
+}
+header .modal .modal-dialog-aside {
+  width: 483px;
+  max-width: 80%;
+  height: 100%;
+  margin: 0;
+  transform: translate(0);
+  transition: transform 0.2s;
+}
+header .modal .modal-dialog-aside .modal-content {
+  height: inherit;
+  border: 0;
+  border-radius: 0;
+}
+header .modal .modal-dialog-aside .modal-content .modal-body {
+  overflow-y: auto;
+}
+header .modal.fixed-left .modal-dialog-aside {
+  margin-left: auto;
+  transform: translateX(100%);
+}
+header .modal.show .modal-dialog-aside {
+  transform: translateX(0);
+}
+header .form-group input::-webkit-input-placeholder {
+  color: lightgrey;
+}
