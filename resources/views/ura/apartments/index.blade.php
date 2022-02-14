@@ -2,13 +2,15 @@
 
 
 @section('content')
+    @include('partials.success')
     <div class="container">
         <div class="p-5 bg-light">
-            <div class="container ml-auto">
-                <div class="d-flex">
+            <div class="container me-auto">
+                <div class="d-flex justify-content-between">
                     <h1 class="display-5 text-center">Apartments</h1>
-                    <div class="btn btn-outline-primary btn-lg d-flex justify-content-center align-items-center"><a
-                            href="{{ route('ura.apartments.create') }}">Create</a></div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{ route('ura.apartments.create') }}" class="btn btn-outline-primary btn-lg ">Create</a>
+                    </div>
                 </div>
 
                 <hr class="my-2">
@@ -25,16 +27,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($apartments as $item)
+                    @foreach ($apartments as $apartment)
                         <tr>
-                            <td scope="row">{{ $item->id }}</td>
-                            <td>{{ $item->title }}</td>
-                            <td>{{ $item->address }}</td>
+                            <td scope="row">{{ $apartment->id }}</td>
+                            <td>{{ $apartment->title }}</td>
+                            <td>{{ $apartment->address }}</td>
                             <td>
-                                <a href="{{ route('ura.apartments.show', $item->id) }}"><i class="fa fa-eye"></i></a>
-                                <a href="{{ route('ura.apartments.edit', $item->id) }}"><i
+                                <a class="btn btn-outline-primary"
+                                    href="{{ route('ura.apartments.show', $apartment->id) }}"><i
+                                        class="fas fa-eye"></i></a>
+                                <a class="btn btn-outline-warning"
+                                    href="{{ route('ura.apartments.edit', $apartment->id) }}"><i
                                         class="fas fa-user-edit"></i></a>
-                                <form action="{{ route('ura.apartments.destroy', $item->id) }}" method="post">
+                                <form action="{{ route('ura.apartments.destroy', $apartment->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>

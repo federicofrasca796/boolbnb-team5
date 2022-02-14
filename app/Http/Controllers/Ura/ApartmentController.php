@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ura;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
@@ -42,20 +43,27 @@ class ApartmentController extends Controller
         /* dd($request); */
         $validator = $request->validate([
             'title' => 'required|max:150',
-            'thumbnail' => 'required',
+            'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
             'address' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'number_of_rooms' => 'required|numeric|max:120|min:1',
             'number_of_beds' => 'required|numeric|max:120|min:1',
             'number_of_baths' => 'required|numeric|max:120|min:1',
-            'square_metres' => 'required|numeric',
+            'square_metres' => 'required|numeric|min:1',
             'is_aviable' => 'boolean|required',
             /*'sponsor_id' => 'required|numeric|exists:sponsors,id, */
         ]);
 
+        if ($request->file('thumbnail')) {
+            $image_path = Storage::put('post_img', $request->file('thumbnail'));
+
+            $validator['thumbnail'] = $image_path;
+
+        }
+
         $validator['slug'] = Str::slug($request->title);
-        /* $validator['user_id'] = Auth::user()->id; */
+        //$validator['user_id'] = Auth::user()->id;
         Apartment::create($validator);
         return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment created Succesfully'));
     }
@@ -99,17 +107,26 @@ class ApartmentController extends Controller
     {
         $validator = $request->validate([
             'title' => 'required|max:150',
-            'thumbnail' => 'required',
+            'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
             'address' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'number_of_rooms' => 'required|numeric|max:120|min:1',
             'number_of_beds' => 'required|numeric|max:120|min:1',
             'number_of_baths' => 'required|numeric|max:120|min:1',
-            'square_metres' => 'required|numeric',
+            'square_metres' => 'required|numeric|min:1',
             'is_aviable' => 'boolean|required',
             /* 'sponsor_id' => 'required|numeric|exists:sponsors,id, */
         ]);
+
+        if ($request->file('thumbnail')) {
+            Storage::delete($apartment->thumbnail);
+
+            $image_path = Storage::put('post_img', $request->file('thumbnail'));
+
+            $validator['thumbnail'] = $image_path;
+
+        }
 
         $validator['slug'] = Str::slug($request->title);
 
@@ -129,6 +146,7 @@ class ApartmentController extends Controller
         // Check if user has permissions to this apartment
         return redirect()->back()->with(session()->flash('error' , 'Access Denied'));
         } */
+        Storage::delete($apartment->thumbnail);
         $apartment->delete();
 
         return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment deleted Succesfully'));
