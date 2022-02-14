@@ -5,6 +5,7 @@ use App\User;
 use App\Models\Message;
 use App\Models\View;
 use App\Models\Sponsor;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -80,5 +81,16 @@ class Apartment extends Model
     public function sponsors(): BelongsToMany
     {
         return $this->belongsToMany(Sponsor::class);
+    }
+
+
+    /**
+     * The services that belong to the Apartment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function services(): BelongsToMany
+    {
+        return $this->belongsToMany(Service::class);
     }
 }
