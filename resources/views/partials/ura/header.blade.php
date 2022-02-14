@@ -11,17 +11,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            {{-- Nav links --}}
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('ura.apartments.index') }}">Apartments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('ura.messages.index') }}">Messages</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sponsorships</a>
-                    </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="#">Sponsor plans</a>
+                    </li> --}}
 
                 </ul>
                 {{-- <form class="d-flex my-2 my-lg-0">
