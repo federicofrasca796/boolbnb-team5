@@ -1,6 +1,6 @@
 <header id="ura_header">
     {{-- Navbar registered user w/ apartment --}}
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light mb-5">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">Navbar</a>
 
