@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\User;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,5 +46,15 @@ class Apartment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the message for the Apartment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function message(): HasMany
+    {
+        return $this->hasMany(Message::class);
     }
 }
