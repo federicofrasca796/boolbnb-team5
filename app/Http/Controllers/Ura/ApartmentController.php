@@ -23,8 +23,8 @@ class ApartmentController extends Controller
         $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(9);
 
         //$apartments = Apartment::all();
-        $services = Service::all();
-        return view('ura.apartments.index', compact('apartments', 'services'));
+        // $services = Service::all();
+        return view('ura.apartments.index', compact('apartments'));
     }
 
     /**
@@ -34,7 +34,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('ura.apartments.create');
+        $services = Service::all();
+
+        return view('ura.apartments.create', compact('services'));
     }
 
     /**
@@ -45,7 +47,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        /* dd($request); */
+        ddd($request);
         $validator = $request->validate([
             'title' => 'required|max:150',
             'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
@@ -92,8 +94,11 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+
+        return view('ura.apartments.create', compact('services'));
         if (Auth::id() === $apartment->user_id) {
-            return view('ura.apartments.edit', compact('apartment'));
+            $services = Service::all();
+            return view('ura.apartments.edit', compact('apartment', 'services'));
         } else {
             abort(403);
         }
