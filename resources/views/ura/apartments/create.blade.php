@@ -171,7 +171,7 @@
                             <label class="form-check form-check-inline">
                                 <input type="checkbox" class="form-check-input" name="service_id[]"
                                     id="service_id_{{ $service->id }}" value="{{ $service->id }}"
-                                    @if (is_array(old('service_id')) && in_array($service->id, old('service_id'))) checked @endif>
+                                    @if (in_array($service->id, old('service_id'))) checked @endif>
                                 {{ $service->name }}
                             </label>
                         @endforeach

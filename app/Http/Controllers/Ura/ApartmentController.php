@@ -23,7 +23,6 @@ class ApartmentController extends Controller
         $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(9);
 
         //$apartments = Apartment::all();
-        // $services = Service::all();
         return view('ura.apartments.index', compact('apartments'));
     }
 
