@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ura;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,8 @@ class ApartmentController extends Controller
         $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(9);
 
         //$apartments = Apartment::all();
-        return view('ura.apartments.index', compact('apartments'));
+        $services = Service::all();
+        return view('ura.apartments.index', compact('apartments', 'services'));
     }
 
     /**
@@ -62,7 +64,6 @@ class ApartmentController extends Controller
             $image_path = Storage::put('apartments_img', $request->file('thumbnail'));
 
             $validator['thumbnail'] = $image_path;
-
         }
 
         $validator['slug'] = Str::slug($request->title);
@@ -128,7 +129,6 @@ class ApartmentController extends Controller
                 $image_path = Storage::put('apartments_img', $request->file('thumbnail'));
 
                 $validator['thumbnail'] = $image_path;
-
             }
 
             $validator['slug'] = Str::slug($request->title);
@@ -138,7 +138,6 @@ class ApartmentController extends Controller
         } else {
             abort(403);
         }
-
     }
 
     /**
@@ -154,7 +153,6 @@ class ApartmentController extends Controller
             $apartment->delete();
 
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' deleted succesfully"));
-
         } else {
             abort(403);
         }
