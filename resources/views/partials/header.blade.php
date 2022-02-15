@@ -4,7 +4,7 @@
     <ul class="navbar-nav position-absolute end-0 d-flex flex-row me-4">
         <!-- Authentication Links -->
         @guest
-        <button class="nav-item-login rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#modal_aside_left_login">
+        <button class="nav-item-login rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#modal_aside_left_login" id="loginButton">
             <a class="nav-link text-dark" {{--href="{{ route('login') }}"--}}><i class="fa-solid fa-user"></i></a>
         </button>
 

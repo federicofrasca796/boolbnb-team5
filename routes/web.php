@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    return view('guest.welcome');
-});
-
 
 //rotte lato guest
 Route::get('/', 'ApartmentController@index')->name('guest.index');
 Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
 Auth::routes();
+
+Route::get('login' , 'Middleware\LoginController@login')->name('login');
+
+route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
 
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {

@@ -18,4 +18,15 @@
 </div>
 
 
+<!-- Middleware Login redirector -->
+<script>
+    var value = {{$requireLogin}};
+    if(value == 1){
+        window.onload = ()=>{
+        let login = document.getElementById('loginButton');
+    login.click();
+    console.log('we we')
+    }
+    }
+</script>
 @endsection
