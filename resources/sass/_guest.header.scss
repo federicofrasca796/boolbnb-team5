@@ -32,7 +32,6 @@ header {
 
 
 
-
     .modal .modal-dialog-aside{ 
         width: 483px; max-width:80%; height: 100%; margin:0;transform: translate(0); transition: transform .2s;
     }
@@ -48,4 +47,8 @@ header {
         }
 
     }
+}
+
+.modal-backdrop{
+    z-index: 10;
 }

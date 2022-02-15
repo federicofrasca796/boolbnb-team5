@@ -10073,13 +10073,17 @@ header .form-group input::-webkit-input-placeholder {
   color: lightgrey;
 }
 
+.modal-backdrop {
+  z-index: 10;
+}
+
 #jumbo {
   height: 75vh;
   background-size: cover;
   background-position: center;
   position: relative;
 }
-#jumbo img {
+#jumbo > img {
   position: absolute;
   height: 100%;
   width: 100%;

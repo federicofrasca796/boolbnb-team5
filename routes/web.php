@@ -27,7 +27,6 @@ Auth::routes();
 
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
 
 
     Route::get('dashboard', function () {
