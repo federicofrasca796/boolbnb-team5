@@ -47,7 +47,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        ddd($request);
         $validator = $request->validate([
             'title' => 'required|max:150',
             'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
@@ -60,6 +59,7 @@ class ApartmentController extends Controller
             'square_metres' => 'required|numeric|min:1',
             'is_aviable' => 'boolean|required',
             /*'sponsor_id' => 'required|numeric|exists:sponsors,id, */
+            'service_id' => 'required|exists:services,id'
         ]);
 
         if ($request->file('thumbnail')) {
@@ -70,7 +70,10 @@ class ApartmentController extends Controller
 
         $validator['slug'] = Str::slug($request->title);
         $validator['user_id'] = Auth::user()->id;
-        Apartment::create($validator);
+
+        // ddd($request, $validator);
+        $new_apartment = Apartment::create($validator);
+        $new_apartment->services()->attach($validator['service_id']);
         return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$request->title' created succesfully"));
     }
 
