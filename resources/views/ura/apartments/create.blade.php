@@ -73,5 +73,5 @@
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js"></script>
 
     <!-- Main Script -->
-    <script src="{{asset('js/crud-apartment-search.js')}}"></script>
+    <script src="{{asset('js/create-apartment-search.js')}}"></script>
 @endsection
