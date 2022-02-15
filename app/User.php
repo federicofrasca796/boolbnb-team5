@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Apartment;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -45,4 +47,15 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    /**
+     * Get all of the apartment for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function apartment(): HasMany
+    {
+        return $this->hasMany(Apartment::class);
+    }
+    
 }
