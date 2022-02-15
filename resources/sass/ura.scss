@@ -1,52 +1,14 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Urbanist:ital,wght@0,300;1,300&display=swap');
 
 // Variables
-/* @import "variables"; */
+@import "variables";
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
-/* @import "index_admin"; */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+body{
+    font-family: $font-family-primary;
 }
 
-#app{
-
-    main{
-
-        .ura-container{
-            display: flex;
-
-            .sidebar{
-                width: 15%;
-                background: crimson;
-                height: 100vh;
-                position: fixed;
-                .sidebar-container{
-                    display: flex;
-                    flex-direction: column;
-
-                    .elements{
-                        display: flex;
-                        flex-direction: column;
-
-                        a{
-                            color: white;
-                            text-decoration: none;
-                            padding: 0.5rem 1rem;
-                        }
-                    }
-                }
-            }
-
-            .content{
-                width: 85%;
-                margin-left: 15%;
-            }
-        }
-    }
-}

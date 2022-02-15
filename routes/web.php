@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('dashboard', function () {
