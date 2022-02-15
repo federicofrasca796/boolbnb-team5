@@ -32,10 +32,14 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
 
 
 
-    Route::resource('apartments', 'ApartmentController');
+    Route::resource('apartments', 'ApartmentController')->scoped([
+        'apartments' => 'slug',
+    ]);;
 
 
-    
+
     /* Routes index and show messages */
-    Route::resource('messages', 'MessageController')->only('index', 'show');
+    Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
+        'messages' => 'slug',
+    ]);
 });
