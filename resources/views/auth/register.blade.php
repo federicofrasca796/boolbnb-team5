@@ -1,16 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<<<<<<< HEAD
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-
-=======
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -132,14 +122,8 @@
                             <small class="text-muted fst-italic fw-bold">Fields marked with * are required</small>
                         </form>
                     </div>
->>>>>>> 87e8183e767b0466491562f85bbe4743551240a0
                 </div>
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-</div>
 @endsection
-=======
-@endsection
->>>>>>> 87e8183e767b0466491562f85bbe4743551240a0

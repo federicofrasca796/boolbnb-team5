@@ -1,11 +1,19 @@
 #jumbo {
     height: 75vh;
-    background-image: url(../img/jumbo-2.jpg);
-    top: 0;
-    z-index: -1;
     background-size: cover;
     background-position: center;
+    position: relative;
 
+    img{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        filter: brightness(0.7);
+
+    }
     .search-destination {
         .input-group {
             height: 70px;

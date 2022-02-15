@@ -1,6 +1,7 @@
 <div id="jumbo" class="w-100 d-flex justify-content-center align-items-center">
+    <img src="{{asset('img/jumbo-2.jpg')}}" alt="">
     <div class="search-destination w-75">
-        <form action="">
+        <form action="#">
             <div class="input-group w-100">
                 <span class="input-group-text px-4" id="basic-addon1"><i class="fa-solid fa-location-dot"></i></span>
                 <input type="text" class="form-control" placeholder="Find your destination">
