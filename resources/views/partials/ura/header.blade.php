@@ -2,7 +2,8 @@
     {{-- Navbar registered user w/ apartment --}}
     <nav class="navbar navbar-expand-lg navbar-light mb-5">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Navbar</a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img width="50" src="{{ asset('img/logo.png') }}"
+                    alt="logo_BoolBnb"></a>
 
             {{-- hamburger menu btn (responsive) --}}
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
