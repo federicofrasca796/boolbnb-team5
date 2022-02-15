@@ -46,8 +46,6 @@
                         <div class=" col-6" id="address">
                             <label for="address" class="form-label">Address*</label>
                             {{-- This input is just for reference --}}
-                            {{-- <input type="text" name="address" id="address" class="form-control" placeholder="Via Roma, 1"
-                            value="{{ old('address') }}" required> --}}
                             @error('address')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror

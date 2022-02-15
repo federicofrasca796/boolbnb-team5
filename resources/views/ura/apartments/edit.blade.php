@@ -157,10 +157,8 @@
                     </div>
 
                     {{-- Address input --}}
-                    <div class="mb-3">
+                    <div class="mb-3" id="address">
                         <label for="address" class="form-label">Address*</label>
-                        <input type="text" name="address" id="address" class="form-control" placeholder="Via Roma 1"
-                            value="{{ $apartment->address }}" required>
                     </div>
 
                     {{-- Square meters input --}}

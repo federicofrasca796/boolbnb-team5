@@ -106,6 +106,7 @@ document.getElementById('address').append(searchBoxHTML);
 document.querySelector('.tt-search-box-input').name = 'address';
 document.querySelector('.tt-search-box-input').id = 'address';
 document.querySelector('.tt-search-box-input').placeholder = 'Search your address';
+document.querySelector('.tt-search-box-input').autocomplete = 'off';
 /* Results Log */
 
 ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
