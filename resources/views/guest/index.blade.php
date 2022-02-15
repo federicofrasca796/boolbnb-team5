@@ -19,6 +19,7 @@
 
 
 <!-- Middleware Login redirector -->
+@if(isset($requireLogin))
 <script>
     var value = {{$requireLogin}};
     if(value == 1){
@@ -29,4 +30,5 @@
     }
     }
 </script>
+@endif
 @endsection
