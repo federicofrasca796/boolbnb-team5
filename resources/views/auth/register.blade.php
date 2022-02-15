@@ -8,6 +8,7 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
+                        @include('partials.errors')
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 
@@ -16,7 +17,9 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
+                                        maxlength="25" minlength="3">
+                                    <small class="text-muted">Add your name min: 3 | max: 25 characters</small>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -32,7 +35,9 @@
                                 <div class="col-md-6">
                                     <input id="surname" type="text"
                                         class="form-control @error('surname') is-invalid @enderror" name="surname"
-                                        value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+                                        value="{{ old('surname') }}" required autocomplete="surname" autofocus
+                                        maxlength="25" minlength="3">
+                                    <small class="text-muted">Add your surname min: 3 | max: 25 characters</small>
 
                                     @error('surname')
                                         <span class="invalid-feedback" role="alert">
@@ -43,13 +48,14 @@
                             </div>
                             <div class="form-group row">
                                 <label for="date_of_birth"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Date_of_birth') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="date_of_birth" type="date"
                                         class="form-control @error('date_of_birth') is-invalid @enderror"
                                         name="date_of_birth" value="{{ old('date_of_birth') }}" required
                                         autocomplete="date_of_birth" autofocus>
+                                    <small class="text-muted">Choose your date of birth</small>
 
                                     @error('date_of_birth')
                                         <span class="invalid-feedback" role="alert">
@@ -61,11 +67,13 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address *') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        name="email" value="{{ old('email') }}" required autocomplete="email"
+                                        placeholder="name.lastname@example.com">
+                                    <small class="text-muted">Add your email address</small>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -77,12 +85,13 @@
 
                             <div class="form-group row">
                                 <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Password *') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                        required autocomplete="new-password" minlength="8">
+                                    <small class="text-muted">Password must be min 8 characters</small>
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -94,11 +103,12 @@
 
                             <div class="form-group row">
                                 <label for="password-confirm"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password *') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                        name="password_confirmation" required autocomplete="new-password" minlength="8">
+                                    <small class="text-muted">Type again your password</small>
                                 </div>
                             </div>
 
@@ -109,6 +119,7 @@
                                     </button>
                                 </div>
                             </div>
+                            <small class="text-muted fst-italic fw-bold">Fields marked with * are required</small>
                         </form>
                     </div>
                 </div>

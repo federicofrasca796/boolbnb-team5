@@ -56,7 +56,7 @@ class ApartmentController extends Controller
         ]);
 
         if ($request->file('thumbnail')) {
-            $image_path = Storage::put('post_img', $request->file('thumbnail'));
+            $image_path = Storage::put('apartments_img', $request->file('thumbnail'));
 
             $validator['thumbnail'] = $image_path;
 
@@ -65,7 +65,7 @@ class ApartmentController extends Controller
         $validator['slug'] = Str::slug($request->title);
         //$validator['user_id'] = Auth::user()->id;
         Apartment::create($validator);
-        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment created Succesfully'));
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$request->title' created succesfully"));
     }
 
     /**
@@ -122,7 +122,7 @@ class ApartmentController extends Controller
         if ($request->file('thumbnail')) {
             Storage::delete($apartment->thumbnail);
 
-            $image_path = Storage::put('post_img', $request->file('thumbnail'));
+            $image_path = Storage::put('apartments_img', $request->file('thumbnail'));
 
             $validator['thumbnail'] = $image_path;
 
@@ -131,7 +131,7 @@ class ApartmentController extends Controller
         $validator['slug'] = Str::slug($request->title);
 
         $apartment->update($validator);
-        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment edited Succesfully'));
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
     }
 
     /**
@@ -149,6 +149,6 @@ class ApartmentController extends Controller
         Storage::delete($apartment->thumbnail);
         $apartment->delete();
 
-        return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Apartment deleted Succesfully'));
+        return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' deleted succesfully"));
     }
 }

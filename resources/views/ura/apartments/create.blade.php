@@ -10,7 +10,7 @@
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                    placeholder="Type here the title" value="{{ old('title') }}" maxlength="150">
+                    placeholder="Type here the title" value="{{ old('title') }}" maxlength="150" required>
                 <small id="titleHelper" class="text-muted">Add your apartment title, max 150 characters</small>
                 @error('title')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -19,7 +19,7 @@
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror"
-                    placeholder="Address Here" value="{{ old('address') }}">
+                    placeholder="Address Here" value="{{ old('address') }}" required>
                 <small id="addressHelper" class="text-muted">Search your apartment address</small>
                 @error('address')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -30,8 +30,9 @@
                 <input type="file" name="thumbnail" id="thumbnail"
                     class="form-control @error('thumbnail') is-invalid
                 @enderror"
-                    placeholder="Add here the image" accept="jpeg,jpg,png,gif,bmp,svg,webp">
-                <small id="thumbnailHelper" class="text-muted">Add your apartment image, max 1024kB</small>
+                    placeholder="Add here the image" accept="jpeg,jpg,png,gif,bmp,svg,webp" required>
+                <small id="thumbnailHelper" class="text-muted">Add your apartment image, max 1024kB. Accept
+                    jpeg,jpg,png,gif,bmp,svg,webp</small>
                 @error('thumbnail')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -41,7 +42,7 @@
                 <input type="text" name="latitude" id="latitude"
                     class="form-control @error('latitude') is-invalid
                     @enderror"
-                    value="{{ old('latitude') }}">
+                    value="{{ old('latitude') }}" required>
                 @error('latitude')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -51,7 +52,7 @@
                 <input type="text" name="longitude" id="longitude"
                     class="form-control @error('longitude') is-invalid
                     @enderror"
-                    value="{{ old('longitude') }}">
+                    value="{{ old('longitude') }}" required>
                 @error('longitude')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -61,8 +62,9 @@
                 <input type="number" name="number_of_rooms" id="number_of_rooms"
                     class="form-control
                     @error('number_of_rooms') is-invalid @enderror"
-                    placeholder="Type here the number of rooms" value="{{ old('number_of_rooms') }}" min="1" max="120">
-                <small id="number_of_roomsHelper" class="text-muted">Add the number of rooms, max: 120 | min: 1</small>
+                    placeholder="Type here the number of rooms" value="{{ old('number_of_rooms') }}" required min="1"
+                    max="120">
+                <small id="number_of_roomsHelper" class="text-muted">Add the number of rooms, min: 1 | max: 120</small>
                 @error('number_of_rooms')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -72,8 +74,9 @@
                 <input type="number" name="number_of_beds" id="number_of_beds"
                     class="form-control @error('number_of_beds')
                     is-invalid @enderror"
-                    placeholder="Type here the number of beds" value="{{ old('number_of_beds') }}" min="1" max="120">
-                <small id="number_of_bedsHelper" class="text-muted">Add the number of beds, max: 120 | min: 1</small>
+                    placeholder="Type here the number of beds" value="{{ old('number_of_beds') }}" required min="1"
+                    max="120">
+                <small id="number_of_bedsHelper" class="text-muted">Add the number of beds, min: 1 | max: 120</small>
                 @error('number_of_beds')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -83,8 +86,9 @@
                 <input type="number" name="number_of_baths" id="number_of_baths"
                     class="form-control
                     @error('number_of_baths') is-invalid @enderror"
-                    placeholder="Type here the number of baths" value="{{ old('number_of_baths') }}" min="1" max="120">
-                <small id="number_of_bathsHelper" class="text-muted">Add the number of baths, max: 120 | min: 1</small>
+                    placeholder="Type here the number of baths" value="{{ old('number_of_baths') }}" required min="1"
+                    max="120">
+                <small id="number_of_bathsHelper" class="text-muted">Add the number of baths, min: 1 | max: 120</small>
                 @error('number_of_baths')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -94,16 +98,17 @@
                 <input type="number" name="square_metres" id="square_metres"
                     class="form-control @error('square_metres')
                     is-invalid @enderror"
-                    placeholder="Type here the number of square metres" value="{{ old('square_metres') }}">
-                <small id="square_metresHelper" class="text-muted">Add the number of square metres, max: 65535 | min:
-                    1</small>
+                    placeholder="Type here the number of square metres" value="{{ old('square_metres') }}" required
+                    min="1" max="65535">
+                <small id="square_metresHelper" class="text-muted">Add the number of square metres, min:
+                    1 | max: 65535</small>
                 @error('square_metres')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="is_aviable" class="form-label">Available</label>
-                <select name="is_aviable" id="is_aviable">
+                <select name="is_aviable" id="is_aviable" required>
                     <option value="1" selected>Yes</option>
                     <option value="0">No</option>
                 </select>
