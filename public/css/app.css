@@ -11295,3 +11295,23 @@ header .modal.show .modal-dialog-aside {
 header .form-group input::-webkit-input-placeholder {
   color: lightgrey;
 }
+
+#jumbo {
+  height: 75vh;
+  background-image: url(../img/jumbo-2.jpg);
+  top: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+}
+#jumbo .search-destination .input-group {
+  height: 70px;
+}
+#jumbo .search-destination .input-group #basic-addon1 {
+  background-color: white;
+  border: none;
+}
+#jumbo .search-destination .input-group input {
+  background-color: white;
+  border: none;
+}

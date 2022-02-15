@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('guest.welcome');
 });
 
+
+//rotte lato guest
+Route::get('/', 'ApartmentController@index')->name('guest.index');
+Route::get('/apartments/{apartmentt}', 'ApartmentController@show')->name('guest.show');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
