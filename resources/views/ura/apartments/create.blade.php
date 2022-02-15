@@ -1,10 +1,12 @@
 @extends('layouts.ura')
 
+@section('css')
+<!-- TomTom Search Style -->
+<link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css'/>
 
 @section('content')
     {{-- Container could be further resized --}}
-    <div class="container">
-<<<<<<< HEAD
+{{--     <div class="container">
         <h2 class="text-center">Add a new apartment</h2>
         @include('partials.errors')
         <form action="{{ route('ura.apartments.store') }}" method="post" enctype="multipart/form-data">
@@ -18,15 +20,14 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
+
+            <div class="mb-3" id="address">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror"
-                    placeholder="Address Here" value="{{ old('address') }}" required>
-                <small id="addressHelper" class="text-muted">Search your apartment address</small>
                 @error('address')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="thumbnail" class="form-label">Thumbnail</label>
                 <input type="file" name="thumbnail" id="thumbnail"
@@ -39,6 +40,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="latitude" class="form-label">Latitude</label>
                 <input type="text" name="latitude" id="latitude"
@@ -49,6 +51,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="longitude" class="form-label">Longitude</label>
                 <input type="text" name="longitude" id="longitude"
@@ -59,6 +62,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="number_of_rooms" class="form-label">Number of rooms</label>
                 <input type="number" name="number_of_rooms" id="number_of_rooms"
@@ -71,6 +75,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="number_of_beds" class="form-label">Number of beds</label>
                 <input type="number" name="number_of_beds" id="number_of_beds"
@@ -83,6 +88,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="number_of_baths" class="form-label">Number of baths</label>
                 <input type="number" name="number_of_baths" id="number_of_baths"
@@ -95,6 +101,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="square_metres" class="form-label">Number of square metres</label>
                 <input type="number" name="square_metres" id="square_metres"
@@ -108,6 +115,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="is_aviable" class="form-label">Available</label>
                 <select name="is_aviable" id="is_aviable" required>
@@ -120,9 +128,9 @@
                 </div>
                 @error('is_aviable')
                     <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-=======
-        <div class="row justify-content-center">
+                @enderror --}}
+
+    <div class="row justify-content-center">
             <div class="col-8">
                 <h1 class="mb-5">New hosting</h1>
                 {{-- Error directive --}}
@@ -241,17 +249,21 @@
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-outline-primary btn-lg my-5">Create</button>
                     </div>
->>>>>>> origin/dashboard
+                </form>
             </div>
         </div>
 
 
-<<<<<<< HEAD
             <button type="submit" class="btn btn-outline-primary btn-lg">Add</button>
-            <a class="btn btn-outline-warning btn-lg" href="{{ route('ura.apartments.index') }}">Back</a>
-=======
->>>>>>> origin/dashboard
-        </form>
-    </div>
+
+        
+    {{-- </div> --}}
+
+    <!-- Required TomTom SearchBox Cdn -->
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js"></script>
+
+    <!-- Main Script -->
+    <script src="{{asset('js/create-apartment-search.js')}}"></script>
     </div>
 @endsection

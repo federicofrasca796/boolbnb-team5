@@ -1,10 +1,16 @@
 @extends('layouts.ura')
 
+
+@section('css')
+<!-- TomTom Search Style -->
+<link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css'/>
+
 @section('content')
     {{-- Container could be further resized --}}
     <div class="container">
-<<<<<<< HEAD
-        <h2 class="text-center">Update your apartment</h2>
+
+        
+        {{-- <h2 class="text-center">Update your apartment</h2>
         @include('partials.errors')
         <form action="{{ route('ura.apartments.update', $apartment->id) }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -18,7 +24,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="address">
                 <label for="address" class="form-label">Address</label>
                 <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror"
                     placeholder="Address Here" value="{{ $apartment->address }}" required>
@@ -26,6 +32,7 @@
                 @error('address')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+
             </div>
             <div class="mb-3">
                 <label for="thumbnail" class="form-label">Thumbnail</label>
@@ -121,8 +128,7 @@
                 </div>
                 @error('is_aviable')
                     <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-=======
+                @enderror --}}
         <div class="row justify-content-center">
             <div class="col-8">
                 <h1 class="mb-5">New hosting</h1>
@@ -251,18 +257,51 @@
                     </div>
 
                 </form>
-
->>>>>>> origin/dashboard
             </div>
         </div>
 
 
-<<<<<<< HEAD
-            <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
+
+            {{-- <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
             <a class="btn btn-outline-warning btn-lg" href="{{ route('ura.apartments.index') }}">Back</a>
-        </form>
-=======
+        </form> --}}
+
+    {{-- </div>
     </div>
->>>>>>> origin/dashboard
-    </div>
+ --}}
+    <!-- Required TomTom SearchBox Cdn -->
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js"></script>
+
+    <!-- Main Script -->
+    <!-- <script src="{{asset('js/edit-apartment-search.js')}}"></script> -->
+
+    <!-- Script for setting value to address input MUST be on blade page -->
+    <script>
+        var options = {
+        searchOptions: {
+            key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+            language: 'it-IT',
+            limit: 5
+        }
+    };
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    document.getElementById('address').append(searchBoxHTML);
+    document.querySelector('.tt-search-box-input').name = 'address';
+    document.querySelector('.tt-search-box-input').id = 'address';
+    document.querySelector('.tt-search-box-input').placeholder = 'Search your address';
+
+
+
+    /* Results Log */
+    ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
+        console.log(data.data.result.position);
+        document.getElementById('latitude').value = data.data.result.position.lat;
+        document.getElementById('longitude').value = data.data.result.position.lng;
+    });
+
+    var value = {!! json_encode($apartment->address) !!}
+    ttSearchBox.setValue(value);
+    </script>
 @endsection
