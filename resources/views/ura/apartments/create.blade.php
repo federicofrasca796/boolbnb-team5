@@ -90,7 +90,7 @@
                         <label for="number_of_rooms" class="form-label">Rooms*</label>
                         <select class="form-control @error('number_of_rooms') is-invalid @enderror" name="number_of_rooms"
                             id="number_of_rooms" required>
-                            <option>Select rooms</option>
+                            <option value="">Select rooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
                                     {{ old('number_of_rooms') == $i ? 'selected' : '' }}>
@@ -109,7 +109,7 @@
                         <label for="number_of_beds" class="form-label">Beds*</label>
                         <select class="form-control @error('number_of_beds') is-invalid @enderror" name="number_of_beds"
                             id="number_of_beds" required>
-                            <option>Select beds</option>
+                            <option value="">Select beds</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}" {{ old('number_of_beds') == $i ? 'selected' : '' }}>
                                     {{ $i }}
@@ -127,7 +127,7 @@
                         <label for="number_of_baths" class="form-label">Bathrooms*</label>
                         <select class="form-control @error('number_of_baths') is-invalid @enderror" name="number_of_baths"
                             id="number_of_baths" required>
-                            <option>Select bathrooms</option>
+                            <option value="">Select bathrooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
                                     {{ old('number_of_baths') == $i ? 'selected' : '' }}>
@@ -145,13 +145,17 @@
                     <div class="mb-3">
                         <label class="d-block">Instantly available*</label>
                         <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="1"
+                            <span class="mr-3">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes" value="1"
+                                    required checked>
+                                <label class="form-check-label" for="is_aviable_yes">Yes</label>
+                            </span>
+
+                            <span class="mr-3">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no" value="0"
                                     required>
-                                Yes
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="0"
-                                    required> No
-                            </label>
+                                <label class="form-check-label" for="is_aviable_no">No</label>
+                            </span>
                         </div>
                         @error('is_aviable')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -160,24 +164,17 @@
 
 
                     {{-- Services input --}}
-                    <div class="mb-1">Services*</div>
-                    <div class="form-check form-check-inline mb-5">
-                        {{-- There could be buttons with icons insted of checkboxes --}}
-                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="1">
-                        <label class="form-check-label mx-2" for="service_id">
-                            Service 1
-                        </label>
-
-                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="2">
-                        <label class="form-check-label mx-2" for="service_id">
-                            Service 2
-                        </label>
-
-                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="3">
-                        <label class="form-check-label mx-2" for="service_id">
-                            Service 3
-                        </label>
-
+                    {{-- There could be buttons with icons insted of checkboxes --}}
+                    <div class="mb-5">
+                        <label class="d-block">Services*</label>
+                        @foreach ($services as $service)
+                            <label class="form-check form-check-inline" for="service_id">
+                                <input type="checkbox" class="form-check-input" name="service_id"
+                                    id="service_id_{{ $service->id }}" value="{{ $service->id }}"
+                                    @if (is_array(old('service_id')) && in_array($service->id, old('service_id'))) checked @endif>
+                                {{ $service->name }}
+                            </label>
+                        @endforeach
                     </div>
 
                     {{-- Submit form --}}
