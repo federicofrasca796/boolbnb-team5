@@ -23,8 +23,8 @@
                 <div class="row g-0">
                     {{-- Apartment thumb --}}
                     <div class="col-md-4">
-                        <a href="{{ route('ura.apartments.show', $apartment->id) }}">
-                            <img src="{{ $apartment->thumbnail }}" class="img-fluid rounded-start"
+                        <a href="{{ route('ura.apartments.show', $apartment->slug) }}">
+                            <img src="{{ asset('storage/' . $apartment->thumbnail) }}" class="img-fluid rounded-start"
                                 alt="{{ $apartment->slug }}">
                         </a>
                     </div>

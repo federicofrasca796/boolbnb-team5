@@ -8,73 +8,6 @@
 @section('content')
     {{-- Container could be further resized --}}
     <div class="container">
-        {{-- <div class="mb-3">
-                <label for="number_of_rooms" class="form-label">Number of rooms</label>
-                <input type="number" name="number_of_rooms" id="number_of_rooms"
-                    class="form-control
-                    @error('number_of_rooms') is-invalid @enderror"
-                    placeholder="Type here the number of rooms" value="{{ old('number_of_rooms') }}" required min="1"
-                    max="120">
-                <small id="number_of_roomsHelper" class="text-muted">Add the number of rooms, min: 1 | max: 120</small>
-                @error('number_of_rooms')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="number_of_beds" class="form-label">Number of beds</label>
-                <input type="number" name="number_of_beds" id="number_of_beds"
-                    class="form-control @error('number_of_beds')
-                    is-invalid @enderror"
-                    placeholder="Type here the number of beds" value="{{ old('number_of_beds') }}" required min="1"
-                    max="120">
-                <small id="number_of_bedsHelper" class="text-muted">Add the number of beds, min: 1 | max: 120</small>
-                @error('number_of_beds')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="number_of_baths" class="form-label">Number of baths</label>
-                <input type="number" name="number_of_baths" id="number_of_baths"
-                    class="form-control
-                    @error('number_of_baths') is-invalid @enderror"
-                    placeholder="Type here the number of baths" value="{{ old('number_of_baths') }}" required min="1"
-                    max="120">
-                <small id="number_of_bathsHelper" class="text-muted">Add the number of baths, min: 1 | max: 120</small>
-                @error('number_of_baths')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="square_metres" class="form-label">Number of square metres</label>
-                <input type="number" name="square_metres" id="square_metres"
-                    class="form-control @error('square_metres')
-                    is-invalid @enderror"
-                    placeholder="Type here the number of square metres" value="{{ old('square_metres') }}" required
-                    min="1" max="65535">
-                <small id="square_metresHelper" class="text-muted">Add the number of square metres, min:
-                    1 | max: 65535</small>
-                @error('square_metres')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="is_aviable" class="form-label">Available</label>
-                <select name="is_aviable" id="is_aviable" required>
-                    <option value="1" selected>Yes</option>
-                    <option value="0">No</option>
-                </select>
-                <div class="display-block">
-                    <small id="is_aviableHelper" class="text-muted">Choose Yes or No if your apartment is available
-                    </small>
-                </div>
-                @error('is_aviable')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror --}}
-
         <div class="row justify-content-center">
             <div class="col-8">
                 <h1 class="mb-5">New hosting</h1>
@@ -101,8 +34,8 @@
                     <div class="mb-3">
                         <label for="title" class="form-label">Title*</label>
                         <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                            placeholder="Type title here" value="{{ old('title') }}" maxlength="255" required>
-                        <small id="titleHelper" class="text-muted">Add your title, max 255 characters</small>
+                            placeholder="Type title here" value="{{ old('title') }}" maxlength="150" required>
+                        <small id="titleHelper" class="text-muted">Add your title, max 150 characters</small>
                         @error('title')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -144,14 +77,21 @@
                     {{-- Square meters input --}}
                     <div class="mb-3">
                         <label for="square_metres" class="form-label">Floor area (mq)*</label>
-                        <input type="text" name="square_metres" id="square_metres" class="form-control"
-                            placeholder="Type floor area in square meters " value="{{ old('square_metres') }}" required>
+                        <input type="number" name="square_metres" id="square_metres"
+                            class="form-control @error('square_metres') is-invalid @enderror"
+                            placeholder="Type floor area in square meters" value="{{ old('square_metres') }}" required
+                            min="1" max="65535">
+                        <small id="square_metresHelper" class="text-muted">Add the number of square metres.</small>
+                        @error('square_metres')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- Rooms input --}}
                     <div class="mb-3">
                         <label for="number_of_rooms" class="form-label">Rooms*</label>
-                        <select class="form-control" name="number_of_rooms" id="number_of_rooms" required>
+                        <select class="form-control @error('number_of_rooms') is-invalid @enderror" name="number_of_rooms"
+                            id="number_of_rooms" required>
                             <option>Select rooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -161,17 +101,6 @@
                             @endfor
                             <option value="99" {{ old('number_of_rooms') == 99 ? 'selected' : '' }}>10+</option>
                         </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="number_of_rooms" class="form-label">Number of rooms</label>
-                        <input type="number" name="number_of_rooms" id="number_of_rooms"
-                            class="form-control
-                    @error('number_of_rooms') is-invalid @enderror"
-                            placeholder="Type here the number of rooms" value="{{ old('number_of_rooms') }}" required
-                            min="1" max="120">
-                        <small id="number_of_roomsHelper" class="text-muted">Add the number of rooms, min: 1 | max:
-                            120</small>
                         @error('number_of_rooms')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -180,7 +109,8 @@
                     {{-- Beds input --}}
                     <div class="mb-3">
                         <label for="number_of_beds" class="form-label">Beds*</label>
-                        <select class="form-control" name="number_of_beds" id="number_of_beds" required>
+                        <select class="form-control @error('number_of_beds') is-invalid @enderror" name="number_of_beds"
+                            id="number_of_beds" required>
                             <option>Select beds</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}" {{ old('number_of_beds') == $i ? 'selected' : '' }}>
@@ -189,12 +119,16 @@
                             @endfor
                             <option value="99" {{ old('number_of_beds') == 99 ? 'selected' : '' }}>10+</option>
                         </select>
+                        @error('number_of_beds')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- Bathrooms input --}}
                     <div class="mb-3">
                         <label for="number_of_baths" class="form-label">Bathrooms*</label>
-                        <select class="form-control" name="number_of_baths" id="number_of_baths" required>
+                        <select class="form-control @error('number_of_baths') is-invalid @enderror" name="number_of_baths"
+                            id="number_of_baths" required>
                             <option>Select bathrooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -204,6 +138,9 @@
                             @endfor
                             <option value="99" {{ old('number_of_baths') == 99 ? 'selected' : '' }}>10+</option>
                         </select>
+                        @error('number_of_baths')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- Availability input --}}
@@ -211,12 +148,18 @@
                         <label class="d-block">Instantly available*</label>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="1">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="1"
+                                    required>
                                 Yes
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="0"> No
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="0"
+                                    required> No
                             </label>
                         </div>
+                        @error('is_aviable')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
 
                     {{-- Services input --}}
                     <div class="mb-1">Services*</div>
@@ -246,12 +189,6 @@
                 </form>
             </div>
         </div>
-
-
-        {{-- <button type="submit" class="btn btn-outline-primary btn-lg">Add</button> --}}
-
-
-        {{-- </div> --}}
 
         <!-- Required TomTom SearchBox Cdn -->
         <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js">

@@ -38,7 +38,7 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
 
     Route::resource('apartments', 'ApartmentController')->scoped([
         'apartments' => 'slug',
-    ]);;
+    ]);
 
 
 
