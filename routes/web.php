@@ -18,11 +18,16 @@ Route::get('/', function () {
     return view('guest.welcome');
 });
 
+
+//rotte lato guest
+Route::get('/', 'ApartmentController@index')->name('guest.index');
+Route::get('/apartments/{apartmentt}', 'ApartmentController@show')->name('guest.show');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
     Route::get('/dashboard', function () {
         return view('ura.dashboard');
     });
@@ -30,3 +35,4 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
     /* Routes index and show messages */
     Route::resource('messages', 'MessageController')->only('index', 'show');
 });
+

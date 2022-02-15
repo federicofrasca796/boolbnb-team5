@@ -1,0 +1,22 @@
+#jumbo {
+    height: 75vh;
+    background-image: url(../img/jumbo-2.jpg);
+    top: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+
+    .search-destination {
+        .input-group {
+            height: 70px;
+            #basic-addon1 {
+                background-color: white;
+                border: none;
+            }
+            input {
+                background-color: white;
+                border: none;
+            }
+        }
+    }
+}
