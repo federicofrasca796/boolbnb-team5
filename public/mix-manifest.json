@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/ura.css": "/css/ura.css",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/create-apartment-search.js": "/js/create-apartment-search.js",
+    "/js/edit-apartment-search.js": "/js/edit-apartment-search.js"
 }

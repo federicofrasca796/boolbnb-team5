@@ -21,18 +21,29 @@ Route::get('/', function () {
 
 //rotte lato guest
 Route::get('/', 'ApartmentController@index')->name('guest.index');
-Route::get('/apartments/{apartmentt}', 'ApartmentController@show')->name('guest.show');
+Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
 Auth::routes();
 
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/dashboard', function () {
-        return view('ura.dashboard');
-    });
-    Route::resource('apartments', 'ApartmentController');
-    /* Routes index and show messages */
-    Route::resource('messages', 'MessageController')->only('index', 'show');
-});
 
+
+    Route::get('dashboard', function () {
+        return view('ura.dashboard');
+    })->name('dashboard');
+
+
+
+    Route::resource('apartments', 'ApartmentController')->scoped([
+        'apartments' => 'slug',
+    ]);;
+
+
+
+    /* Routes index and show messages */
+    Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
+        'messages' => 'slug',
+    ]);
+});
