@@ -11328,3 +11328,7 @@ header .form-group input::-webkit-input-placeholder {
   background-color: white;
   border: none;
 }
+
+.register-container {
+  padding-top: calc(75px + 2rem);
+}
