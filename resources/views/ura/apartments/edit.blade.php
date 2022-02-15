@@ -1,71 +1,141 @@
 @extends('layouts.ura')
 
-
 @section('content')
+    {{-- Container could be further resized --}}
     <div class="container">
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <h1>{{ $error }}</h1>
-            @endforeach
-        @endif
-        {{-- {{ ddd($apartment) }} --}}
-        <form action="{{ route('ura.apartments.update', $apartment->id) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" id="title" class="form-control" placeholder="Title Here"
-                    value="{{ $apartment->title }}">
-            </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-control" placeholder="address Here"
-                    value="{{ $apartment->address }}">
-            </div>
-            <div class="mb-3">
-                <label for="thumbnail" class="form-label">Thumbnail</label>
-                <input type="text" name="thumbnail" id="thumbnail" class="form-control" placeholder="Thumbnail Here"
-                    value="{{ $apartment->thumbnail }}">
-            </div>
-            <div class="mb-3">
-                <label for="latitude" class="form-label">Latitude</label>
-                <input type="text" name="latitude" id="latitude" class="form-control" placeholder="latitude Here"
-                    value="{{ $apartment->latitude }}">
-            </div>
-            <div class="mb-3">
-                <label for="longitude" class="form-label">longitude</label>
-                <input type="text" name="longitude" id="longitude" class="form-control" placeholder="longitude Here"
-                    value="{{ $apartment->longitude }}">
-            </div>
-            <div class="mb-3">
-                <label for="number_of_rooms" class="form-label">number_of_rooms</label>
-                <input type="text" name="number_of_rooms" id="number_of_rooms" class="form-control"
-                    placeholder="number_of_rooms Here" value="{{ $apartment->number_of_rooms }}">
-            </div>
-            <div class="mb-3">
-                <label for="number_of_beds" class="form-label">number_of_beds</label>
-                <input type="text" name="number_of_beds" id="number_of_beds" class="form-control"
-                    placeholder="number_of_beds Here" value="{{ $apartment->number_of_beds }}">
-            </div>
-            <div class="mb-3">
-                <label for="number_of_baths" class="form-label">number_of_baths</label>
-                <input type="text" name="number_of_baths" id="number_of_baths" class="form-control"
-                    placeholder="number_of_baths Here" value="{{ $apartment->number_of_baths }}">
-            </div>
-            <div class="mb-3">
-                <label for="square_metres" class="form-label">square_metres</label>
-                <input type="text" name="square_metres" id="square_metres" class="form-control"
-                    placeholder="square_metres Here" value="{{ $apartment->square_metres }}">
-            </div>
-            <div class="mb-3">
-                <label for="is_aviable" class="form-label">Aviable</label>
-                <select name="is_aviable" id="is_aviable">
-                    <option value="1" selected>Yes</option>
-                    <option value="0">No</option>
-                </select>
-            </div>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h1 class="mb-5">New hosting</h1>
+                {{-- Error directive --}}
+                @include('partials.validation_errors')
 
-            <button type="submit" class="btn btn-outline-primary btn-lg">Update</button>
-        </form>
+                <form action="{{ route('ura.apartments.update', $apartment->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+
+
+                    {{-- Thumbnail input --}}
+                    <div class="mb-3">
+                        To be fixed...
+                        <label for="thumbnail" class="form-label">Pictures*</label>
+                        <input type="file" class="form-control" name="thumbnail" id="thumbnail"
+                            placeholder="Drag photos here or click to select" aria-describedby="thumbnail" required>
+                        <small id="thumbnail" class="form-text text-muted">Max 1MB</small>
+                    </div>
+
+                    {{-- Title input --}}
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title*</label>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Title Here"
+                            value="{{ $apartment->title }}" required>
+                    </div>
+
+                    {{-- Address input --}}
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address*</label>
+                        <input type="text" name="address" id="address" class="form-control" placeholder="Via Roma 1"
+                            value="{{ $apartment->address }}" required>
+                    </div>
+
+                    {{-- Square meters input --}}
+                    <div class="mb-3">
+                        <label for="square_metres" class="form-label">Floor area (mq)*</label>
+                        <input type="text" name="square_metres" id="square_metres" class="form-control"
+                            placeholder="Type floor area in square meters " value="{{ $apartment->square_metres }}"
+                            required>
+                    </div>
+
+                    {{-- Rooms input --}}
+                    <div class="mb-3">
+                        <label for="number_of_rooms" class="form-label">Rooms*</label>
+                        <select class="form-control" name="number_of_rooms" id="number_of_rooms" required>
+                            <option>Select rooms</option>
+                            @for ($i = 1; $i < 10; $i++)
+                                <option value="{{ $i }}"
+                                    {{ $apartment->number_of_rooms == $i ? 'selected' : '' }}>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                            <option value="99" {{ $apartment->number_of_rooms == 99 ? 'selected' : '' }}>10+</option>
+                        </select>
+                    </div>
+
+                    {{-- Beds input --}}
+                    <div class="mb-3">
+                        <label for="number_of_beds" class="form-label">Beds*</label>
+                        <select class="form-control" name="number_of_beds" id="number_of_beds" required>
+                            <option>Select beds</option>
+                            @for ($i = 1; $i < 10; $i++)
+                                <option value="{{ $i }}"
+                                    {{ $apartment->number_of_beds == $i ? 'selected' : '' }}>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                            <option value="99" {{ $apartment->number_of_beds == 99 ? 'selected' : '' }}>10+</option>
+                        </select>
+                    </div>
+
+                    {{-- Bathrooms input --}}
+                    <div class="mb-3">
+                        <label for="number_of_baths" class="form-label">Bathrooms*</label>
+                        <select class="form-control" name="number_of_baths" id="number_of_baths" required>
+                            <option>Select bathrooms</option>
+                            @for ($i = 1; $i < 10; $i++)
+                                <option value="{{ $i }}"
+                                    {{ $apartment->number_of_baths == $i ? 'selected' : '' }}>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                            <option value="99" {{ $apartment->number_of_baths == 99 ? 'selected' : '' }}>10+</option>
+                        </select>
+                    </div>
+
+                    {{-- Availability input --}}
+                    {{-- !!!TO DO: Add select previous selection feature --}}
+                    <div class="mb-3">
+                        <label class="d-block">Instantly available*</label>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="1">
+                                Yes
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable" value="0"> No
+                            </label>
+                        </div>
+                    </div>
+
+                    {{-- Services input --}}
+                    {{-- !!!TO DO: Add select previous selection feature --}}
+                    <div class="mb-1">Services*</div>
+                    <div class="form-check form-check-inline mb-5">
+                        {{-- There could be buttons with icons insted of checkboxes --}}
+                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="1">
+                        <label class="form-check-label mx-2" for="service_id">
+                            Service 1
+                        </label>
+
+                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="2">
+                        <label class="form-check-label mx-2" for="service_id">
+                            Service 2
+                        </label>
+
+                        <input type="checkbox" class="form-check-input" name="service_id" id="service_id" value="3">
+                        <label class="form-check-label mx-2" for="service_id">
+                            Service 3
+                        </label>
+
+                    </div>
+
+                    {{-- Submit form --}}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-outline-primary btn-lg my-5">Create</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
     </div>
 @endsection
