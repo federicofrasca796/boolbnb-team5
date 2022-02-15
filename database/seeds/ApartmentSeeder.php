@@ -17,6 +17,7 @@ class ApartmentSeeder extends Seeder
             [
                 'title' => 'Cantami o Diva del pelide Achille l\'ira funesta',
                 'address' => 'via Del Pelide Achille 83 04011 Aprilia LT',
+                'thumbnail' => 'https://images7.alphacoders.com/365/thumb-1920-365706.jpg',
                 'latitude' => 13.89649743,
                 'longitude' => 111.23413764,
                 'number_of_rooms' => 3,
@@ -28,6 +29,7 @@ class ApartmentSeeder extends Seeder
             [
                 'title' => 'Cantami o Diva del pelide Achille l\'ira funesta',
                 'address' => 'via Enzo Dotti 11 00040 Roma RM',
+                'thumbnail' => 'https://images7.alphacoders.com/365/thumb-1920-365706.jpg',
                 'latitude' => 14.86249743,
                 'longitude' => 13.11413664,
                 'number_of_rooms' => 6,
@@ -42,6 +44,7 @@ class ApartmentSeeder extends Seeder
             $apartment = new Apartment();
             $apartment->title = $sample['title'];
             $apartment->address = $sample['address'];
+            $apartment->thumbnail = $sample['thumbnail'];
             $apartment->latitude = $sample['latitude'];
             $apartment->longitude = $sample['longitude'];
             $apartment->number_of_rooms = $sample['number_of_rooms'];
