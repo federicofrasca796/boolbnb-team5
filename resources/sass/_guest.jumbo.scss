@@ -17,14 +17,30 @@
     .search-destination {
         .input-group {
             height: 70px;
+            border-radius: 0.9rem;
             #basic-addon1 {
                 background-color: white;
                 border: none;
+                border-top-left-radius: 0.9rem;
+                border-bottom-left-radius: 0.9rem;
             }
             input {
                 background-color: white;
                 border: none;
+                
             }
+            .container-button-search{
+                border-top-right-radius: 0.9rem;
+                border-bottom-right-radius: 0.9rem;
+               button{
+                border-top-right-radius: 0.9rem;
+                border-bottom-right-radius: 0.9rem;
+                color: white;
+                background-color: $raspberry;
+            
+                }
+            }
+            
         }
     }
 }
