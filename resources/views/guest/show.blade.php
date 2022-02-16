@@ -2,7 +2,7 @@
 @section ('content')
 <div class="container_img w-100 px-3 d-flex flex-wrap">
     <div class="col-12 col-md-6 h-100 p-2">
-        <img src="{{$apartment->thumbnail}}" class="w-100 h-100" alt="">
+        <img src="{{asset('storage/' . $apartment->thumbnail)}}" class="w-100 h-100" alt="">
     </div>
     <div class="col-12 col-md-6 h-100 p-2">
         <img src="{{asset('img/house 2.jpg')}}" class="w-100 h-100" alt="">
