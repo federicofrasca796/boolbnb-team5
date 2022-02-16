@@ -27,10 +27,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        $apartments = Apartment::all();
 
-        return view('guest.show', compact('apartments'));
+        return view('guest.show', compact('apartment'));
     }
-
-
 }

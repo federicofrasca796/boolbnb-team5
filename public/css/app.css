@@ -11246,7 +11246,6 @@ textarea.form-control-lg {
 header {
   height: 75px;
   background-color: transparent;
-  position: fixed !important;
   z-index: 99;
 }
 header button {
@@ -11327,4 +11326,43 @@ header .form-group input::-webkit-input-placeholder {
 #jumbo .search-destination .input-group input {
   background-color: white;
   border: none;
+}
+
+.sponsor_title {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.container-apartments {
+  width: 85%;
+}
+.container-apartments .card {
+  border-radius: 2rem !important;
+  font-family: "Josefin Sans", sans-serif;
+}
+.container-apartments .card a {
+  text-decoration: none;
+  color: black;
+}
+.container-apartments .card a:visited {
+  color: black;
+}
+
+.container_img {
+  height: 60vh;
+}
+
+.container_home, .container_details {
+  width: 85%;
+}
+.container_home h1, .container_home .h1, .container_home h4, .container_home .h4, .container_details h1, .container_details .h1, .container_details h4, .container_details .h4 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.container_home p, .container_details p {
+  font-family: "Urbanist", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
