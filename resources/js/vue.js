@@ -1,5 +1,28 @@
 window.Vue = require('vue');
 
+//Vue router import
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+//Define vue components
+const advancedSearch = Vue.component('search', require('./pages/Search.vue').default);
+const App = Vue.component('App', require('./App.vue').default);
+
+//Define routes for components
+const routes = [
+    {
+        path: '/search',
+        name: 'search',
+        component: advancedSearch
+    }
+]
+
+//Initialize router
+const router = new VueRouter({
+    mode: 'history',
+    routes,
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -11,10 +34,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('search', require('./pages/Search.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-import search from './pages/Search.vue';
+// import search from './pages/Search.vue';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -23,8 +45,9 @@ import search from './pages/Search.vue';
 
 const app = new Vue({
     el: '#app',
-    components:
+    routes,
+    /* components:
     {
         search
-    }
+    } */
 });

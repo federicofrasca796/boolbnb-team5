@@ -1,12 +1,10 @@
 <template>
   <div>
-    <h1>I AM SEARCHBAR!</h1>
+    I AM APP
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {};
 </script>
-
-<style>
-</style>

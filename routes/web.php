@@ -21,10 +21,13 @@ Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.s
 
 Auth::routes();
 
-Route::get('login' , 'Middleware\LoginController@login')->name('login');
+Route::get('login', 'Middleware\LoginController@login')->name('login');
 
-route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
+route::get('requireLogin', 'Middleware\LoginController@login')->name('requireLogin');
 
+Route::get('search', function () {
+    return view('guest.vue');
+})->name('search');
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 

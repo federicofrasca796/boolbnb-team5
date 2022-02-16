@@ -43,7 +43,6 @@
     <div id="app">
         @include ('partials.header')
         <main>
-            <search></search>
             @yield('content')
         </main>
     </div>
