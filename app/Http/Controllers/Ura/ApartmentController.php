@@ -113,7 +113,6 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        ddd(Auth::id() === $apartment->user_id);
         if (Auth::id() === $apartment->user_id) {
             $validator = $request->validate([
                 'title' => 'required|max:150',
