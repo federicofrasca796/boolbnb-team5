@@ -58,7 +58,7 @@ class ApartmentController extends Controller
             'square_metres' => 'required|numeric|min:1',
             'is_aviable' => 'boolean',
             /*'sponsor_id' => 'required|numeric|exists:sponsors,id, */
-            'services' => 'required|exists:services,id'
+            'services' => 'required|exists:services,id',
         ]);
 
         if ($request->file('thumbnail')) {
@@ -117,7 +117,7 @@ class ApartmentController extends Controller
         if (Auth::id() === $apartment->user_id) {
             $validator = $request->validate([
                 'title' => 'required|max:150',
-                'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
+                'thumbnail' => 'nullable|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
                 'address' => 'required',
                 'latitude' => 'required|numeric',
                 'longitude' => 'required|numeric',
@@ -126,7 +126,7 @@ class ApartmentController extends Controller
                 'number_of_baths' => 'required|numeric|max:120|min:1',
                 'square_metres' => 'required|numeric|min:1',
                 'is_aviable' => 'boolean|required',
-                'services' => 'required|exists:services,id'
+                'services' => 'required|exists:services,id',
                 /* 'sponsor_id' => 'required|numeric|exists:sponsors,id, */
             ]);
 
