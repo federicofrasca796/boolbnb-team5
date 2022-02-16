@@ -144,22 +144,15 @@
                     {{-- Availability input --}}
                     <div class="mb-3">
                         <label class="d-block">Instantly available*</label>
-                        <div class="form-check form-check-inline">
-                            <span class="mr-3">
-                                <input required class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes" value="1" checked>
-                                <label class="form-check-label" for="is_aviable_yes">Yes</label>
-                            </span>
-
-                            <span class="mr-3">
-                                <input required class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no" value="0">
-                                <label class="form-check-label" for="is_aviable_no">No</label>
-                            </span>
+                        <div class="form-check">
+                            <label class="form-check-label" for="is_aviable">Nascondi</label>
+                            <input class="form-check-input" type="checkbox" name="is_aviable" id="is_aviable" value="0">
                         </div>
                         @error('is_aviable')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    
 
                     {{-- Services input --}}
                     <div class="mb-3">
