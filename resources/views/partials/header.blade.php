@@ -4,7 +4,7 @@
     <ul class="navbar-nav position-absolute end-0 d-flex flex-row me-4">
         <!-- Authentication Links -->
         @guest
-        <button class="nav-item-login rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#modal_aside_left_login">
+        <button class="nav-item-login rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#modal_aside_left_login" id="loginButton">
             <a class="nav-link text-dark" {{--href="{{ route('login') }}"--}}><i class="fa-solid fa-user"></i></a>
         </button>
 
@@ -85,84 +85,8 @@
 
         @if (Route::has('register'))
         <button class="nav-item-register rounded-pill" data-bs-toggle="modal" data-bs-target="#modal_aside_left_register">
-            <a class="nav-link text-dark">{{ __('Register') }}</a>
+            <a class="nav-link text-dark" href="{{route('register')}}">{{ __('Register') }}</a>
         </button>
-
-
-        <div class="modal fade fixed-left" id="modal_aside_left_register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-aside">
-                <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-between px-4 py-3">
-                        <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h5 class="modal-title" id="exampleModalLabel">Join BoolBnb</h5>
-                    </div>
-                    <div class="modal-body p-5 mt">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-
-                            <div class="form-group">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                                <div>
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Type your name and surname" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                <div>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Type your email address" value="{{ old('email') }}" required autocomplete="email">
-
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                <div>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="********" name="password" required autocomplete="new-password">
-
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                                <div>
-                                    <input id="password-confirm" type="password" placeholder="********" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-
-
-
-                            <button type="submit" class="btn btn-primary w-100 mt-4 px-3 py-2">
-                                {{ __('Register') }}
-                            </button>
-
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         @endif
         @else
@@ -191,3 +115,20 @@
 
 
 </header>
+
+@error('email')
+<script>
+    window.onload = ()=>{
+        let login = document.getElementById('loginButton');
+        login.click();
+    }
+</script>
+@enderror
+@error('password')
+<script>
+    window.onload = ()=>{
+        let login = document.getElementById('loginButton');
+        login.click();
+    }
+</script>
+@enderror
