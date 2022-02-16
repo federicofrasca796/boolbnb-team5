@@ -21,6 +21,10 @@ Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.s
 
 Auth::routes();
 
+Route::get('login' , 'Middleware\LoginController@login')->name('login');
+
+route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
+
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 

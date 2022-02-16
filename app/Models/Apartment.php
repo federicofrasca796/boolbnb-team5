@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\User;
 use App\Models\Message;
 use App\Models\View;
@@ -26,7 +27,8 @@ class Apartment extends Model
         'is_aviable',
         'user_id',
         'sponsor_id',
-        'slug'
+        'slug',
+        'service_id[]'
     ];
 
 
