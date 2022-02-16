@@ -1,0 +1,12 @@
+.container_img {
+    height: 60vh;
+}
+.container_home,.container_details {
+    width: 85%;
+    h1,h4 {
+        font-family: $font-family-primary;
+    }
+    p {
+        font-family: $font-family-secondary;
+    }
+}
