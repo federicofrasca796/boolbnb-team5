@@ -56,9 +56,9 @@ class ApartmentController extends Controller
             'number_of_beds' => 'required|numeric|max:120|min:1',
             'number_of_baths' => 'required|numeric|max:120|min:1',
             'square_metres' => 'required|numeric|min:1',
-            'is_aviable' => 'boolean|required',
+            'is_aviable' => 'boolean',
             /*'sponsor_id' => 'required|numeric|exists:sponsors,id, */
-            'service_id' => 'required|exists:services,id'
+            'services' => 'required|exists:services,id'
         ]);
 
         if ($request->file('thumbnail')) {
@@ -72,7 +72,8 @@ class ApartmentController extends Controller
 
         // ddd($request, $validator);
         $new_apartment = Apartment::create($validator);
-        $new_apartment->services()->attach($validator['service_id']);
+        $new_apartment->services()->attach($validator['services']);
+        //ddd($new_apartment);
         return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$request->title' created succesfully"));
     }
 
