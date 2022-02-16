@@ -37,13 +37,29 @@
                             </h4>
                             <p class="card-text">{{ $apartment->address }}</p>
                             <p class="card-text">
-                                <small class="text-muted">Created on {{ $apartment->created_at }}</small>
+                                <small class="text-muted">
+                                    Services:
+                                    @forelse($apartment->services as $service)
+                                        {{ $service->name }}
+                                        @if (!$loop->last)
+                                            ,
+                                        @endif
+
+                                    @empty
+                                        None
+                                    @endforelse
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Created on
+                                    {{ $apartment->created_at }}</small>
                             </p>
                             <div class="d-flex">
                                 <a href="{{ route('ura.apartments.show', $apartment->slug) }}" class="btn btn-light mx-1">
                                     <i class="fa fa-eye text-primary"></i>
                                 </a>
-                                <a href="{{ route('ura.apartments.edit', $apartment->slug) }}" class="btn btn-light mx-1">
+                                <a href="{{ route('ura.apartments.edit', $apartment->slug) }}"
+                                    class="btn btn-light mx-1">
                                     <i class="fas fa-user-edit text-secondary"></i>
                                 </a>
                                 <button type="button" class="btn btn-light mx-1" data-bs-toggle="modal"
