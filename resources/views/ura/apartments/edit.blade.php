@@ -20,17 +20,25 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-
-                    <div class="mb-3">
-                        <label for="thumbnail" class="form-label">Thumbnail*</label>
-                        <input required type="file" name="thumbnail" id="thumbnail"
-                            class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Add image here"
-                            accept="jpeg,jpg,png,gif,bmp,svg,webp">
-                        <small id="thumbnailHelper" class="text-muted">Add your apartment image, max 1024kB. Accept
-                            jpeg,jpg,png,gif,bmp,svg,webp</small>
-                        @error('thumbnail')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                    <div class="row align-items-center">
+                        <div class="col-2 pe-0">
+                            <img width="100%" src="{{ asset('storage/' . $apartment->thumbnail) }}"
+                                alt="{{ $apartment->title }}">
+                        </div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Thumbnail*</label>
+                                <input type="file" name="thumbnail" id="thumbnail"
+                                    class="form-control @error('thumbnail') is-invalid @enderror"
+                                    placeholder="Add image here" accept="jpeg,jpg,png,gif,bmp,svg,webp">
+                                <small id="thumbnailHelper" class="text-muted">Update your apartment image, max 1024kB.
+                                    Accept
+                                    jpeg,jpg,png,gif,bmp,svg,webp</small>
+                                @error('thumbnail')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
 
                     {{-- Title input --}}
@@ -197,6 +205,8 @@
                     {{-- Submit form --}}
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-outline-primary btn-lg my-5">Update</button>
+                        <a class="btn btn-outline-secondary btn-lg my-5 ms-2"
+                            href="{{ route('ura.apartments.index') }}">Back</a>
                     </div>
                 </form>
             </div>
