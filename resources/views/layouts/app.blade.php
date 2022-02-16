@@ -44,6 +44,7 @@
         @include ('partials.header')
         <main>
             @yield('content')
+            <router-link to="/searchadv"> Search</router-link>
         </main>
     </div>
 

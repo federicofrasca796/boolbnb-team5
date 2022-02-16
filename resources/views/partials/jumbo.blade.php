@@ -7,8 +7,6 @@
                 <input type="text" class="form-control" placeholder="Find your destination">
                 <div class="h-100 bg-white p-2">
                     <a class="h-100 px-5 border-0 bg-danger" type="submit">SEARCH</a>
-                    {{-- <router-link to="/search">SEARCH</router-link> --}}
-                    <router-view></router-view>
                 </div>
 
             </div>

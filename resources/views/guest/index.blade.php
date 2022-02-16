@@ -18,7 +18,6 @@
                     <h5 class="card-title">{{$apartment->title}}</h5>
                 </div>
             </a>
-
         </div>
     </div>
 

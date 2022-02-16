@@ -1,10 +1,13 @@
 <template>
-  <div>
-    I AM APP
-    <router-view></router-view>
-  </div>
+    <div class="pb-4">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-export default {};
+export default {
+}
 </script>
+
+<style>
+</style>

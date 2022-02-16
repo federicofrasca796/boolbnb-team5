@@ -11370,3 +11370,7 @@ header .form-group input::-webkit-input-placeholder {
 .register-container {
   padding-top: calc(75px + 2rem);
 }
+
+main {
+  padding-top: 75px;
+}

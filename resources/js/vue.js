@@ -1,27 +1,26 @@
 window.Vue = require('vue');
 
-//Vue router import
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
+/* SETUP VUE-Router */
+// Step 0 installa vue router
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+// step 1 define route pages components
+const Search = Vue.component('Search', require('./pages/Search.vue').default);
 
-//Define vue components
-const advancedSearch = Vue.component('search', require('./pages/Search.vue').default);
-const App = Vue.component('App', require('./App.vue').default);
-
-//Define routes for components
+// Step 2 define vue router routes
 const routes = [
     {
-        path: '/search',
-        name: 'search',
-        component: advancedSearch
-    }
+        path: '/searchadv',
+        name: 'Search',
+        component: Search,
+    },
 ]
 
-//Initialize router
+// Step 3 Create vue router instance
 const router = new VueRouter({
     mode: 'history',
-    routes,
-});
+    routes // short for `routes: routes`
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,10 +32,11 @@ const router = new VueRouter({
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.component('App', require('./App.vue').default);
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-// import search from './pages/Search.vue';
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -44,10 +44,6 @@ const router = new VueRouter({
  */
 
 const app = new Vue({
+    router,
     el: '#app',
-    routes,
-    /* components:
-    {
-        search
-    } */
 });
