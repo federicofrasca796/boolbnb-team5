@@ -110,6 +110,8 @@
         @endforelse
 
         {{-- Pagination --}}
-        {{-- {{ $collection->links() }} --}}
+        <div id="paginate" class="mt-5 d-flex justify-content-center">
+            {{ $apartments->links() }}
+        </div>
     </div>
 @endsection

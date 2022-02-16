@@ -20,7 +20,7 @@ class ApartmentController extends Controller
     public function index()
     {
         //$apartments = Apartment::where('user_id', Auth::user()->id);
-        $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(9);
+        $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(4);
 
         //$apartments = Apartment::all();
         return view('ura.apartments.index', compact('apartments'));
