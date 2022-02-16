@@ -13,7 +13,7 @@
         <div class="card overflow-hidden">
             <a href="{{route('guest.show', $apartment->slug)}}">
 
-                <img src="{{$apartment->thumbnail}}" class="w-100 " alt="...">
+                <img src="{{asset('storage/' . $apartment->thumbnail)}}" class="w-100 " alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{$apartment->title}}</h5>
                 </div>
