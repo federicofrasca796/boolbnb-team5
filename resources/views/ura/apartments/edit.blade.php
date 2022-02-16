@@ -150,23 +150,16 @@
                     <div class="mb-3">
                         <label class="d-block">Instantly available*</label>
                         <div class="form-check form-check-inline">
-                            <span class="mr-3">
-
-                                <label class="form-check-label" for="is_aviable_yes">
-                                    <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes"
-                                        value="1" required checked>
-                                    Yes
-                                </label>
-                            </span>
-
-                            <span class="mr-3">
-
-                                <label class="form-check-label" for="is_aviable_no">
-                                    <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no"
-                                        value="0" required>
-                                    No
-                                </label>
-                            </span>
+                            <label class="form-check-label" for="is_aviable_yes">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes" value="1"
+                                    required checked>
+                                Yes
+                            </label>
+                            <label class="form-check-label ps-4" for="is_aviable_no">
+                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no" value="0"
+                                    required>
+                                No
+                            </label>
                         </div>
                         @error('is_aviable')
                             <div class="alert alert-danger">{{ $message }}</div>
