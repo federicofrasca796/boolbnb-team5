@@ -125,6 +125,7 @@ class ApartmentController extends Controller
                 'number_of_baths' => 'required|numeric|max:120|min:1',
                 'square_metres' => 'required|numeric|min:1',
                 'is_aviable' => 'boolean|required',
+                'services' => 'required|exists:services,id'
                 /* 'sponsor_id' => 'required|numeric|exists:sponsors,id, */
             ]);
 
@@ -137,6 +138,7 @@ class ApartmentController extends Controller
             }
 
             $validator['slug'] = Str::slug($request->title);
+            $apartment->services()->sync($validator['services']);
 
             $apartment->update($validator);
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
