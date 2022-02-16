@@ -47,8 +47,8 @@
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg-rgb: 248, 250, 252;
-  --bs-font-sans-serif: "Nunito", sans-serif;
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -56,7 +56,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.6;
   --bs-body-color: #212529;
-  --bs-body-bg: #f8fafc;
+  --bs-body-bg: #ffff;
 }
 
 *,
@@ -596,7 +596,7 @@ progress {
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #f8fafc;
+  background-color: #ffff;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -2184,7 +2184,7 @@ progress {
   font-weight: 400;
   line-height: 1.6;
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #ffff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   -webkit-appearance: none;
@@ -2206,7 +2206,7 @@ progress {
 }
 .form-control:focus {
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #ffff;
   border-color: #9ac8ee;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
@@ -2369,7 +2369,7 @@ textarea.form-control-lg {
   font-weight: 400;
   line-height: 1.6;
   color: #212529;
-  background-color: #f8fafc;
+  background-color: #ffff;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
@@ -2435,7 +2435,7 @@ textarea.form-control-lg {
   height: 1em;
   margin-top: 0.3em;
   vertical-align: top;
-  background-color: #f8fafc;
+  background-color: #ffff;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -2537,10 +2537,10 @@ textarea.form-control-lg {
   outline: 0;
 }
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #f8fafc, 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #ffff, 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
 }
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #f8fafc, 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #ffff, 0 0 0 0.25rem rgba(52, 144, 220, 0.25);
 }
 .form-range::-moz-focus-outer {
   border: 0;
@@ -3938,8 +3938,8 @@ textarea.form-control-lg {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
-  background-color: #f8fafc;
-  border-color: #dee2e6 #dee2e6 #f8fafc;
+  background-color: #ffff;
+  border-color: #dee2e6 #dee2e6 #ffff;
 }
 .nav-tabs .dropdown-menu {
   margin-top: -1px;
@@ -4544,10 +4544,6 @@ textarea.form-control-lg {
   margin-left: -0.5rem;
   border-bottom: 0;
 }
-.card-header-tabs .nav-link.active {
-  background-color: #fff;
-  border-bottom-color: #fff;
-}
 
 .card-header-pills {
   margin-right: -0.5rem;
@@ -4633,7 +4629,7 @@ textarea.form-control-lg {
   font-size: 0.9rem;
   color: #212529;
   text-align: left;
-  background-color: #f8fafc;
+  background-color: #ffff;
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -4684,7 +4680,7 @@ textarea.form-control-lg {
 }
 
 .accordion-item {
-  background-color: #f8fafc;
+  background-color: #ffff;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 .accordion-item:first-of-type {
@@ -11246,4 +11242,131 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+header {
+  height: 75px;
+  background-color: transparent;
+  z-index: 99;
+}
+header button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-family: "Josefin Sans", sans-serif;
+}
+header button.nav-item-login {
+  width: 40px;
+  height: 40px;
+}
+header button.nav-item-register {
+  padding: 0px 16px;
+}
+header button a:visited {
+  color: black;
+}
+header button:hover {
+  background: white;
+}
+header #navbarDropdown:first-of-type {
+  color: white !important;
+}
+header .modal .modal-dialog-aside {
+  width: 483px;
+  max-width: 80%;
+  height: 100%;
+  margin: 0;
+  transform: translate(0);
+  transition: transform 0.2s;
+}
+header .modal .modal-dialog-aside .modal-content {
+  height: inherit;
+  border: 0;
+  border-radius: 0;
+}
+header .modal .modal-dialog-aside .modal-content .modal-body {
+  overflow-y: auto;
+}
+header .modal.fixed-left .modal-dialog-aside {
+  margin-left: auto;
+  transform: translateX(100%);
+}
+header .modal.show .modal-dialog-aside {
+  transform: translateX(0);
+}
+header .form-group input::-webkit-input-placeholder {
+  color: lightgrey;
+}
+
+.modal-backdrop {
+  z-index: 10;
+}
+
+#jumbo {
+  height: 75vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+#jumbo > img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+  filter: brightness(0.7);
+}
+#jumbo .search-destination .input-group {
+  height: 70px;
+}
+#jumbo .search-destination .input-group #basic-addon1 {
+  background-color: white;
+  border: none;
+}
+#jumbo .search-destination .input-group input {
+  background-color: white;
+  border: none;
+}
+
+.sponsor_title {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.container-apartments {
+  width: 85%;
+}
+.container-apartments .card {
+  border-radius: 2rem !important;
+  font-family: "Josefin Sans", sans-serif;
+}
+.container-apartments .card a {
+  text-decoration: none;
+  color: black;
+}
+.container-apartments .card a:visited {
+  color: black;
+}
+
+.container_img {
+  height: 60vh;
+}
+
+.container_home, .container_details {
+  width: 85%;
+}
+.container_home h1, .container_home .h1, .container_home h4, .container_home .h4, .container_details h1, .container_details .h1, .container_details h4, .container_details .h4 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.container_home p, .container_details p {
+  font-family: "Urbanist", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.register-container {
+  padding-top: calc(75px + 2rem);
 }

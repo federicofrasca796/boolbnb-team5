@@ -1,0 +1,30 @@
+#jumbo {
+    height: 75vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    &>img{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        filter: brightness(0.7);
+    }
+
+    .search-destination {
+        .input-group {
+            height: 70px;
+            #basic-addon1 {
+                background-color: white;
+                border: none;
+            }
+            input {
+                background-color: white;
+                border: none;
+            }
+        }
+    }
+}

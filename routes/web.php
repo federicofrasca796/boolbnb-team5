@@ -12,12 +12,37 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::get('/', function () {
-    return view('guest.welcome');
-});
+
+//rotte lato guest
+Route::get('/', 'ApartmentController@index')->name('guest.index');
+Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('login' , 'Middleware\LoginController@login')->name('login');
+
+route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
+
+
+Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
+
+
+    Route::get('dashboard', function () {
+        return view('ura.dashboard');
+    })->name('dashboard');
+
+
+
+    Route::resource('apartments', 'ApartmentController')->scoped([
+        'apartments' => 'slug',
+    ]);
+
+
+
+    /* Routes index and show messages */
+    Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
+        'messages' => 'slug',
+    ]);
+});

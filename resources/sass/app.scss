@@ -1,8 +1,19 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import 'guest.header';
+@import 'guest.jumbo';
+@import 'guest.index';
+@import 'guest.show';
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.register-container {
+    padding-top: calc(75px + 2rem);
+}
