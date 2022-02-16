@@ -17,8 +17,8 @@ class CreateApartmentServiceTable extends Migration
             $table->id();
             $table->unsignedBigInteger('apartment_id')->nullable();
             $table->unsignedBigInteger('service_id')->nullable();
-            $table->foreign('apartment_id')->references('id')->on('services')->cascadeOnDelete();
-            $table->foreign('service_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->cascadeOnDelete();
+            $table->foreign('service_id')->references('id')->on('services')->cascadeOnDelete();
             $table->timestamps();
         });
     }

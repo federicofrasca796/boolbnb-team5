@@ -157,7 +157,7 @@
                     {{-- Services input --}}
                     <div class="mb-3">
                           <label class="form-label">Services*</label>
-                          <select multiple class="form-select @error('services') is_invalid @enderror" name="services[]" id="services" required>
+                          <select multiple class="form-select @error('services') is_invalid @enderror" name="services[]" id="service_id" required>
                             <option disabled>Select all services</option>
                             @foreach ($services as $item)
                                <option value="{{ $item->id }}">{{ $item->name }}</option>  
