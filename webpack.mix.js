@@ -12,8 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-.js('resources/js/create-apartment-search.js', 'public/js')
-.js('resources/js/edit-apartment-search.js', 'public/js')
+    .js('resources/js/vue.js', 'public/js')
+    .js('resources/js/create-apartment-search.js', 'public/js')
+    .js('resources/js/edit-apartment-search.js', 'public/js')
     .options({
         processCssUrls: false
     })

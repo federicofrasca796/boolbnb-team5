@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -120,14 +120,14 @@ function setSearchValue(value) {
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!*****************************************************!*\
   !*** multi ./resources/js/edit-apartment-search.js ***!
   \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/edit-apartment-search.js */"./resources/js/edit-apartment-search.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\edit-apartment-search.js */"./resources/js/edit-apartment-search.js");
 
 
 /***/ })

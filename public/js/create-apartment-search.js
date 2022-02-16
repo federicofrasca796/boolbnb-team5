@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -117,14 +117,14 @@ ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!*******************************************************!*\
   !*** multi ./resources/js/create-apartment-search.js ***!
   \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/create-apartment-search.js */"./resources/js/create-apartment-search.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\create-apartment-search.js */"./resources/js/create-apartment-search.js");
 
 
 /***/ })
