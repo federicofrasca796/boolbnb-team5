@@ -115,3 +115,20 @@
 
 
 </header>
+
+@error('email')
+<script>
+    window.onload = ()=>{
+        let login = document.getElementById('loginButton');
+        login.click();
+    }
+</script>
+@enderror
+@error('password')
+<script>
+    window.onload = ()=>{
+        let login = document.getElementById('loginButton');
+        login.click();
+    }
+</script>
+@enderror

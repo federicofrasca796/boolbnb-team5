@@ -23,11 +23,10 @@
 <script>
     var value = {{$requireLogin}};
     if(value == 1){
-        window.onload = ()=>{
-        let login = document.getElementById('loginButton');
-    login.click();
-    console.log('we we')
-    }
+            window.onload = ()=>{
+            let login = document.getElementById('loginButton');
+        login.click();
+        }
     }
 </script>
 @endif
