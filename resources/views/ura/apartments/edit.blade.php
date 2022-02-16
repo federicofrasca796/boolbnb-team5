@@ -186,7 +186,9 @@
                         <select multiple class="form-select" name="services[]" id="services" required>
                             <option disabled>Select all services</option>
                             @foreach ($services as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}"
+                                    {{ $apartment->services->contains($item) ? 'selected' : '' }}>{{ $item->name }}
+                                </option>
                             @endforeach
 
                         </select>
