@@ -8,6 +8,11 @@
 
     export default { 
       	name: 'Map', 
+		data(){
+			return{
+				apartments: null,
+			}
+		},
       	mounted() {      
 			const tt = window.tt; 
 			var map = tt.map({ 
@@ -167,6 +172,12 @@
 				console.log(data.data.result.position);
 			});
       	}  
+		
+		axios.get('api/apartments').then(
+			(response) => {
+				console.log(response);
+			}
+		)
 		
     } 
 </script>
