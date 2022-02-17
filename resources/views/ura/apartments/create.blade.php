@@ -182,8 +182,41 @@
         </script>
         <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js">
         </script>
-
         <!-- Main Script -->
-        <script src="{{ asset('js/create-apartment-search.js') }}"></script>
+        {{-- <script src="{{ asset('js/create-apartment-search.js') }}"></script> --}}
+        <script>
+            var options = {
+                searchOptions: {
+                    key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+                    language: 'it-IT',
+                    limit: 5
+                }
+            };
+            var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+            var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+            document.getElementById('address').append(searchBoxHTML);
+            document.querySelector('.tt-search-box-input').name = 'address';
+            document.querySelector('.tt-search-box-input').id = 'address';
+            document.querySelector('.tt-search-box-input').placeholder = 'Search your address';
+            document.querySelector('.tt-search-box-input').autocomplete = 'off';
+
+
+
+
+
+            /* Results Log */
+            ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
+                console.log(data.data.result.position);
+                document.getElementById('latitude').value = data.data.result.position.lat;
+                document.getElementById('longitude').value = data.data.result.position.lng;
+            });
+            var value = {!! json_encode(old('address')) !!}
+
+            if (value != null) {
+                var value = {!! json_encode(old('address')) !!}.toString()
+                ttSearchBox.setValue(value)
+            }
+            
+        </script>
     </div>
 @endsection
