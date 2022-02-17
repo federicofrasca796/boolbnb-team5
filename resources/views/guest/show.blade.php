@@ -68,19 +68,19 @@
             @elseif($service->name=='Air Conditioning')
             <img src="{{asset('img/air-conditioner.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Gym')
-            <img src="{{asset('img/wights.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
+            <img src="{{asset('img/weights.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='EV charger')
             <img src="{{asset('img/charging-station.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Smoke alarm')
             <img src="{{asset('img/smoke-detector.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Fireplace')
-            <img src="{{asset('img/firplace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
+            <img src="{{asset('img/fireplace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Dryer')
             <img src="{{asset('img/hair-dryer.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Washer')
             <img src="{{asset('img/washer.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @elseif($service->name=='Dedicated workspace')
-            <img src="{{asset('img/wrokspace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
+            <img src="{{asset('img/workspace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
             @endif
             @endforeach
 
