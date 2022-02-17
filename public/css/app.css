@@ -11378,15 +11378,31 @@ header .form-group input::-webkit-input-placeholder {
   font-family: "Urbanist", sans-serif;
 }
 
+.container-extra-service {
+  width: 85%;
+}
+.container-extra-service h1, .container-extra-service .h1, .container-extra-service h4, .container-extra-service .h4, .container-extra-service h3, .container-extra-service .h3 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.container-extra-service p {
+  font-family: "Urbanist", sans-serif;
+}
+
+@media only screen and (max-width: 575px) {
+  .container-extra-service {
+    width: 92%;
+    margin: auto;
+  }
+}
 .container_details img {
   width: 70px;
 }
 
 .container-extra-service img {
-  width: 40px;
+  width: 30px;
 }
 .container-extra-service span {
-  line-height: 40px;
+  line-height: 30px;
 }
 
 .map {
