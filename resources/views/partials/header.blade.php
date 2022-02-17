@@ -1,5 +1,5 @@
 <header class="{{ Route::currentRouteName() === 'guest.show' ? '' : 'position-fixed'}}  w-100 d-flex justify-content-start justify-content-sm-center py-3 px-4">
-    <img class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
+    <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
     <h1 class="ms-3 {{ Route::currentRouteName() === 'guest.show' ? 'text-black' : 'text-white'}}">BoolBnB</h1>
     <ul class="navbar-nav position-absolute end-0 d-flex flex-row me-4">
         <!-- Authentication Links -->

@@ -49,45 +49,73 @@
         </div>
 
     </div>
-    <div class=" col-12 col-md-8 container-extra-service mb-5">
-        <h3 class="text-center text-md-start mt-4">Extra services</h3>
-        <div>
-            @foreach ($apartment->services as $service)
-            @if($service->name=='WiFi')
-            <img src="{{asset('img/wifi.png')}}" alt=""><span class="ms-2 me-5">{{$service->name}}</span>
-            @elseif($service->name=='Kitchen')
-            <img src="{{asset('img/kitchen-utensils.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Self check-in')
-            <img src="{{asset('img/room-key.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Pool')
-            <img src="{{asset('img/swimming-pool.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Hot tub')
-            <img src="{{asset('img/bath.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='free parking')
-            <img src="{{asset('img/free-parking.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Air Conditioning')
-            <img src="{{asset('img/air-conditioner.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Gym')
-            <img src="{{asset('img/weights.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='EV charger')
-            <img src="{{asset('img/charging-station.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Smoke alarm')
-            <img src="{{asset('img/smoke-detector.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Fireplace')
-            <img src="{{asset('img/fireplace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Dryer')
-            <img src="{{asset('img/hair-dryer.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Washer')
-            <img src="{{asset('img/washer.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @elseif($service->name=='Dedicated workspace')
-            <img src="{{asset('img/workspace.png')}}" alt=""><span class="ms-2">{{$service->name}}</span>
-            @endif
-            @endforeach
-
+</div>
+<div class=" container-extra-service mb-5 m-auto">
+    <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
+    <div class="col-12 col-md-8 d-flex flex-wrap ">
+        @foreach ($apartment->services as $service)
+        @if($service->name=='WiFi')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/wifi.png')}}" alt=""><span class="ms-2 me-3 mb-3">{{$service->name}}</span>
         </div>
-
+        @elseif($service->name=='Kitchen')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/kitchen-utensils.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Self check-in')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/room-key.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Pool')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/swimming-pool.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Hot tub')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/bath.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='free parking')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/free-parking.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Air Conditioning')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/air-conditioner.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Gym')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/weights.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='EV charger')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/charging-station.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Smoke alarm')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/smoke-detector.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Fireplace')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/fireplace.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Dryer')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/hair-dryer.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Washer')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/washer.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Dedicated workspace')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/workspace.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @endif
+        @endforeach
 
     </div>
+
+
 </div>
 <div class="map">
     <img class="w-100" src="{{asset('img/map.png')}}" alt="">
