@@ -47,7 +47,7 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
         $validator = $request->validate([
-            'title' => 'required|max:150',
+            'title' => 'required|max:150|unique:apartments,title',
             'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
             'address' => 'required',
             'latitude' => 'required|numeric',
@@ -163,6 +163,17 @@ class ApartmentController extends Controller
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' deleted succesfully"));
         } else {
             abort(403);
+        }
+    }
+    public function makeVisible(Apartment $apartment, Request $request)
+    {
+        if (Auth::id() === $apartment->user_id) {
+            $validator = $request->validate(
+                ['is_aviable' => 'required']
+            );
+            $apartment->update($validator);
+            return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
+
         }
     }
 }

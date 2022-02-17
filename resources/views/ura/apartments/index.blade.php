@@ -95,8 +95,35 @@
                                 </div>
 
                                 @if ($apartment->is_aviable === 0 )
-                                    <div class=" btn btn-light mx-1 text-muted">
-                                        <i class="fas fa-low-vision"></i>
+
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class=" btn btn-light mx-1 text-muted" data-bs-toggle="modal" data-bs-target="#serviceModal">
+                                      <i class="fas fa-low-vision"></i>
+                                    </button>
+                                    
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title w-75">You're trying to make the apartment visible: "{{ $apartment->slug }}"</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                   Do you want to make this apartment visible?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <form action="{{ route('ura.apartments.makeVisibile', $apartment->slug) }}" method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                            <input type="text" name="is_aviable" id="is_aviable" value="{{ old('is_aviable') }}">
+                                                        <button type="submit" class="btn btn-primary" >Make it visbile</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
 
