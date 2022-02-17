@@ -96,10 +96,8 @@
 
                                 @if ($apartment->is_aviable === 0 )
                                     <div class=" btn btn-light mx-1 text-muted">
-                                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                        <i class="fas fa-low-vision"></i>
                                     </div>
-                                @else
-                                    Visibile
                                 @endif
 
                             </div>
