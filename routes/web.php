@@ -25,9 +25,9 @@ Route::get('login', 'Middleware\LoginController@login')->name('login');
 
 route::get('requireLogin', 'Middleware\LoginController@login')->name('requireLogin');
 
-Route::get('search', function () {
-    return view('guest.vue');
-})->name('search');
+// Route::get('search', function () {
+//     return view('guest.vue');
+// })->name('search');
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 
@@ -49,3 +49,7 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
         'messages' => 'slug',
     ]);
 });
+
+Route::get('/{any}', function () {
+    return view('guest.vue');
+})->where('any', '.*');
