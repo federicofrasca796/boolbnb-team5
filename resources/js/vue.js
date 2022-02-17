@@ -6,9 +6,15 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 // step 1 define route pages components
 const Search = Vue.component('Search', require('./pages/Search.vue').default);
+const Home = Vue.component('Home', require('./pages/Home.vue').default);
 
 // Step 2 define vue router routes
 const routes = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+    },
     {
         path: '/searchadv',
         name: 'Search',
