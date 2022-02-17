@@ -171,13 +171,39 @@
 			ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
 				console.log(data.data.result.position);
 			});
-      	}  
-		
-		axios.get('api/apartments').then(
-			(response) => {
-				console.log(response);
+			let games = '';
+			axios.get('api/apartments').then(
+				(response) => {
+					this.games = response.data; 
+					console.log(this.games.length);
+					games = response.data;
+					initializeCreate()
+				},
+			)
+			
+			function initializeCreate(){
+				for(let i = 0; i<games.length; i++){
+					createMarker(games[i])
+				}
 			}
-		)
+
+			function createMarker(object){   
+				console.log(object);
+				/* create the popup for the marker*/
+				var popup = new tt.Popup()
+					.setHTML("<p>"+object.title+"</p>")
+				
+				/* Create the Marker */
+				var marker = new tt.Marker()
+				.setLngLat([object.longitude , object.latitude]) /* Coordinates here */
+				.setPopup(popup)
+				.addTo(map);
+			}
+      	}  ,
+		
+		methods: {
+			
+		}
 		
     } 
 </script>

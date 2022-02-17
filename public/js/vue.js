@@ -143,9 +143,222 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Search.vue?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\resources\\js\\pages\\Search.vue: Unexpected token, expected \",\" (176:2)\n\n\u001b[0m \u001b[90m 174 |\u001b[39m       \t}  \u001b[0m\n\u001b[0m \u001b[90m 175 |\u001b[39m \t\t\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 176 |\u001b[39m \t\taxios\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m'api/apartments'\u001b[39m)\u001b[33m.\u001b[39mthen(\u001b[0m\n\u001b[0m \u001b[90m     |\u001b[39m \t\t\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 177 |\u001b[39m \t\t\t(response) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 178 |\u001b[39m \t\t\t\tconsole\u001b[33m.\u001b[39mlog(response)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 179 |\u001b[39m \t\t\t}\u001b[0m\n    at Parser._raise (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:476:17)\n    at Parser.raiseWithData (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:469:17)\n    at Parser.raise (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:430:17)\n    at Parser.unexpected (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:3789:16)\n    at Parser.expect (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:3773:28)\n    at Parser.parseObjectLike (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:13086:14)\n    at Parser.parseExprAtom (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:12498:23)\n    at Parser.parseExprSubscripts (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:12149:23)\n    at Parser.parseUpdate (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:12129:21)\n    at Parser.parseMaybeUnary (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:12104:23)\n    at Parser.parseMaybeUnaryOrPrivate (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11901:61)\n    at Parser.parseExprOps (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11908:23)\n    at Parser.parseMaybeConditional (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11878:23)\n    at Parser.parseMaybeAssign (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11833:21)\n    at C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11791:39\n    at Parser.allowInAnd (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:13817:16)\n    at Parser.parseMaybeAssignAllowIn (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:11791:17)\n    at Parser.parseExportDefaultExpression (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:15465:22)\n    at Parser.parseExport (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:15353:31)\n    at Parser.parseStatementContent (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14229:27)\n    at Parser.parseStatement (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14113:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14739:25)\n    at Parser.parseBlockBody (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14730:10)\n    at Parser.parseProgram (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14032:10)\n    at Parser.parseTopLevel (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:14019:25)\n    at Parser.parse (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:15940:10)\n    at parse (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\parser\\lib\\index.js:15992:38)\n    at parser (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\core\\lib\\parser\\index.js:52:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:87:38)\n    at normalizeFile.next (<anonymous>)\n    at run (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\core\\lib\\transformation\\index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\@babel\\core\\lib\\transform.js:25:41)\n    at transform.next (<anonymous>)\n    at step (C:\\Users\\Ros\\Desktop\\boolean\\boolbnb-team5\\node_modules\\gensync\\index.js:261:32)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Map',
+  data: function data() {
+    return {
+      apartments: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var tt = window.tt;
+    var map = tt.map({
+      key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+      container: 'map',
+      center: [12.49427, 41.89056],
+      zoom: 5
+    });
+    var options = {
+      searchOptions: {
+        key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+        language: 'en-GB',
+        limit: 5
+      }
+    };
+    map.addControl(new tt.FullscreenControl());
+    map.addControl(new tt.NavigationControl());
+    /* Search Events Handler */
+
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchMarkersManager = new SearchMarkersManager(map);
+    ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
+    ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
+    ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
+    ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
+    map.addControl(ttSearchBox, 'top-left');
+    /* Search Event Functions */
+
+    function handleResultsFound(event) {
+      var results = event.data.results.fuzzySearch.results;
+
+      if (results.length === 0) {
+        searchMarkersManager.clear();
+      }
+
+      searchMarkersManager.draw(results);
+      fitToViewport(results);
+    }
+
+    function handleResultSelection(event) {
+      var result = event.data.result;
+
+      if (result.type === 'category' || result.type === 'brand') {
+        return;
+      }
+
+      searchMarkersManager.draw([result]);
+      fitToViewport(result);
+    }
+
+    function fitToViewport(markerData) {
+      if (!markerData || markerData instanceof Array && !markerData.length) {
+        return;
+      }
+
+      var bounds = new tt.LngLatBounds();
+
+      if (markerData instanceof Array) {
+        markerData.forEach(function (marker) {
+          bounds.extend(getBounds(marker));
+        });
+      } else {
+        bounds.extend(getBounds(markerData));
+      }
+
+      map.fitBounds(bounds, {
+        padding: 100,
+        linear: true
+      });
+    }
+
+    function getBounds(data) {
+      var btmRight;
+      var topLeft;
+
+      if (data.viewport) {
+        btmRight = [data.viewport.btmRightPoint.lng, data.viewport.btmRightPoint.lat];
+        topLeft = [data.viewport.topLeftPoint.lng, data.viewport.topLeftPoint.lat];
+      }
+
+      return [btmRight, topLeft];
+    }
+
+    function handleResultClearing() {
+      searchMarkersManager.clear();
+    }
+    /* Search Markers Engine */
+
+
+    function SearchMarkersManager(map, options) {
+      this.map = map;
+      this._options = options || {};
+      this._poiList = undefined;
+      this.markers = {};
+    }
+
+    SearchMarkersManager.prototype.draw = function (poiList) {
+      this._poiList = poiList;
+      this.clear();
+
+      this._poiList.forEach(function (poi) {
+        var markerId = poi.id;
+        var poiOpts = {
+          name: poi.poi ? poi.poi.name : undefined,
+          address: poi.address ? poi.address.freeformAddress : '',
+          distance: poi.dist,
+          classification: poi.poi ? poi.poi.classifications[0].code : undefined,
+          position: poi.position,
+          entryPoints: poi.entryPoints
+        };
+        var marker = new SearchMarker(poiOpts, this._options);
+        marker.addTo(this.map);
+        this.markers[markerId] = marker;
+      }, this);
+    };
+
+    SearchMarkersManager.prototype.clear = function () {
+      for (var markerId in this.markers) {
+        var marker = this.markers[markerId];
+        marker.remove();
+      }
+
+      this.markers = {};
+      this._lastClickedMarker = null;
+    };
+    /* Add Remove Markers From Map */
+
+
+    function SearchMarker(poiData, options) {
+      this.poiData = poiData;
+      this.options = options || {};
+      this.marker = new tt.Marker({
+        element: this.createMarker(),
+        anchor: 'bottom'
+      });
+      var lon = this.poiData.position.lng || this.poiData.position.lon;
+      this.marker.setLngLat([lon, this.poiData.position.lat]);
+    }
+
+    SearchMarker.prototype.addTo = function (map) {
+      this.marker.addTo(map);
+      this._map = map;
+      return this;
+    };
+
+    SearchMarker.prototype.createMarker = function () {
+      var elem = document.createElement('div');
+      elem.className = 'tt-icon-marker-black tt-search-marker';
+
+      if (this.options.markerClassName) {
+        elem.className += ' ' + this.options.markerClassName;
+      }
+
+      var innerElem = document.createElement('div');
+      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
+      elem.appendChild(innerElem);
+      return elem;
+    };
+
+    SearchMarker.prototype.remove = function () {
+      this.marker.remove();
+      this._map = null;
+    };
+    /* Results Log */
+
+
+    ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
+      console.log(data.data.result.position);
+    });
+    var games = '';
+    axios.get('api/apartments').then(function (response) {
+      _this.games = response.data;
+      console.log(_this.games.length);
+      games = response.data;
+      initializeCreate();
+    });
+
+    function initializeCreate() {
+      for (var i = 0; i < games.length; i++) {
+        createMarker(games[i]);
+      }
+    }
+
+    function createMarker(object) {
+      console.log(object);
+      /* create the popup for the marker*/
+
+      var popup = new tt.Popup().setHTML("<p>" + object.title + "</p>");
+      /* Create the Marker */
+
+      var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
+      /* Coordinates here */
+      .setPopup(popup).addTo(map);
+    }
+  },
+  methods: {}
+});
 
 /***/ }),
 
@@ -16842,14 +17055,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/pages/Search.vue ***!
   \***************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Search_vue_vue_type_template_id_7262a471___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Search.vue?vue&type=template&id=7262a471& */ "./resources/js/pages/Search.vue?vue&type=template&id=7262a471&");
 /* harmony import */ var _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Search.vue?vue&type=script&lang=js& */ "./resources/js/pages/Search.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Search_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Search.vue?vue&type=style&index=0&lang=css& */ "./resources/js/pages/Search.vue?vue&type=style&index=0&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _Search_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Search.vue?vue&type=style&index=0&lang=css& */ "./resources/js/pages/Search.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -16881,7 +17095,7 @@ component.options.__file = "resources/js/pages/Search.vue"
 /*!****************************************************************!*\
   !*** ./resources/js/pages/Search.vue?vue&type=script&lang=js& ***!
   \****************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
