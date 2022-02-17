@@ -331,30 +331,54 @@ __webpack_require__.r(__webpack_exports__);
     ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
       console.log(data.data.result.position);
     });
-    var games = '';
+    var apartments = '';
     axios.get('api/apartments').then(function (response) {
-      _this.games = response.data;
-      console.log(_this.games.length);
-      games = response.data;
+      _this.apartments = response.data;
+      apartments = response.data;
       initializeCreate();
+      calculateDistance();
     });
 
     function initializeCreate() {
-      for (var i = 0; i < games.length; i++) {
-        createMarker(games[i]);
+      for (var i = 0; i < apartments.length; i++) {
+        createMarker(apartments[i]);
       }
     }
 
     function createMarker(object) {
-      console.log(object);
       /* create the popup for the marker*/
-
       var popup = new tt.Popup().setHTML("<p>" + object.title + "</p>");
       /* Create the Marker */
 
       var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
       /* Coordinates here */
       .setPopup(popup).addTo(map);
+    }
+
+    function calcCrow(lat1, lon1, lat2, lon2) {
+      var R = 6371; // km
+
+      var dLat = toRad(lat2 - lat1);
+      var dLon = toRad(lon2 - lon1);
+      var lat1 = toRad(lat1);
+      var lat2 = toRad(lat2);
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      console.log(d);
+    } // Converts numeric degrees to radians
+
+
+    function toRad(Value) {
+      return Value * Math.PI / 180;
+    }
+
+    function calculateDistance() {
+      var lat1 = apartments[0]['latitude'];
+      var lon1 = apartments[0]['longitude'];
+      var lat2 = apartments[1]['latitude'];
+      var lon2 = apartments[1]['longitude'];
+      calcCrow(lat1, lon1, lat2, lon2);
     }
   },
   methods: {}

@@ -171,24 +171,23 @@
 			ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
 				console.log(data.data.result.position);
 			});
-			let games = '';
+			let apartments = '';
 			axios.get('api/apartments').then(
 				(response) => {
-					this.games = response.data; 
-					console.log(this.games.length);
-					games = response.data;
+					this.apartments = response.data; 
+					apartments = response.data;
 					initializeCreate()
+					calculateDistance();
 				},
 			)
 			
 			function initializeCreate(){
-				for(let i = 0; i<games.length; i++){
-					createMarker(games[i])
+				for(let i = 0; i<apartments.length; i++){
+					createMarker(apartments[i])
 				}
 			}
 
 			function createMarker(object){   
-				console.log(object);
 				/* create the popup for the marker*/
 				var popup = new tt.Popup()
 					.setHTML("<p>"+object.title+"</p>")
@@ -198,6 +197,34 @@
 				.setLngLat([object.longitude , object.latitude]) /* Coordinates here */
 				.setPopup(popup)
 				.addTo(map);
+			}
+
+			function calcCrow(lat1, lon1, lat2, lon2) 
+			{
+			var R = 6371; // km
+			var dLat = toRad(lat2-lat1);
+			var dLon = toRad(lon2-lon1);
+			var lat1 = toRad(lat1);
+			var lat2 = toRad(lat2);
+
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+			var d = R * c;
+			console.log(d);
+			}
+
+			// Converts numeric degrees to radians
+			function toRad(Value) 
+			{
+				return Value * Math.PI / 180;
+			}
+			function calculateDistance(){
+				let lat1 = apartments[0]['latitude'];
+				let lon1 = apartments[0]['longitude'];
+				let lat2 = apartments[1]['latitude'];
+				let lon2 = apartments[1]['longitude'];
+				calcCrow(lat1, lon1, lat2, lon2)
 			}
       	}  ,
 		
