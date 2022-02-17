@@ -111,15 +111,19 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                   Do you want to make this apartment visible?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                   
                                                     <form action="{{ route('ura.apartments.makeVisibile', $apartment->slug) }}" method="post">
                                                         @csrf
                                                         @method('PUT')
-                                                            <input type="text" name="is_aviable" id="is_aviable" value="{{ old('is_aviable') }}">
-                                                        <button type="submit" class="btn btn-primary" >Make it visbile</button>
+                                                            <div class="form-group">
+                                                              <label for="is_aviable">Do you want to make this apartment visible?</label>
+                                                              <input required class="ms-3" type="checkbox" name="is_aviable" id="is_aviable" value="1">
+                                                              <label for="">YES</label>
+                                                            </div>
+                                                         <div class="d-flex justify-content-center mt-2"> 
+                                                            {{-- <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Close</button> --}}
+                                                            <button type="submit" class="btn btn-primary btn-lg">Make it visbile</button>
+                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -148,3 +152,4 @@
         </div>
     </div>
 @endsection
+

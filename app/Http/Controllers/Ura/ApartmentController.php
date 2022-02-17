@@ -168,9 +168,9 @@ class ApartmentController extends Controller
     public function makeVisible(Apartment $apartment, Request $request)
     {
         if (Auth::id() === $apartment->user_id) {
-            $validator = $request->validate(
-                ['is_aviable' => 'required']
-            );
+            $validator = $request->validate([
+                'is_aviable' => 'max:1|boolean|required'
+            ]);
             $apartment->update($validator);
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
 
