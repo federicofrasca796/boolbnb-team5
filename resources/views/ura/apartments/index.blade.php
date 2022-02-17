@@ -51,8 +51,7 @@
                                 </small>
                             </p>
                             <p class="card-text">
-                                <small class="text-muted">Created on
-                                    {{ $apartment->created_at }}</small>
+                                <small class="text-muted">Created on {{ $apartment->created_at }}</small>
                             </p>
                             <div class="d-flex">
                                 <a href="{{ route('ura.apartments.show', $apartment->slug) }}" class="btn btn-light mx-1">
@@ -94,6 +93,13 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @if ($apartment->is_aviable === 0 )
+                                    <div class=" btn btn-light mx-1 text-muted">
+                                        <i class="fas fa-low-vision"></i>
+                                    </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -110,6 +116,8 @@
         @endforelse
 
         {{-- Pagination --}}
-        {{-- {{ $collection->links() }} --}}
+        <div id="paginate" class="mt-5 d-flex justify-content-center">
+            {{ $apartments->links() }}
+        </div>
     </div>
 @endsection

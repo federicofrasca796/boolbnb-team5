@@ -28,7 +28,7 @@ class Apartment extends Model
         'user_id',
         'sponsor_id',
         'slug',
-        'service_id[]'
+        'service_id'
     ];
 
 
