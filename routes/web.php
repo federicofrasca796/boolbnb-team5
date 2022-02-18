@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 
-//rotte lato guest
+//Guest routes (to be deprecated with vue routes)
 Route::get('/', 'ApartmentController@index')->name('guest.index');
 Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
@@ -55,5 +55,5 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
 });
 
 Route::get('/{any}', function () {
-    return view('guest.vue');
+    return view('guest.index');
 })->where('any', '.*');

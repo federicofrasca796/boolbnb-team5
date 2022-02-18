@@ -22,7 +22,7 @@ const routes = [
         component: Search,
     },
     {
-        path: '/apartment/:slug',
+        path: '/apartments/:slug',
         name: 'Apartment',
         component: Apartment,
     },
