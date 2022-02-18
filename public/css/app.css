@@ -11429,6 +11429,10 @@ header .modal button[type=submit] {
   font-family: "Josefin Sans", sans-serif;
 }
 
+.advanced-search {
+  width: 80%;
+  margin: auto;
+}
 .advanced-search input[type=button] {
   font-family: "Josefin Sans", sans-serif;
   padding: 8px 16px;
@@ -11437,6 +11441,20 @@ header .modal button[type=submit] {
 }
 .advanced-search input[type=button]:hover {
   border: 1px solid black;
+}
+
+.container_results_appartment {
+  width: 80%;
+  margin: auto;
+  border: none;
+  border-top: 1px solid lightgray;
+}
+.container_results_appartment .number_results {
+  border-bottom: 1px solid lightgray;
+}
+.container_results_appartment .single-apartment .image-single img {
+  border-radius: 1.9rem;
+  height: 165px;
 }
 
 * {
