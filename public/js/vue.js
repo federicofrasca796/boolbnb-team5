@@ -286,12 +286,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
     return {
       apartments: null,
-      x: 0
+      x: 0,
+      results: [],
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -337,6 +352,16 @@ __webpack_require__.r(__webpack_exports__);
       }
       /* searchMarkersManager.draw(results); */
 
+    }
+
+    function handleResultSelection(event) {
+      var result = event.data.result;
+
+      if (result.type === 'category' || result.type === 'brand') {
+        return;
+      }
+      /* searchMarkersManager.draw([result]); */
+
 
       if (layer != null) {
         hideLayer(layer);
@@ -349,18 +374,6 @@ __webpack_require__.r(__webpack_exports__);
 
         markers = [];
       }
-
-      fitToViewport(results);
-    }
-
-    function handleResultSelection(event) {
-      var result = event.data.result;
-
-      if (result.type === 'category' || result.type === 'brand') {
-        return;
-      }
-      /* searchMarkersManager.draw([result]); */
-
 
       fitToViewport(result);
     }
@@ -381,8 +394,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       map.fitBounds(bounds, {
-        padding: 100,
-        linear: true
+        padding: {
+          left: 300
+        }
       });
     }
 
@@ -484,22 +498,26 @@ __webpack_require__.r(__webpack_exports__);
     ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
       console.log(data.data.result);
       center = [data.data.result.position.lat, data.data.result.position.lng];
+      _this.results = [];
 
-      for (var i = 0; i < apartments.length; i++) {
-        var dist = calcCrow(center[0], center[1], apartments[i]['latitude'], apartments[i]['longitude']);
+      for (var k = 0; k < apartments.length; k++) {
+        var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
 
         if (dist < 20) {
-          createMarker(apartments[i]);
-          console.log(apartments[i]['title'], '_', dist, ' KM');
+          createMarker(apartments[k]);
+
+          _this.results.push(apartments[k]);
+
+          console.log(apartments[k]['title'], '_', dist, ' KM');
         }
       }
 
       if (layers.length == 0) {
         createLayer(data.data.result);
       } else {
-        for (var _i = 0; _i < layers.length; _i++) {
-          if (layers[_i] == data.data.result.id) {
-            showLayer(layers[_i]);
+        for (var j = 0; j < layers.length; j++) {
+          if (layers[j] == data.data.result.id) {
+            showLayer(layers[j]);
             break;
           } else {
             createLayer(data.data.result);
@@ -511,6 +529,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('api/apartments').then(function (response) {
       _this.apartments = response.data.data;
       apartments = response.data.data;
+      _this.loading = false;
     });
 
     function createMarker(object) {
@@ -589,6 +608,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     testComputed: function testComputed() {
       return this.x;
+    },
+    getApartments: function getApartments() {
+      return this.apartments;
     }
   }
 });
@@ -602,13 +624,12 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(/*! ../../../node_modules/css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n#map { \n    height: 500px; \n    width: 100%;\n}\n.tt-search-marker{\n\tbackground-image: url(" + escape(__webpack_require__(/*! ../../img/logo.png */ "./resources/img/logo.png")) + ") !important;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n", ""]);
+exports.push([module.i, "\n.container{\r\n\tdisplay: flex;\n}\n#map {\r\n  height: 100vh;\r\n  width: 40%;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
 
 // exports
 
@@ -697,33 +718,6 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/url/escape.js":
-/*!***************************************************!*\
-  !*** ./node_modules/css-loader/lib/url/escape.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
 }
 
 
@@ -1948,22 +1942,34 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container" }, [
+    _vm.loading
+      ? _c("div", { staticClass: "loading results" }, [
+          _c("p", [_vm._v("Loading")]),
+        ])
+      : _vm.results.length == 0
+      ? _c(
+          "div",
+          { staticClass: "all results" },
+          _vm._l(_vm.apartments, function (apartment) {
+            return _c("div", { key: apartment.id, staticClass: "col" }, [
+              _c("p", [_vm._v(_vm._s(apartment.title))]),
+            ])
+          }),
+          0
+        )
+      : _c(
+          "div",
+          { staticClass: "search results" },
+          _vm._l(_vm.results, function (apartment) {
+            return _c("div", { key: apartment.title, staticClass: "col" }, [
+              _c("p", [_vm._v(_vm._s(apartment.title))]),
+            ])
+          }),
+          0
+        ),
+    _vm._v(" "),
     _c("div", { ref: "mapRef", attrs: { id: "map" } }),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.testComputed))]),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function ($event) {
-            return _vm.addTest()
-          },
-        },
-      },
-      [_vm._v("Add")]
-    ),
   ])
 }
 var staticRenderFns = []
@@ -17313,17 +17319,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-
-/***/ "./resources/img/logo.png":
-/*!********************************!*\
-  !*** ./resources/img/logo.png ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/logo.png?04df678b06e62a0076b754282d29839a";
 
 /***/ }),
 

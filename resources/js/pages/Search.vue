@@ -1,8 +1,21 @@
 <template>
-  <div>
+  <div class="container">
+	<div class="loading results" v-if="loading">
+		<p>Loading</p>
+	</div>
+	<div class="all results" v-else-if="results.length == 0">
+		<div class="col" v-for="apartment in apartments" :key="apartment.id">
+			<p>{{apartment.title}}</p>
+		</div>
+	</div>
+	<div class="search results" v-else>
+		<div class="col" v-for="apartment in results" :key="apartment.title">
+			<p>{{apartment.title}}</p>
+		</div>
+	</div>
     <div id="map" ref="mapRef"></div>
-	<p>{{testComputed}}</p>
-	<button @click="addTest()">Add</button>
+	<!-- <p>{{testComputed}}</p>
+	<button @click="addTest()">Add</button> -->
   </div>
 </template>
 
@@ -14,6 +27,8 @@
 			return{
 				apartments: null,
 				x: 0,
+				results: [],
+				loading : true,
 			}
 		},
       	mounted() {      
@@ -58,17 +73,8 @@
 					searchMarkersManager.clear();
 				}
 				/* searchMarkersManager.draw(results); */
-				if(layer != null){
-					hideLayer(layer)
-				}
+				
 
-				if(markers.length != 0){
-					for(let i = 0;i<markers.length;i++){
-						markers[i].remove();
-					}
-					markers = [];
-				}
-				fitToViewport(results);
 			}
 
 			function handleResultSelection(event) {
@@ -77,6 +83,15 @@
 					return;
 				}
 				/* searchMarkersManager.draw([result]); */
+				if(layer != null){
+					hideLayer(layer)
+				}
+				if(markers.length != 0){
+					for(let i = 0;i<markers.length;i++){
+						markers[i].remove();
+					}
+					markers = [];
+				}
 				fitToViewport(result);
 			}
 
@@ -92,7 +107,9 @@
 				} else {
 					bounds.extend(getBounds(markerData));
 				}
-				map.fitBounds(bounds, { padding: 100, linear: true });
+				map.fitBounds(bounds, {
+					padding: { left: 300},
+				});
 			}
 
 			function getBounds(data) {
@@ -186,23 +203,26 @@
 				this._map = null;
 			};
 			/* Results Log */
-			ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
+			ttSearchBox.on('tomtom.searchbox.resultselected', (data) => {
 				console.log(data.data.result);
 				center = [data.data.result.position.lat , data.data.result.position.lng];
-				for(let i = 0;i<apartments.length;i++){
-					let dist = calcCrow(center[0] , center[1] , apartments[i]['latitude'] , apartments[i]['longitude'])
+				this.results = [];
+				
+				for(let k = 0;k<apartments.length;k++){
+					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude'])
 					if(dist < 20){
-						createMarker(apartments[i])
-						console.log(apartments[i]['title'] , '_' , dist , ' KM');
+						createMarker(apartments[k]);
+						this.results.push(apartments[k])
+						console.log(apartments[k]['title'] , '_' , dist , ' KM');
 					}
 				}
 				if(layers.length == 0){
 					createLayer(data.data.result) 
 				}
 				else{
-					for(let i = 0;i<layers.length;i++){
-						if(layers[i] == data.data.result.id){
-							showLayer(layers[i])
+					for(let j = 0;j<layers.length;j++){
+						if(layers[j] == data.data.result.id){
+							showLayer(layers[j])
 							break;
 						}
 						else{
@@ -216,6 +236,7 @@
 				(response) => {
 					this.apartments = response.data.data; 
 					apartments = response.data.data;
+					this.loading = false;
 				},
 			)
 			
@@ -298,6 +319,10 @@
 		computed:{
 			testComputed(){
 				return this.x;
+			},
+
+			getApartments(){
+				return this.apartments;
 			}
 		}
 
@@ -306,16 +331,13 @@
 </script>
 
 <style>
-  #map { 
-    height: 500px; 
-    width: 100%; 
-} 
 
-.tt-search-marker{
-	background-image: url(../../img/logo.png) !important;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+.container{
+	display: flex;
+}
+#map {
+  height: 100vh;
+  width: 40%;
 }
 .tt-search-marker>div{
 	background: none !important;
