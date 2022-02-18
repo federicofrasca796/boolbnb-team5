@@ -327,7 +327,8 @@ __webpack_require__.r(__webpack_exports__);
       searchOptions: {
         key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
         language: 'en-GB',
-        limit: 5
+        limit: 5,
+        countrySet: 'IT'
       }
     };
     map.addControl(new tt.FullscreenControl());
