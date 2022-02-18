@@ -111,6 +111,101 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -120,7 +215,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log("/api/apartments/" + this.$route.params.slug);
     this.fetchApartment();
   },
   methods: {
@@ -128,11 +222,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/apartments/" + this.$route.params.slug).then(function (r) {
-        console.log(r.data);
+        //   console.log(r.data);
         _this.apartment = r.data;
         _this.loading = false;
       })["catch"](function (e) {
-        console.error(e);
+        //   console.error(e);
         _this.api_error = true;
       });
     }
@@ -150,6 +244,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -1724,21 +1821,156 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "apartment_main" } }, [
-    _vm._v("\n  " + _vm._s(_vm.apartment.title) + "\n  "),
-    _c("div", { staticClass: "container_img w-100 px-3 d-flex flex-wrap" }, [
-      _c("div", { staticClass: "col-12 h-100 p-2" }, [
-        _c("img", {
-          staticClass: "w-100 h-100",
-          attrs: {
-            src: "storage/" + _vm.apartment.thumbnail,
-            alt: _vm.apartment.slug,
-          },
-        }),
+    _c(
+      "section",
+      { staticClass: "container_img w-100 px-3 d-flex flex-wrap" },
+      [
+        _c("div", { staticClass: "col-12 h-100 p-2" }, [
+          _c("img", {
+            staticClass: "w-100 h-100",
+            attrs: {
+              src: "storage/" + _vm.apartment.thumbnail,
+              alt: _vm.apartment.slug,
+            },
+          }),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "container_home d-flex flex-wrap m-auto py-5" },
+      [
+        _c("div", { staticClass: "col-12 col-md-8" }, [
+          _c("p", [_vm._v(_vm._s(_vm.apartment.address))]),
+          _vm._v(" "),
+          _c("h1", [_vm._v(_vm._s(_vm.apartment.title))]),
+          _vm._v(" "),
+          _c("h4", [_vm._v("About this home")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,\n        optio praesentium libero quis ratione facilis molestias quod odit\n        reiciendis hic sed magnam deserunt. Facere, fugit dolorem. Quidem nisi\n        totam voluptates. Consectetur eligendi corrupti, ratione illum\n        delectus vitae veritatis cupiditate? Recusandae beatae blanditiis\n        aliquid, repellat illum impedit inventore, odio ipsa repellendus\n        cumque amet incidunt! Fugiat, doloremque optio. Porro libero sit\n        vitae. Quaerat deleniti laborum tempore aperiam nostrum eum cumque,\n        fugit earum. Voluptatum cupiditate consequuntur inventore rem, dolor,\n        ut cumque magnam magni atque quisquam similique esse? Voluptatum nemo\n        consectetur numquam beatae praesentium. Nostrum iste accusamus iure\n        assumenda laudantium quasi odit consequatur veritatis! Necessitatibus\n        aspernatur molestiae error voluptatibus molestias incidunt saepe a\n        corrupti nesciunt. Non, maxime. Nesciunt minus sed sunt. Error, amet\n        cupiditate? Minus explicabo alias ullam distinctio illo iusto, iste\n        voluptatibus nesciunt modi eos veritatis voluptatem asperiores\n        blanditiis et optio magni excepturi dolor ex ea dolorem nostrum\n        quisquam eum quas? Veniam, magnam. Dolore dolorem repellat quo quam\n        possimus, tempora neque quod delectus esse alias et aspernatur\n        reprehenderit ex fuga similique est ut. Velit mollitia illum minus\n        laborum porro ex sunt atque praesentium.\n      "
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _vm._m(0),
+      ]
+    ),
+    _vm._v(" "),
+    _c("section", { staticClass: "container_details m-auto" }, [
+      _c("hr", { staticClass: "col-12 col-md-8" }),
+      _vm._v(" "),
+      _c("h1", { staticClass: "text-center text-md-start mt-4" }, [
+        _vm._v("All the details"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-md-8 d-flex mt-4 flex-wrap" }, [
+        _c(
+          "div",
+          { staticClass: "col-6 col-md-3 text-center text-md-start mb-5" },
+          [
+            _c("img", { attrs: { src: "img/plans.png", alt: "floors icon" } }),
+            _c("span", { staticClass: "ms-4" }, [
+              _vm._v(_vm._s(_vm.apartment.square_metres) + " m²"),
+            ]),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
+          _c("img", { attrs: { src: "img/open-door.png", alt: "rooms icon" } }),
+          _c("span", { staticClass: "ms-4" }, [
+            _vm._v(_vm._s(_vm.apartment.number_of_rooms) + " rooms"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
+          _c("img", { attrs: { src: "img/bed.png", alt: "bed icon" } }),
+          _c("span", { staticClass: "ms-4" }, [
+            _vm._v(_vm._s(_vm.apartment.number_of_beds) + " beds"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
+          _c("img", { attrs: { src: "img/shower.png", alt: "shower icon" } }),
+          _c("span", { staticClass: "ms-4" }, [
+            _vm._v(_vm._s(_vm.apartment.number_of_baths) + " bath"),
+          ]),
+        ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "container-extra-service mb-5 m-auto" }, [
+      _c("h3", { staticClass: "text-center text-md-start mt-4 mb-3" }, [
+        _vm._v("Extra services"),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
+        _vm._l(_vm.apartment.services, function (service) {
+          return _c(
+            "div",
+            {
+              key: service.id,
+              staticClass: "col-4 col-md-3 text-md-start mb-2",
+            },
+            [
+              _c("img", {
+                attrs: {
+                  src: "img/" + service.slug + ".png",
+                  alt: service.slug,
+                },
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ms-2 me-3 mb-3" }, [
+                _vm._v(_vm._s(service.name)),
+              ]),
+            ]
+          )
+        }),
+        0
+      ),
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "col-12 col-md-4 d-flex justify-content-center align-items-center",
+      },
+      [
+        _c("div", { staticClass: "card w-50 m-auto rounded-pill sticky-top" }, [
+          _c("div", { staticClass: "card-body text-center" }, [
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v("Contact the owner"),
+            ]),
+          ]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "map" }, [
+      _c("img", {
+        staticClass: "w-100",
+        attrs: { src: "img/map.png", alt: "" },
+      }),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -1768,7 +2000,7 @@ var render = function () {
         attrs: { id: "jumbo" },
       },
       [
-        _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "" } }),
+        _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "bg image" } }),
         _vm._v(" "),
         _c("div", { staticClass: "search-destination w-75" }, [
           _c("form", { attrs: { action: "#" } }, [
@@ -1781,6 +2013,16 @@ var render = function () {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "h-100 bg-white p-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn btn-secondary text-white px-5 rounded-0 h-100",
+                    attrs: { id: "link_fake" },
+                  },
+                  [_vm._v("\n              SEARCH\n            ")]
+                ),
+                _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "d-none", attrs: { id: "link_router" } },
@@ -1798,16 +2040,6 @@ var render = function () {
                     ),
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "btn btn-secondary text-white px-5 rounded-0 h-100",
-                    attrs: { id: "link_fake" },
-                  },
-                  [_vm._v("\n              SEARCH\n            ")]
                 ),
               ]),
             ]),
@@ -1847,7 +2079,7 @@ var render = function () {
                               staticClass: "w-100",
                               attrs: {
                                 src: "storage/" + apartment.thumbnail,
-                                alt: "...",
+                                alt: apartment.slug,
                               },
                             }),
                             _vm._v(" "),

@@ -6,7 +6,7 @@
       class="w-100 d-flex justify-content-center align-items-center"
     >
       <!-- BG image -->
-      <img src="img/jumbo-2.jpg" alt="" />
+      <img src="img/jumbo-2.jpg" alt="bg image" />
 
       <!-- Searchbar -->
       <div class="search-destination w-75">
@@ -21,18 +21,21 @@
 
             <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
+              <!-- Disabled btn -->
+              <div
+                id="link_fake"
+                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+              >
+                SEARCH
+              </div>
+
+              <!-- Active btn after TomTom query -->
               <div id="link_router" class="d-none">
                 <router-link
                   class="btn btn-danger text-white px-5 rounded-0 h-100"
                   :to="{ name: 'Search', params: mySearchResult }"
                   >SEARCH
                 </router-link>
-              </div>
-              <div
-                id="link_fake"
-                class="btn btn-secondary text-white px-5 rounded-0 h-100"
-              >
-                SEARCH
               </div>
             </div>
           </div>
@@ -60,7 +63,7 @@
                 <img
                   :src="'storage/' + apartment.thumbnail"
                   class="w-100"
-                  alt="..."
+                  :alt="apartment.slug"
                 />
                 <div class="card-body">
                   <h5 class="card-title">{{ apartment.title }}</h5>

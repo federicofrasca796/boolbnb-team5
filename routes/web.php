@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
  */
 
 
-//Guest routes (to be deprecated with vue routes)
-Route::get('/', 'ApartmentController@index')->name('guest.index');
-Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
+//Guest routes (deprecated with vue routes)
+// Route::get('/', 'ApartmentController@index')->name('guest.index');
+// Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
 Auth::routes();
 
