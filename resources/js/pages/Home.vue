@@ -13,9 +13,9 @@
         <form action="#">
           <div class="input-group w-100">
             <!-- Icon -->
-            <span class="input-group-text px-4" id="basic-addon1"
-              ><i class="fa-solid fa-location-dot"></i
-            ></span>
+            <span class="input-group-text px-4" id="basic-addon1">
+              <i class="fa-solid fa-location-dot"></i>
+            </span>
             <!-- Input text -->
             <input
               type="text"
@@ -79,17 +79,22 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("/api/apartments")
-      .then((r) => {
-        // console.log(r);
-        this.apartments = r.data;
-        this.loading = false;
-      })
-      .catch((e) => {
-        console.error(e);
-        this.api_error = true;
-      });
+    this.fetchApartments();
+  },
+  methods: {
+    fetchApartments() {
+      axios
+        .get("/api/apartments")
+        .then((r) => {
+          // console.log(r);
+          this.apartments = r.data.data;
+          this.loading = false;
+        })
+        .catch((e) => {
+          console.error(e);
+          this.api_error = true;
+        });
+    },
   },
 };
 </script>

@@ -227,16 +227,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    this.fetchApartments();
+  },
+  methods: {
+    fetchApartments: function fetchApartments() {
+      var _this = this;
 
-    axios.get("/api/apartments").then(function (r) {
-      // console.log(r);
-      _this.apartments = r.data;
-      _this.loading = false;
-    })["catch"](function (e) {
-      console.error(e);
-      _this.api_error = true;
-    });
+      axios.get("/api/apartments").then(function (r) {
+        // console.log(r);
+        _this.apartments = r.data.data;
+        _this.loading = false;
+      })["catch"](function (e) {
+        console.error(e);
+        _this.api_error = true;
+      });
+    }
   }
 });
 
