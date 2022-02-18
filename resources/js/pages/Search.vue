@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="map" ref="mapRef"></div>
-	<div id="geofencing"></div>
 	<p>{{testComputed}}</p>
 	<button @click="addTest()">Add</button>
   </div>
@@ -19,6 +18,10 @@
 		},
       	mounted() {      
 			const tt = window.tt; 
+			let layers = [];
+			let layer;
+			let center;
+			let markers = [];
 			var map = tt.map({ 
 				key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj', 
 				container: 'map', 
@@ -55,6 +58,16 @@
 					searchMarkersManager.clear();
 				}
 				/* searchMarkersManager.draw(results); */
+				if(layer != null){
+					hideLayer(layer)
+				}
+
+				if(markers.length != 0){
+					for(let i = 0;i<markers.length;i++){
+						markers[i].remove();
+					}
+					markers = [];
+				}
 				fitToViewport(results);
 			}
 
@@ -172,26 +185,40 @@
 				this.marker.remove();
 				this._map = null;
 			};
-
 			/* Results Log */
 			ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
-				console.log(data.data.result.position);
+				console.log(data.data.result);
+				center = [data.data.result.position.lat , data.data.result.position.lng];
+				for(let i = 0;i<apartments.length;i++){
+					let dist = calcCrow(center[0] , center[1] , apartments[i]['latitude'] , apartments[i]['longitude'])
+					if(dist < 20){
+						createMarker(apartments[i])
+						console.log(apartments[i]['title'] , '_' , dist , ' KM');
+					}
+				}
+				if(layers.length == 0){
+					createLayer(data.data.result) 
+				}
+				else{
+					for(let i = 0;i<layers.length;i++){
+						if(layers[i] == data.data.result.id){
+							showLayer(layers[i])
+							break;
+						}
+						else{
+							createLayer(data.data.result) 
+						}
+					}
+				}
 			});
 			let apartments = '';
 			axios.get('api/apartments').then(
 				(response) => {
-					this.apartments = response.data; 
-					apartments = response.data;
-					initializeCreate()
-					calculateDistance();
+					this.apartments = response.data.data; 
+					apartments = response.data.data;
 				},
 			)
 			
-			function initializeCreate(){
-				for(let i = 0; i<apartments.length; i++){
-					createMarker(apartments[i])
-				}
-			}
 
 			function createMarker(object){   
 				/* create the popup for the marker*/
@@ -203,6 +230,8 @@
 				.setLngLat([object.longitude , object.latitude]) /* Coordinates here */
 				.setPopup(popup)
 				.addTo(map);
+				markers.push(marker)
+				console.log(markers)
 			}
 
 			function calcCrow(lat1, lon1, lat2, lon2) 
@@ -217,7 +246,7 @@
 				Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
 			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 			var d = R * c;
-			console.log(d);
+			return d;
 			}
 
 			// Converts numeric degrees to radians
@@ -233,18 +262,30 @@
 				calcCrow(lat1, lon1, lat2, lon2)
 			}
 
-			var config = {
-				"name": "Bool",
-				"type": "Feature",
-				"geometry": {
-				"radius": 50,
-				"type": "Point",
-				"shapeType": "Circle",
-				"coordinates": [-67.137343, 45.137451]
-				}
+			function hideLayer(layerId) {
+            	map.setLayoutProperty(layerId, 'visibility', 'none');
+        	}
+
+			function showLayer(layerId){
+				map.setLayoutProperty(layerId, 'visibility' , 'visible')
 			}
 
-
+			function createLayer(result){
+				map.addLayer({
+					'id': result.id,
+					'type': 'fill',
+					'source' : { 
+						'type' : 'geojson',
+						'data' : turf.circle([result.position.lng , result.position.lat] , 20000 , {units: 'metres' , properties : {key : result.id}})
+					},
+					'paint' : {
+						'fill-color' : 'blue',
+						'fill-opacity' : 0.3
+					}
+				});
+				layers.push(result.id);
+				layer = result.id;
+			}
 			
     	}  ,
 		

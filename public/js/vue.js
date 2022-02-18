@@ -220,10 +220,12 @@ __webpack_require__.r(__webpack_exports__);
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: "hello"
+      mySearchResult: {}
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.fetchApartments(); //Searchbar
 
     var options = {
@@ -240,7 +242,8 @@ __webpack_require__.r(__webpack_exports__);
     /* Results Log */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      // this.mySearchResult = data.data.result;
+      var self = _this;
+      self.mySearchResult = data.data.result;
       callTestMethod(data.data.result);
     });
 
@@ -250,15 +253,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchApartments: function fetchApartments() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/apartments").then(function (r) {
         // console.log(r);
-        _this.apartments = r.data.data;
-        _this.loading = false;
+        _this2.apartments = r.data.data;
+        _this2.loading = false;
       })["catch"](function (e) {
         console.error(e);
-        _this.api_error = true;
+        _this2.api_error = true;
       });
     }
   }
@@ -283,7 +286,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
@@ -296,6 +298,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var tt = window.tt;
+    var layers = [];
+    var layer;
+    var center;
+    var markers = [];
     var map = tt.map({
       key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
       container: 'map',
@@ -331,6 +337,18 @@ __webpack_require__.r(__webpack_exports__);
       }
       /* searchMarkersManager.draw(results); */
 
+
+      if (layer != null) {
+        hideLayer(layer);
+      }
+
+      if (markers.length != 0) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].remove();
+        }
+
+        markers = [];
+      }
 
       fitToViewport(results);
     }
@@ -464,21 +482,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
     ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
-      console.log(data.data.result.position);
+      console.log(data.data.result);
+      center = [data.data.result.position.lat, data.data.result.position.lng];
+
+      for (var i = 0; i < apartments.length; i++) {
+        var dist = calcCrow(center[0], center[1], apartments[i]['latitude'], apartments[i]['longitude']);
+
+        if (dist < 20) {
+          createMarker(apartments[i]);
+          console.log(apartments[i]['title'], '_', dist, ' KM');
+        }
+      }
+
+      if (layers.length == 0) {
+        createLayer(data.data.result);
+      } else {
+        for (var _i = 0; _i < layers.length; _i++) {
+          if (layers[_i] == data.data.result.id) {
+            showLayer(layers[_i]);
+            break;
+          } else {
+            createLayer(data.data.result);
+          }
+        }
+      }
     });
     var apartments = '';
     axios.get('api/apartments').then(function (response) {
-      _this.apartments = response.data;
-      apartments = response.data;
-      initializeCreate();
-      calculateDistance();
+      _this.apartments = response.data.data;
+      apartments = response.data.data;
     });
-
-    function initializeCreate() {
-      for (var i = 0; i < apartments.length; i++) {
-        createMarker(apartments[i]);
-      }
-    }
 
     function createMarker(object) {
       /* create the popup for the marker*/
@@ -488,6 +521,8 @@ __webpack_require__.r(__webpack_exports__);
       var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
       /* Coordinates here */
       .setPopup(popup).addTo(map);
+      markers.push(marker);
+      console.log(markers);
     }
 
     function calcCrow(lat1, lon1, lat2, lon2) {
@@ -500,7 +535,7 @@ __webpack_require__.r(__webpack_exports__);
       var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c;
-      console.log(d);
+      return d;
     } // Converts numeric degrees to radians
 
 
@@ -516,16 +551,35 @@ __webpack_require__.r(__webpack_exports__);
       calcCrow(lat1, lon1, lat2, lon2);
     }
 
-    var config = {
-      "name": "Bool",
-      "type": "Feature",
-      "geometry": {
-        "radius": 50,
-        "type": "Point",
-        "shapeType": "Circle",
-        "coordinates": [-67.137343, 45.137451]
-      }
-    };
+    function hideLayer(layerId) {
+      map.setLayoutProperty(layerId, 'visibility', 'none');
+    }
+
+    function showLayer(layerId) {
+      map.setLayoutProperty(layerId, 'visibility', 'visible');
+    }
+
+    function createLayer(result) {
+      map.addLayer({
+        'id': result.id,
+        'type': 'fill',
+        'source': {
+          'type': 'geojson',
+          'data': turf.circle([result.position.lng, result.position.lat], 20000, {
+            units: 'metres',
+            properties: {
+              key: result.id
+            }
+          })
+        },
+        'paint': {
+          'fill-color': 'blue',
+          'fill-opacity': 0.3
+        }
+      });
+      layers.push(result.id);
+      layer = result.id;
+    }
   },
   methods: {
     addTest: function addTest() {
@@ -1896,8 +1950,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { ref: "mapRef", attrs: { id: "map" } }),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "geofencing" } }),
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s(_vm.testComputed))]),
     _vm._v(" "),
@@ -17636,7 +17688,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

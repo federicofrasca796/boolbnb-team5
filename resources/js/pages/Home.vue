@@ -72,7 +72,7 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: "hello",
+      mySearchResult: {},
     };
   },
   mounted() {
@@ -94,8 +94,9 @@ export default {
     input.appendChild(searchBoxHTML);
 
     /* Results Log */
-    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      // this.mySearchResult = data.data.result;
+    ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
+      var self = this;
+      self.mySearchResult = data.data.result;
       callTestMethod(data.data.result);
     });
     function callTestMethod(p) {
