@@ -257,11 +257,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
     return {
-      apartments: null
+      apartments: null,
+      x: 0
     };
   },
   mounted: function mounted() {
@@ -286,12 +290,13 @@ __webpack_require__.r(__webpack_exports__);
     /* Search Events Handler */
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     var searchMarkersManager = new SearchMarkersManager(map);
     ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
     ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
-    map.addControl(ttSearchBox, 'top-left');
+    document.body.appendChild(searchBoxHTML);
     /* Search Event Functions */
 
     function handleResultsFound(event) {
@@ -300,8 +305,9 @@ __webpack_require__.r(__webpack_exports__);
       if (results.length === 0) {
         searchMarkersManager.clear();
       }
+      /* searchMarkersManager.draw(results); */
 
-      searchMarkersManager.draw(results);
+
       fitToViewport(results);
     }
 
@@ -311,8 +317,9 @@ __webpack_require__.r(__webpack_exports__);
       if (result.type === 'category' || result.type === 'brand') {
         return;
       }
+      /* searchMarkersManager.draw([result]); */
 
-      searchMarkersManager.draw([result]);
+
       fitToViewport(result);
     }
 
@@ -350,7 +357,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function handleResultClearing() {
-      searchMarkersManager.clear();
+      /* searchMarkersManager.clear(); */
     }
     /* Search Markers Engine */
 
@@ -478,14 +485,34 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function calculateDistance() {
-      var lat1 = apartments[0]['latitude'];
-      var lon1 = apartments[0]['longitude'];
-      var lat2 = apartments[1]['latitude'];
-      var lon2 = apartments[1]['longitude'];
+      var lat1 = apartments[3]['latitude'];
+      var lon1 = apartments[3]['longitude'];
+      var lat2 = apartments[4]['latitude'];
+      var lon2 = apartments[4]['longitude'];
       calcCrow(lat1, lon1, lat2, lon2);
     }
+
+    var config = {
+      "name": "Bool",
+      "type": "Feature",
+      "geometry": {
+        "radius": 50,
+        "type": "Point",
+        "shapeType": "Circle",
+        "coordinates": [-67.137343, 45.137451]
+      }
+    };
   },
-  methods: {}
+  methods: {
+    addTest: function addTest() {
+      this.x += 1;
+    }
+  },
+  computed: {
+    testComputed: function testComputed() {
+      return this.x;
+    }
+  }
 });
 
 /***/ }),
@@ -497,12 +524,13 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var escape = __webpack_require__(/*! ../../../node_modules/css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n#map { \n    height: 500px; \n    width: 100%;\n} \n", ""]);
+exports.push([module.i, "\n#map { \n    height: 500px; \n    width: 100%;\n}\n.tt-search-marker{\n\tbackground-image: url(" + escape(__webpack_require__(/*! ../../img/logo.png */ "./resources/img/logo.png")) + ") !important;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n", ""]);
 
 // exports
 
@@ -591,6 +619,33 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/url/escape.js":
+/*!***************************************************!*\
+  !*** ./node_modules/css-loader/lib/url/escape.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function escape(url) {
+    if (typeof url !== 'string') {
+        return url
+    }
+    // If url is already wrapped in quotes, remove them
+    if (/^['"].*['"]$/.test(url)) {
+        url = url.slice(1, -1);
+    }
+    // Should url be wrapped?
+    // See https://drafts.csswg.org/css-values-3/#urls
+    if (/["'() \t\n]/.test(url)) {
+        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
+    }
+
+    return url
 }
 
 
@@ -1815,7 +1870,25 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("div", { ref: "mapRef", attrs: { id: "map" } })])
+  return _c("div", [
+    _c("div", { ref: "mapRef", attrs: { id: "map" } }),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "geofencing" } }),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.testComputed))]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function ($event) {
+            return _vm.addTest()
+          },
+        },
+      },
+      [_vm._v("Add")]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -17164,6 +17237,17 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+
+/***/ "./resources/img/logo.png":
+/*!********************************!*\
+  !*** ./resources/img/logo.png ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/logo.png?04df678b06e62a0076b754282d29839a";
 
 /***/ }),
 

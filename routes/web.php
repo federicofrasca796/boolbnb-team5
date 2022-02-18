@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ura\ApartmentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,9 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
     Route::resource('apartments', 'ApartmentController')->scoped([
         'apartments' => 'slug',
     ]);
+
+
+    Route::put('apartments/{apartment}/make-visible', 'ApartmentController@makeVisible')->name('apartments.makeVisibile');
 
 
 

@@ -1,6 +1,9 @@
 <template>
   <div>
     <div id="map" ref="mapRef"></div>
+	<div id="geofencing"></div>
+	<p>{{testComputed}}</p>
+	<button @click="addTest()">Add</button>
   </div>
 </template>
 
@@ -11,6 +14,7 @@
 		data(){
 			return{
 				apartments: null,
+				x: 0,
 			}
 		},
       	mounted() {      
@@ -26,20 +30,22 @@
 				searchOptions: {
 					key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
 					language: 'en-GB',
-					limit: 5
+					limit: 5,
 				},
 			};
+
             map.addControl(new tt.FullscreenControl()); 
             map.addControl(new tt.NavigationControl());  
 
 			/* Search Events Handler */
 			var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+			var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
 			var searchMarkersManager = new SearchMarkersManager(map);
 			ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
 			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
-			map.addControl(ttSearchBox, 'top-left');
+			document.body.appendChild(searchBoxHTML)
 
 			/* Search Event Functions */
 			function handleResultsFound(event) {
@@ -48,7 +54,7 @@
 				if (results.length === 0) {
 					searchMarkersManager.clear();
 				}
-				searchMarkersManager.draw(results);
+				/* searchMarkersManager.draw(results); */
 				fitToViewport(results);
 			}
 
@@ -57,7 +63,7 @@
 				if (result.type === 'category' || result.type === 'brand') {
 					return;
 				}
-				searchMarkersManager.draw([result]);
+				/* searchMarkersManager.draw([result]); */
 				fitToViewport(result);
 			}
 
@@ -87,7 +93,7 @@
 			}
 
 			function handleResultClearing() {
-				searchMarkersManager.clear();
+				/* searchMarkersManager.clear(); */
 			}
 
 
@@ -220,17 +226,40 @@
 				return Value * Math.PI / 180;
 			}
 			function calculateDistance(){
-				let lat1 = apartments[0]['latitude'];
-				let lon1 = apartments[0]['longitude'];
-				let lat2 = apartments[1]['latitude'];
-				let lon2 = apartments[1]['longitude'];
+				let lat1 = apartments[3]['latitude'];
+				let lon1 = apartments[3]['longitude'];
+				let lat2 = apartments[4]['latitude'];
+				let lon2 = apartments[4]['longitude'];
 				calcCrow(lat1, lon1, lat2, lon2)
 			}
-      	}  ,
+
+			var config = {
+				"name": "Bool",
+				"type": "Feature",
+				"geometry": {
+				"radius": 50,
+				"type": "Point",
+				"shapeType": "Circle",
+				"coordinates": [-67.137343, 45.137451]
+				}
+			}
+
+
+			
+    	}  ,
 		
 		methods: {
-			
+			addTest(){
+				this.x += 1;
+			}	
+		},
+
+		computed:{
+			testComputed(){
+				return this.x;
+			}
 		}
+
 		
     } 
 </script>
@@ -240,4 +269,17 @@
     height: 500px; 
     width: 100%; 
 } 
+
+.tt-search-marker{
+	background-image: url(../../img/logo.png) !important;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.tt-search-marker>div{
+	background: none !important;
+	border: none !important;
+	height: 50px !important;
+	width: 50px !important;
+}
 </style>
