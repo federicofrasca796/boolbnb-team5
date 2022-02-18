@@ -171,6 +171,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -195,14 +198,13 @@ __webpack_require__.r(__webpack_exports__);
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     this.printSearchbar(searchBoxHTML);
-    var input = document.getElementById("mySearchbar");
-    input.appendChild(searchBoxHTML);
-    /* Results Log */
+    /* Results Log on select */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      var self = _this;
-      self.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
+      _this.mySearchResult = data.data.result;
+
+      _this.changeBtn(); //   console.log(this.mySearchResult);
+
     });
   },
   methods: {
@@ -1715,7 +1717,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "main_wrap" } }, [
+  return _c("div", { attrs: { id: "home_main" } }, [
     _c(
       "section",
       {
@@ -1723,7 +1725,7 @@ var render = function () {
         attrs: { id: "jumbo" },
       },
       [
-        _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "" } }),
+        _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "bg image" } }),
         _vm._v(" "),
         _c("div", { staticClass: "search-destination w-75" }, [
           _c("form", { attrs: { action: "#" } }, [
@@ -1736,6 +1738,16 @@ var render = function () {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "h-100 bg-white p-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn btn-secondary text-white px-5 rounded-0 h-100",
+                    attrs: { id: "link_fake" },
+                  },
+                  [_vm._v("\n              SEARCH\n            ")]
+                ),
+                _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "d-none", attrs: { id: "link_router" } },
@@ -1753,16 +1765,6 @@ var render = function () {
                     ),
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "btn btn-secondary text-white px-5 rounded-0 h-100",
-                    attrs: { id: "link_fake" },
-                  },
-                  [_vm._v("\n              SEARCH\n            ")]
                 ),
               ]),
             ]),
@@ -1790,21 +1792,32 @@ var render = function () {
                   "div",
                   { key: _vm.apartments.id, staticClass: "col" },
                   [
-                    _c("div", { staticClass: "card overflow-hidden" }, [
-                      _c("img", {
-                        staticClass: "w-100",
-                        attrs: {
-                          src: "storage/" + apartment.thumbnail,
-                          alt: "...",
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("h5", { staticClass: "card-title" }, [
-                          _vm._v(_vm._s(apartment.title)),
-                        ]),
-                      ]),
-                    ]),
+                    _c(
+                      "div",
+                      { staticClass: "card overflow-hidden" },
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/apartments/" + apartment.slug } },
+                          [
+                            _c("img", {
+                              staticClass: "w-100",
+                              attrs: {
+                                src: "storage/" + apartment.thumbnail,
+                                alt: apartment.slug,
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("h5", { staticClass: "card-title" }, [
+                                _vm._v(_vm._s(apartment.title)),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
                   ]
                 )
               }),
@@ -17418,10 +17431,6 @@ var routes = [{
   path: '/searchadv',
   name: 'Search',
   component: Search
-}, {
-  path: '/apartment/:slug',
-  name: 'Apartment',
-  component: Apartment
 }]; // Step 3 Create vue router instance
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({

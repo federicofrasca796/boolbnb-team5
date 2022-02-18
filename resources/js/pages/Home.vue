@@ -1,12 +1,12 @@
 <template>
-  <div id="main_wrap">
+  <div id="home_main">
     <!-- Jumbo -->
     <section
       id="jumbo"
       class="w-100 d-flex justify-content-center align-items-center"
     >
       <!-- BG image -->
-      <img src="img/jumbo-2.jpg" alt="" />
+      <img src="img/jumbo-2.jpg" alt="bg image" />
 
       <!-- Searchbar -->
       <div class="search-destination w-75">
@@ -21,18 +21,21 @@
 
             <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
+              <!-- Disabled btn -->
+              <div
+                id="link_fake"
+                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+              >
+                SEARCH
+              </div>
+
+              <!-- Active btn after TomTom query -->
               <div id="link_router" class="d-none">
                 <router-link
                   class="btn btn-danger text-white px-5 rounded-0 h-100"
                   :to="{ name: 'Search', params: mySearchResult }"
                   >SEARCH
                 </router-link>
-              </div>
-              <div
-                id="link_fake"
-                class="btn btn-secondary text-white px-5 rounded-0 h-100"
-              >
-                SEARCH
               </div>
             </div>
           </div>
@@ -56,16 +59,16 @@
         <template v-else>
           <div class="col" v-for="apartment in apartments" :key="apartments.id">
             <div class="card overflow-hidden">
-              <!-- <a href="{{ route('guest.show', $apartment->slug) }}"> -->
-              <img
-                :src="'storage/' + apartment.thumbnail"
-                class="w-100"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">{{ apartment.title }}</h5>
-              </div>
-              <!-- </a> -->
+              <router-link :to="'/apartments/' + apartment.slug">
+                <img
+                  :src="'storage/' + apartment.thumbnail"
+                  class="w-100"
+                  :alt="apartment.slug"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ apartment.title }}</h5>
+                </div>
+              </router-link>
             </div>
           </div>
         </template>
@@ -100,14 +103,11 @@ export default {
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     this.printSearchbar(searchBoxHTML);
 
-    let input = document.getElementById("mySearchbar");
-    input.appendChild(searchBoxHTML);
-
-    /* Results Log */
+    /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      var self = this;
-      self.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
+      this.mySearchResult = data.data.result;
+      this.changeBtn();
+      //   console.log(this.mySearchResult);
     });
   },
   methods: {
