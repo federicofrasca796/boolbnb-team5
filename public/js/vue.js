@@ -303,7 +303,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Map',
+  name: "Map",
   data: function data() {
     return {
       apartments: null,
@@ -315,15 +315,15 @@ __webpack_require__.r(__webpack_exports__);
 
     var tt = window.tt;
     var map = tt.map({
-      key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-      container: 'map',
+      key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+      container: "map",
       center: [12.49427, 41.89056],
       zoom: 5
     });
     var options = {
       searchOptions: {
-        key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-        language: 'en-GB',
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        language: "en-GB",
         limit: 5
       }
     };
@@ -334,10 +334,10 @@ __webpack_require__.r(__webpack_exports__);
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     var searchMarkersManager = new SearchMarkersManager(map);
-    ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
-    ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
-    ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
-    ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
+    ttSearchBox.on("tomtom.searchbox.resultsfound", handleResultsFound);
+    ttSearchBox.on("tomtom.searchbox.resultselected", handleResultSelection);
+    ttSearchBox.on("tomtom.searchbox.resultfocused", handleResultSelection);
+    ttSearchBox.on("tomtom.searchbox.resultscleared", handleResultClearing);
     document.body.appendChild(searchBoxHTML);
     /* Search Event Functions */
 
@@ -356,7 +356,7 @@ __webpack_require__.r(__webpack_exports__);
     function handleResultSelection(event) {
       var result = event.data.result;
 
-      if (result.type === 'category' || result.type === 'brand') {
+      if (result.type === "category" || result.type === "brand") {
         return;
       }
       /* searchMarkersManager.draw([result]); */
@@ -419,7 +419,7 @@ __webpack_require__.r(__webpack_exports__);
         var markerId = poi.id;
         var poiOpts = {
           name: poi.poi ? poi.poi.name : undefined,
-          address: poi.address ? poi.address.freeformAddress : '',
+          address: poi.address ? poi.address.freeformAddress : "",
           distance: poi.dist,
           classification: poi.poi ? poi.poi.classifications[0].code : undefined,
           position: poi.position,
@@ -448,7 +448,7 @@ __webpack_require__.r(__webpack_exports__);
       this.options = options || {};
       this.marker = new tt.Marker({
         element: this.createMarker(),
-        anchor: 'bottom'
+        anchor: "bottom"
       });
       var lon = this.poiData.position.lng || this.poiData.position.lon;
       this.marker.setLngLat([lon, this.poiData.position.lat]);
@@ -461,15 +461,15 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     SearchMarker.prototype.createMarker = function () {
-      var elem = document.createElement('div');
-      elem.className = 'tt-icon-marker-black tt-search-marker';
+      var elem = document.createElement("div");
+      elem.className = "tt-icon-marker-black tt-search-marker";
 
       if (this.options.markerClassName) {
-        elem.className += ' ' + this.options.markerClassName;
+        elem.className += " " + this.options.markerClassName;
       }
 
-      var innerElem = document.createElement('div');
-      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
+      var innerElem = document.createElement("div");
+      innerElem.setAttribute("style", "background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;");
       elem.appendChild(innerElem);
       return elem;
     };
@@ -481,15 +481,20 @@ __webpack_require__.r(__webpack_exports__);
     /* Results Log */
 
 
-    ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
       console.log(data.data.result.position);
     });
-    var apartments = '';
-    axios.get('api/apartments').then(function (response) {
-      _this.apartments = response.data;
-      apartments = response.data;
+    var apartments = "";
+    axios.get("/api/apartments").then(function (r) {
+      // console.log(r);
+      _this.apartments = r.data.data;
+      _this.loading = false;
+      apartments = _this.apartments;
       initializeCreate();
       calculateDistance();
+    })["catch"](function (e) {
+      console.error(e);
+      _this.api_error = true;
     });
 
     function initializeCreate() {
@@ -527,21 +532,21 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function calculateDistance() {
-      var lat1 = apartments[3]['latitude'];
-      var lon1 = apartments[3]['longitude'];
-      var lat2 = apartments[4]['latitude'];
-      var lon2 = apartments[4]['longitude'];
+      var lat1 = apartments[3]["latitude"];
+      var lon1 = apartments[3]["longitude"];
+      var lat2 = apartments[4]["latitude"];
+      var lon2 = apartments[4]["longitude"];
       calcCrow(lat1, lon1, lat2, lon2);
     }
 
     var config = {
-      "name": "Bool",
-      "type": "Feature",
-      "geometry": {
-        "radius": 50,
-        "type": "Point",
-        "shapeType": "Circle",
-        "coordinates": [-67.137343, 45.137451]
+      name: "Bool",
+      type: "Feature",
+      geometry: {
+        radius: 50,
+        type: "Point",
+        shapeType: "Circle",
+        coordinates: [-67.137343, 45.137451]
       }
     };
   },
@@ -572,7 +577,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#map { \n    height: 500px; \n    width: 100%;\n}\n.tt-search-marker{\n\tbackground-image: url(" + escape(__webpack_require__(/*! ../../img/logo.png */ "./resources/img/logo.png")) + ") !important;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n", ""]);
+exports.push([module.i, "\n#map {\r\n  height: 500px;\r\n  width: 100%;\n}\n.tt-search-marker {\r\n  background-image: url(" + escape(__webpack_require__(/*! ../../img/logo.png */ "./resources/img/logo.png")) + ") !important;\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  background-position: center;\n}\n.tt-search-marker > div {\r\n  background: none !important;\r\n  border: none !important;\r\n  height: 50px !important;\r\n  width: 50px !important;\n}\r\n", ""]);
 
 // exports
 
@@ -1816,7 +1821,9 @@ var render = function () {
                       {
                         staticClass:
                           "btn btn-danger text-white px-5 rounded-0 h-100",
-                        attrs: { to: "/searchadv" },
+                        attrs: {
+                          to: { name: "Search", params: _vm.mySearchResult },
+                        },
                       },
                       [_vm._v("SEARCH\n              ")]
                     ),

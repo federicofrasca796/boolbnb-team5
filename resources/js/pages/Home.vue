@@ -24,7 +24,7 @@
               <div id="link_router" class="d-none">
                 <router-link
                   class="btn btn-danger text-white px-5 rounded-0 h-100"
-                  to="/searchadv"
+                  :to="{ name: 'Search', params: mySearchResult }"
                   >SEARCH
                 </router-link>
               </div>
