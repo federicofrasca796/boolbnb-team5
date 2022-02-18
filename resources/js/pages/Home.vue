@@ -17,11 +17,7 @@
               <i class="fa-solid fa-location-dot"></i>
             </span>
             <!-- Input text -->
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Find your destination"
-            />
+            <div id="mySearchbar" class="form-control"></div>
             <div class="h-100 bg-white p-2">
               <!-- Route to advanced search page -->
               <router-link
@@ -76,10 +72,35 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
+      mySearchResult: "hello",
     };
   },
   mounted() {
     this.fetchApartments();
+
+    //Searchbar
+    var options = {
+      searchOptions: {
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        language: "en-GB",
+        limit: 5,
+      },
+    };
+
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+
+    let input = document.getElementById("mySearchbar");
+    input.appendChild(searchBoxHTML);
+
+    /* Results Log */
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
+      // this.mySearchResult = data.data.result;
+      callTestMethod(data.data.result);
+    });
+    function callTestMethod(p) {
+      console.log(p);
+    }
   },
   methods: {
     fetchApartments() {

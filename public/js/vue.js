@@ -214,20 +214,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       apartments: Array,
       loading: true,
-      api_error: false
+      api_error: false,
+      mySearchResult: "hello"
     };
   },
   mounted: function mounted() {
-    this.fetchApartments();
+    this.fetchApartments(); //Searchbar
+
+    var options = {
+      searchOptions: {
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        language: "en-GB",
+        limit: 5
+      }
+    };
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+    var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    var input = document.getElementById("mySearchbar");
+    input.appendChild(searchBoxHTML);
+    /* Results Log */
+
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
+      // this.mySearchResult = data.data.result;
+      callTestMethod(data.data.result);
+    });
+
+    function callTestMethod(p) {
+      console.log(p);
+    }
   },
   methods: {
     fetchApartments: function fetchApartments() {
@@ -1764,9 +1783,9 @@ var render = function () {
             _c("div", { staticClass: "input-group w-100" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("input", {
+              _c("div", {
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Find your destination" },
+                attrs: { id: "mySearchbar" },
               }),
               _vm._v(" "),
               _c(
