@@ -18,13 +18,22 @@
             </span>
             <!-- Input text -->
             <div id="mySearchbar" class="form-control"></div>
+
+            <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
-              <!-- Route to advanced search page -->
-              <router-link
-                class="btn btn-danger text-white px-5 rounded-0 h-100"
-                to="/searchadv"
-                >SEARCH
-              </router-link>
+              <div id="link_router" class="d-none">
+                <router-link
+                  class="btn btn-danger text-white px-5 rounded-0 h-100"
+                  to="/searchadv"
+                  >SEARCH
+                </router-link>
+              </div>
+              <div
+                id="link_fake"
+                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+              >
+                SEARCH
+              </div>
             </div>
           </div>
         </form>
@@ -72,7 +81,7 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: "hello",
+      mySearchResult: Object,
     };
   },
   mounted() {
@@ -89,18 +98,14 @@ export default {
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    this.printSearchbar(searchBoxHTML);
 
-    let input = document.getElementById("mySearchbar");
-    input.appendChild(searchBoxHTML);
-
-    /* Results Log */
-    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      // this.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
+    /* Results Log on select */
+    ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
+      this.mySearchResult = data.data.result;
+      this.changeBtn();
+      //   console.log(this.mySearchResult);
     });
-    function callTestMethod(p) {
-      console.log(p);
-    }
   },
   methods: {
     fetchApartments() {
@@ -115,6 +120,18 @@ export default {
           console.error(e);
           this.api_error = true;
         });
+    },
+
+    printSearchbar(searchbar) {
+      let input = document.getElementById("mySearchbar");
+      input.appendChild(searchbar);
+    },
+
+    changeBtn() {
+      let fake = document.getElementById("link_fake");
+      fake.classList.add("d-none");
+      let real = document.getElementById("link_router");
+      real.classList.remove("d-none");
     },
   },
 };

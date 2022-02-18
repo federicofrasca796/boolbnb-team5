@@ -214,16 +214,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: "hello"
+      mySearchResult: Object
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.fetchApartments(); //Searchbar
 
     var options = {
@@ -235,31 +246,38 @@ __webpack_require__.r(__webpack_exports__);
     };
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
-    var input = document.getElementById("mySearchbar");
-    input.appendChild(searchBoxHTML);
-    /* Results Log */
+    this.printSearchbar(searchBoxHTML);
+    /* Results Log on select */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      // this.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
-    });
+      _this.mySearchResult = data.data.result;
 
-    function callTestMethod(p) {
-      console.log(p);
-    }
+      _this.changeBtn(); //   console.log(this.mySearchResult);
+
+    });
   },
   methods: {
     fetchApartments: function fetchApartments() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/apartments").then(function (r) {
         // console.log(r);
-        _this.apartments = r.data.data;
-        _this.loading = false;
+        _this2.apartments = r.data.data;
+        _this2.loading = false;
       })["catch"](function (e) {
         console.error(e);
-        _this.api_error = true;
+        _this2.api_error = true;
       });
+    },
+    printSearchbar: function printSearchbar(searchbar) {
+      var input = document.getElementById("mySearchbar");
+      input.appendChild(searchbar);
+    },
+    changeBtn: function changeBtn() {
+      var fake = document.getElementById("link_fake");
+      fake.classList.add("d-none");
+      var real = document.getElementById("link_router");
+      real.classList.remove("d-none");
     }
   }
 });
@@ -1788,22 +1806,34 @@ var render = function () {
                 attrs: { id: "mySearchbar" },
               }),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "h-100 bg-white p-2" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass:
-                        "btn btn-danger text-white px-5 rounded-0 h-100",
-                      attrs: { to: "/searchadv" },
-                    },
-                    [_vm._v("SEARCH\n            ")]
-                  ),
-                ],
-                1
-              ),
+              _c("div", { staticClass: "h-100 bg-white p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "d-none", attrs: { id: "link_router" } },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass:
+                          "btn btn-danger text-white px-5 rounded-0 h-100",
+                        attrs: { to: "/searchadv" },
+                      },
+                      [_vm._v("SEARCH\n              ")]
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn btn-secondary text-white px-5 rounded-0 h-100",
+                    attrs: { id: "link_fake" },
+                  },
+                  [_vm._v("\n              SEARCH\n            ")]
+                ),
+              ]),
             ]),
           ]),
         ]),
