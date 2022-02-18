@@ -11295,6 +11295,9 @@ header .modal.show .modal-dialog-aside {
 header .form-group input::-webkit-input-placeholder {
   color: lightgrey;
 }
+header .modal button[type=submit] {
+  background-color: #e41c5bff;
+}
 
 .modal-backdrop {
   z-index: 10;
@@ -11410,12 +11413,19 @@ header .form-group input::-webkit-input-placeholder {
   height: 560px;
 }
 
+.register-container {
+  padding-top: calc(75px + 2rem);
+}
+.register-container .form-group input::-webkit-input-placeholder {
+  color: lightgrey;
+}
+.register-container button[type=submit] {
+  background-color: #e41c5bff;
+  font-family: "Josefin Sans", sans-serif;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-.register-container {
-  padding-top: calc(75px + 2rem);
 }

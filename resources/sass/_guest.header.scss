@@ -46,6 +46,11 @@ header {
         }
 
     }
+    .modal {
+        button[type=submit]{
+            background-color: $raspberry;
+        }
+    }
 }
 
 .modal-backdrop{
