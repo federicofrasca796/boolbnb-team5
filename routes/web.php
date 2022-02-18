@@ -20,11 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'ApartmentController@index')->name('guest.index');
 Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
+Route::get('/advanced-search', function () {
+    $apartments = App\Models\Apartment::all();
+    $services = App\Models\Service::all();
+    return view('guest.advanced-search', compact('apartments', 'services'));
+})->name('guest.advanced-search');
+
 Auth::routes();
 
-Route::get('login' , 'Middleware\LoginController@login')->name('login');
+Route::get('login', 'Middleware\LoginController@login')->name('login');
 
-route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
+route::get('requireLogin', 'Middleware\LoginController@login')->name('requireLogin');
 
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
