@@ -1,5 +1,5 @@
 <template>
-  <div id="main_wrap">
+  <div id="home_main">
     <!-- Jumbo -->
     <section
       id="jumbo"
@@ -56,16 +56,16 @@
         <template v-else>
           <div class="col" v-for="apartment in apartments" :key="apartments.id">
             <div class="card overflow-hidden">
-              <!-- <a href="{{ route('guest.show', $apartment->slug) }}"> -->
-              <img
-                :src="'storage/' + apartment.thumbnail"
-                class="w-100"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">{{ apartment.title }}</h5>
-              </div>
-              <!-- </a> -->
+              <router-link :to="'/apartments/' + apartment.slug">
+                <img
+                  :src="'storage/' + apartment.thumbnail"
+                  class="w-100"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ apartment.title }}</h5>
+                </div>
+              </router-link>
             </div>
           </div>
         </template>

@@ -49,7 +49,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return Apartment::where('slug', $apartment->slug)->first();
     }
 
     /**
