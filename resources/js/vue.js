@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 // step 1 define route pages components
 const Search = Vue.component('Search', require('./pages/Search.vue').default);
 const Home = Vue.component('Home', require('./pages/Home.vue').default);
+const Apartment = Vue.component('Apartment', require('./pages/Apartment.vue').default);
 
 // Step 2 define vue router routes
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
         path: '/searchadv',
         name: 'Search',
         component: Search,
+    },
+    {
+        path: '/apartment/:slug',
+        name: 'Apartment',
+        component: Apartment,
     },
 ]
 
@@ -38,9 +44,7 @@ const router = new VueRouter({
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('App', require('./App.vue').default);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
 /**

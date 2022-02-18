@@ -4,6 +4,5 @@
 
 
 @section('content')
-    <App></App>
-    <router-link to="/searchadv"> Search</router-link>
+    <router-link to="/searchadv"> Search (guest.vue file blade)</router-link>
 @endsection
