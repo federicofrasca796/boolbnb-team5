@@ -100,11 +100,14 @@ export default {
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     this.printSearchbar(searchBoxHTML);
 
-    /* Results Log on select */
+    let input = document.getElementById("mySearchbar");
+    input.appendChild(searchBoxHTML);
+
+    /* Results Log */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      this.mySearchResult = data.data.result;
-      this.changeBtn();
-      //   console.log(this.mySearchResult);
+      var self = this;
+      self.mySearchResult = data.data.result;
+      callTestMethod(data.data.result);
     });
   },
   methods: {
