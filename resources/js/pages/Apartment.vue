@@ -86,7 +86,7 @@
       </div>
     </section>
 
-    <!-- Services section  -->
+    <!-- Services section-->
     <section class="container-extra-service mb-5 m-auto">
       <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
 
@@ -97,14 +97,14 @@
           class="col-4 col-md-3 text-md-start mb-2"
         >
           <img :src="'../img/' + service.slug + '.png'" :alt="service.slug" />
-
           <span class="ms-2 me-3 mb-3">{{ service.name }}</span>
         </div>
       </div>
     </section>
 
+    <!-- Map section -->
     <section class="map">
-      <img class="w-100" src="img/map.png" alt="" />
+      <img class="w-100" src="../img/map.png" alt="" />
     </section>
   </div>
 </template>

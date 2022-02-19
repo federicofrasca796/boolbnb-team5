@@ -1968,7 +1968,7 @@ var staticRenderFns = [
     return _c("section", { staticClass: "map" }, [
       _c("img", {
         staticClass: "w-100",
-        attrs: { src: "img/map.png", alt: "" },
+        attrs: { src: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '../img/map.png'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())), alt: "" },
       }),
     ])
   },
