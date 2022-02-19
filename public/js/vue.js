@@ -316,12 +316,13 @@ __webpack_require__.r(__webpack_exports__);
     var layers = [];
     var layer;
     var center;
+    var startCoords = [12.49427, 41.89056];
     var markers = [];
     var map = tt.map({
       key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
       container: 'map',
-      center: [12.49427, 41.89056],
-      zoom: 5
+      center: startCoords,
+      zoom: 4
     });
     var options = {
       searchOptions: {
@@ -357,6 +358,7 @@ __webpack_require__.r(__webpack_exports__);
 
     function handleResultSelection(event) {
       var result = event.data.result;
+      console.log(event);
 
       if (result.type === 'category' || result.type === 'brand') {
         return;
@@ -376,7 +378,11 @@ __webpack_require__.r(__webpack_exports__);
         markers = [];
       }
 
+      map.setMaxZoom(8.5);
       fitToViewport(result);
+      setTimeout(function () {
+        map.setMaxZoom(22);
+      }, 500);
     }
 
     function fitToViewport(markerData) {
@@ -415,6 +421,20 @@ __webpack_require__.r(__webpack_exports__);
 
     function handleResultClearing() {
       /* searchMarkersManager.clear(); */
+      map.flyTo({
+        "center": startCoords,
+        "zoom": 4
+      });
+
+      if (markers.length != 0) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].remove();
+        }
+
+        markers = [];
+      }
+
+      drawAll(apartments);
     }
     /* Search Markers Engine */
 
@@ -515,6 +535,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (layers.length == 0) {
         createLayer(data.data.result);
+        console.log('first');
       } else {
         for (var j = 0; j < layers.length; j++) {
           if (layers[j] == data.data.result.id) {
@@ -531,6 +552,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.apartments = response.data.data;
       apartments = response.data.data;
       _this.loading = false;
+      drawAll(apartments);
     });
 
     function createMarker(object) {
@@ -542,7 +564,6 @@ __webpack_require__.r(__webpack_exports__);
       /* Coordinates here */
       .setPopup(popup).addTo(map);
       markers.push(marker);
-      console.log(markers);
     }
 
     function calcCrow(lat1, lon1, lat2, lon2) {
@@ -563,14 +584,6 @@ __webpack_require__.r(__webpack_exports__);
       return Value * Math.PI / 180;
     }
 
-    function calculateDistance() {
-      var lat1 = apartments[3]['latitude'];
-      var lon1 = apartments[3]['longitude'];
-      var lat2 = apartments[4]['latitude'];
-      var lon2 = apartments[4]['longitude'];
-      calcCrow(lat1, lon1, lat2, lon2);
-    }
-
     function hideLayer(layerId) {
       map.setLayoutProperty(layerId, 'visibility', 'none');
     }
@@ -580,25 +593,41 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function createLayer(result) {
-      map.addLayer({
-        'id': result.id,
-        'type': 'fill',
-        'source': {
-          'type': 'geojson',
-          'data': turf.circle([result.position.lng, result.position.lat], 20000, {
-            units: 'metres',
-            properties: {
-              key: result.id
-            }
-          })
-        },
-        'paint': {
-          'fill-color': 'blue',
-          'fill-opacity': 0.3
+      var exists = 0;
+
+      for (var i = 0; i < layers.length; i++) {
+        if (layers[i] == result.id) {
+          exists = 1;
         }
-      });
-      layers.push(result.id);
-      layer = result.id;
+      }
+
+      if (exists == 0) {
+        map.addLayer({
+          'id': result.id,
+          'type': 'fill',
+          'source': {
+            'type': 'geojson',
+            'data': turf.circle([result.position.lng, result.position.lat], 20000, {
+              units: 'metres',
+              properties: {
+                key: result.id
+              }
+            })
+          },
+          'paint': {
+            'fill-color': 'blue',
+            'fill-opacity': 0.3
+          }
+        });
+        layers.push(result.id);
+        layer = result.id;
+      }
+    }
+
+    function drawAll(data) {
+      for (var k = 0; k < data.length; k++) {
+        createMarker(data[k]);
+      }
     }
   },
   methods: {
