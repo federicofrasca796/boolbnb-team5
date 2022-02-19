@@ -15,9 +15,7 @@
 			</div>
 		</div>
 	</div>
-		<div id="searchbar" class="w-100"></div>
-    <div id="map" class="d-none" ref="mapRef"></div>
-
+    <div id="map" ref="mapRef"></div>
 	<!-- <p>{{testComputed}}</p>
 	<button @click="addTest()">Add</button> -->
   </div>
@@ -67,6 +65,7 @@
 			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
+			document.body.appendChild(searchBoxHTML)
 
 			/* Search Event Functions */
 			function handleResultsFound(event) {
@@ -258,8 +257,6 @@
 					apartments = response.data.data;
 					this.loading = false;
 					drawAll(apartments);
-					let searchBarDiv = document.getElementById('searchbar')
-					searchBarDiv.appendChild(searchBoxHTML)
 				},
 			)
 			

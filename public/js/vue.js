@@ -301,8 +301,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
@@ -346,6 +344,7 @@ __webpack_require__.r(__webpack_exports__);
     ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
+    document.body.appendChild(searchBoxHTML);
     /* Search Event Functions */
 
     function handleResultsFound(event) {
@@ -555,8 +554,6 @@ __webpack_require__.r(__webpack_exports__);
       apartments = response.data.data;
       _this.loading = false;
       drawAll(apartments);
-      var searchBarDiv = document.getElementById('searchbar');
-      searchBarDiv.appendChild(searchBoxHTML);
     });
 
     function createMarker(object) {
@@ -2018,9 +2015,7 @@ var render = function () {
               ),
         ]),
     _vm._v(" "),
-    _c("div", { staticClass: "w-100", attrs: { id: "searchbar" } }),
-    _vm._v(" "),
-    _c("div", { ref: "mapRef", staticClass: "d-none", attrs: { id: "map" } }),
+    _c("div", { ref: "mapRef", attrs: { id: "map" } }),
   ])
 }
 var staticRenderFns = []
