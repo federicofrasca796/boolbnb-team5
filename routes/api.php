@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Apartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('apartments' , 'Api\ApartmentController@index')->name('api.apartments.index');
+
+Route::get('orders/generate' , 'Api\Order\OrderController@generate');
+
+Route::post('orders/make/payment' , 'Api\Order\OrderController@makePayment');
