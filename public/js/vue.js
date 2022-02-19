@@ -1829,7 +1829,7 @@ var render = function () {
           _c("img", {
             staticClass: "w-100 h-100",
             attrs: {
-              src: "storage/" + _vm.apartment.thumbnail,
+              src: "/storage/" + _vm.apartment.thumbnail,
               alt: _vm.apartment.slug,
             },
           }),
@@ -1871,7 +1871,7 @@ var render = function () {
           "div",
           { staticClass: "col-6 col-md-3 text-center text-md-start mb-5" },
           [
-            _c("img", { attrs: { src: "img/plans.png", alt: "floors icon" } }),
+            _c("img", { attrs: { src: "/img/plans.png", alt: "floors icon" } }),
             _c("span", { staticClass: "ms-4" }, [
               _vm._v(_vm._s(_vm.apartment.square_metres) + " m²"),
             ]),
@@ -1879,21 +1879,23 @@ var render = function () {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", { attrs: { src: "img/open-door.png", alt: "rooms icon" } }),
+          _c("img", {
+            attrs: { src: "/img/open-door.png", alt: "rooms icon" },
+          }),
           _c("span", { staticClass: "ms-4" }, [
             _vm._v(_vm._s(_vm.apartment.number_of_rooms) + " rooms"),
           ]),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", { attrs: { src: "img/bed.png", alt: "bed icon" } }),
+          _c("img", { attrs: { src: "/img/bed.png", alt: "bed icon" } }),
           _c("span", { staticClass: "ms-4" }, [
             _vm._v(_vm._s(_vm.apartment.number_of_beds) + " beds"),
           ]),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", { attrs: { src: "img/shower.png", alt: "shower icon" } }),
+          _c("img", { attrs: { src: "/img/shower.png", alt: "shower icon" } }),
           _c("span", { staticClass: "ms-4" }, [
             _vm._v(_vm._s(_vm.apartment.number_of_baths) + " bath"),
           ]),
@@ -1919,7 +1921,7 @@ var render = function () {
             [
               _c("img", {
                 attrs: {
-                  src: "img/" + service.slug + ".png",
+                  src: "../img/" + service.slug + ".png",
                   alt: service.slug,
                 },
               }),

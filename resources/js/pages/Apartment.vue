@@ -4,7 +4,7 @@
     <section class="container_img w-100 px-3 d-flex flex-wrap">
       <div class="col-12 h-100 p-2">
         <img
-          :src="'storage/' + apartment.thumbnail"
+          :src="'/storage/' + apartment.thumbnail"
           class="w-100 h-100"
           :alt="apartment.slug"
         />
@@ -64,22 +64,22 @@
 
       <div class="col-12 col-md-8 d-flex mt-4 flex-wrap">
         <div class="col-6 col-md-3 text-center text-md-start mb-5">
-          <img src="img/plans.png" alt="floors icon" /><span class="ms-4"
+          <img src="/img/plans.png" alt="floors icon" /><span class="ms-4"
             >{{ apartment.square_metres }} m&sup2;</span
           >
         </div>
         <div class="col-6 col-md-3 text-center text-md-start">
-          <img src="img/open-door.png" alt="rooms icon" /><span class="ms-4"
+          <img src="/img/open-door.png" alt="rooms icon" /><span class="ms-4"
             >{{ apartment.number_of_rooms }} rooms</span
           >
         </div>
         <div class="col-6 col-md-3 text-center text-md-start">
-          <img src="img/bed.png" alt="bed icon" /><span class="ms-4"
+          <img src="/img/bed.png" alt="bed icon" /><span class="ms-4"
             >{{ apartment.number_of_beds }} beds</span
           >
         </div>
         <div class="col-6 col-md-3 text-center text-md-start">
-          <img src="img/shower.png" alt="shower icon" /><span class="ms-4"
+          <img src="/img/shower.png" alt="shower icon" /><span class="ms-4"
             >{{ apartment.number_of_baths }} bath</span
           >
         </div>
@@ -96,7 +96,7 @@
           :key="service.id"
           class="col-4 col-md-3 text-md-start mb-2"
         >
-          <img :src="'img/' + service.slug + '.png'" :alt="service.slug" />
+          <img :src="'../img/' + service.slug + '.png'" :alt="service.slug" />
 
           <span class="ms-2 me-3 mb-3">{{ service.name }}</span>
         </div>
