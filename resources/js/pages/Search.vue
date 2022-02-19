@@ -1,19 +1,23 @@
 <template>
-  <div class="container">
-	<div class="loading results" v-if="loading">
+  <div class="container-fluid d-flex">
+	<div class="loading results" v-if="loading && mapLoading">
 		<p>Loading</p>
 	</div>
-	<div class="all results" v-else-if="results.length == 0">
-		<div class="col" v-for="apartment in apartments" :key="apartment.id">
-			<p>{{apartment.title}}</p>
+	<div class="loaded d-none flex-grow-1" v-else>
+		<div class="all results" v-if="results.length == 0">
+			<div class="col" v-for="apartment in apartments" :key="apartment.id">
+				<p>{{apartment.title}}</p>
+			</div>
+		</div>
+		<div class="search results" v-else>
+			<div class="col" v-for="apartment in results" :key="apartment.title">
+				<p>{{apartment.title}}</p>
+			</div>
 		</div>
 	</div>
-	<div class="search results" v-else>
-		<div class="col" v-for="apartment in results" :key="apartment.title">
-			<p>{{apartment.title}}</p>
-		</div>
-	</div>
-    <div id="map" ref="mapRef"></div>
+		<div id="searchbar" class="w-100"></div>
+    <div id="map" class="d-none" ref="mapRef"></div>
+
 	<!-- <p>{{testComputed}}</p>
 	<button @click="addTest()">Add</button> -->
   </div>
@@ -29,6 +33,7 @@
 				x: 0,
 				results: [],
 				loading : true,
+				mapLoading : true
 			}
 		},
       	mounted() {      
@@ -53,9 +58,7 @@
 					countrySet: 'IT',
 				},
 			};
-
-            map.addControl(new tt.FullscreenControl()); 
-            map.addControl(new tt.NavigationControl());  
+  
 			/* Search Events Handler */
 			var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
 			var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
@@ -64,7 +67,6 @@
 			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
-			document.body.appendChild(searchBoxHTML)
 
 			/* Search Event Functions */
 			function handleResultsFound(event) {
@@ -256,6 +258,8 @@
 					apartments = response.data.data;
 					this.loading = false;
 					drawAll(apartments);
+					let searchBarDiv = document.getElementById('searchbar')
+					searchBarDiv.appendChild(searchBoxHTML)
 				},
 			)
 			
@@ -333,6 +337,16 @@
 				}
 			}
 
+			map.on('load' , toggleLoading)
+			
+			function toggleLoading(){
+				this.mapLoading  = false;
+				console.log('loaded')
+				document.getElementById('map').classList.remove('d-none')
+				document.querySelector('.loaded').classList.remove('d-none')
+				map.addControl(new tt.FullscreenControl()); 
+            	map.addControl(new tt.NavigationControl());
+			}
 			
     	}  ,
 		
@@ -358,9 +372,6 @@
 
 <style>
 
-.container{
-	display: flex;
-}
 #map {
   height: 100vh;
   width: 40%;

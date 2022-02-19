@@ -299,6 +299,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
@@ -306,7 +310,8 @@ __webpack_require__.r(__webpack_exports__);
       apartments: null,
       x: 0,
       results: [],
-      loading: true
+      loading: true,
+      mapLoading: true
     };
   },
   mounted: function mounted() {
@@ -332,8 +337,6 @@ __webpack_require__.r(__webpack_exports__);
         countrySet: 'IT'
       }
     };
-    map.addControl(new tt.FullscreenControl());
-    map.addControl(new tt.NavigationControl());
     /* Search Events Handler */
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
@@ -343,7 +346,6 @@ __webpack_require__.r(__webpack_exports__);
     ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
     ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
-    document.body.appendChild(searchBoxHTML);
     /* Search Event Functions */
 
     function handleResultsFound(event) {
@@ -553,6 +555,8 @@ __webpack_require__.r(__webpack_exports__);
       apartments = response.data.data;
       _this.loading = false;
       drawAll(apartments);
+      var searchBarDiv = document.getElementById('searchbar');
+      searchBarDiv.appendChild(searchBoxHTML);
     });
 
     function createMarker(object) {
@@ -629,6 +633,17 @@ __webpack_require__.r(__webpack_exports__);
         createMarker(data[k]);
       }
     }
+
+    map.on('load', toggleLoading);
+
+    function toggleLoading() {
+      this.mapLoading = false;
+      console.log('loaded');
+      document.getElementById('map').classList.remove('d-none');
+      document.querySelector('.loaded').classList.remove('d-none');
+      map.addControl(new tt.FullscreenControl());
+      map.addControl(new tt.NavigationControl());
+    }
   },
   methods: {
     addTest: function addTest() {
@@ -659,7 +674,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container{\r\n\tdisplay: flex;\n}\n#map {\r\n  height: 100vh;\r\n  width: 40%;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
+exports.push([module.i, "\n#map {\r\n  height: 100vh;\r\n  width: 40%;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
 
 // exports
 
@@ -1972,34 +1987,40 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm.loading
+  return _c("div", { staticClass: "container-fluid d-flex" }, [
+    _vm.loading && _vm.mapLoading
       ? _c("div", { staticClass: "loading results" }, [
           _c("p", [_vm._v("Loading")]),
         ])
-      : _vm.results.length == 0
-      ? _c(
-          "div",
-          { staticClass: "all results" },
-          _vm._l(_vm.apartments, function (apartment) {
-            return _c("div", { key: apartment.id, staticClass: "col" }, [
-              _c("p", [_vm._v(_vm._s(apartment.title))]),
-            ])
-          }),
-          0
-        )
-      : _c(
-          "div",
-          { staticClass: "search results" },
-          _vm._l(_vm.results, function (apartment) {
-            return _c("div", { key: apartment.title, staticClass: "col" }, [
-              _c("p", [_vm._v(_vm._s(apartment.title))]),
-            ])
-          }),
-          0
-        ),
+      : _c("div", { staticClass: "loaded d-none flex-grow-1" }, [
+          _vm.results.length == 0
+            ? _c(
+                "div",
+                { staticClass: "all results" },
+                _vm._l(_vm.apartments, function (apartment) {
+                  return _c("div", { key: apartment.id, staticClass: "col" }, [
+                    _c("p", [_vm._v(_vm._s(apartment.title))]),
+                  ])
+                }),
+                0
+              )
+            : _c(
+                "div",
+                { staticClass: "search results" },
+                _vm._l(_vm.results, function (apartment) {
+                  return _c(
+                    "div",
+                    { key: apartment.title, staticClass: "col" },
+                    [_c("p", [_vm._v(_vm._s(apartment.title))])]
+                  )
+                }),
+                0
+              ),
+        ]),
     _vm._v(" "),
-    _c("div", { ref: "mapRef", attrs: { id: "map" } }),
+    _c("div", { staticClass: "w-100", attrs: { id: "searchbar" } }),
+    _vm._v(" "),
+    _c("div", { ref: "mapRef", staticClass: "d-none", attrs: { id: "map" } }),
   ])
 }
 var staticRenderFns = []
