@@ -1,9 +1,5 @@
 <template>
-  <div class="container-fluid d-flex">
-	<div class="loading results" v-if="loading && mapLoading">
-		<p>Loading</p>
-	</div>
-	<div class="loaded d-none flex-grow-1" v-else>
+  	<div class="container-fluid d-flex">
 		<div class="all results" v-if="results.length == 0">
 			<div class="col" v-for="apartment in apartments" :key="apartment.id">
 				<p>{{apartment.title}}</p>
@@ -14,8 +10,9 @@
 				<p>{{apartment.title}}</p>
 			</div>
 		</div>
-	</div>
-    <div id="map" ref="mapRef"></div>
+		<div id="map" ref="mapRef"></div>
+	<div class="div"></div>
+	<!-- This is the computed test -->
 	<!-- <p>{{testComputed}}</p>
 	<button @click="addTest()">Add</button> -->
   </div>
@@ -31,16 +28,20 @@
 				x: 0,
 				results: [],
 				loading : true,
-				mapLoading : true
+				searching: null,
 			}
 		},
+
       	mounted() {      
 			const tt = window.tt; 
 			let layers = [];
 			let layer;
 			let center;
+			let apartments;
 			let startCoords = [12.49427, 41.89056];
 			let markers = [];
+
+			/* Create The Map */
 			var map = tt.map({ 
 				key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj', 
 				container: 'map', 
@@ -48,6 +49,10 @@
     			zoom: 4
 			}); 
 
+			map.addControl(new tt.FullscreenControl()); 
+            map.addControl(new tt.NavigationControl());
+
+			/* Search Options */
 			var options = {
 				searchOptions: {
 					key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
@@ -74,9 +79,6 @@
 				if (results.length === 0) {
 					searchMarkersManager.clear();
 				}
-				/* searchMarkersManager.draw(results); */
-				
-
 			}
 
 			function handleResultSelection(event) {
@@ -85,7 +87,6 @@
 				if (result.type === 'category' || result.type === 'brand') {
 					return;
 				}
-				/* searchMarkersManager.draw([result]); */
 				if(layer != null){
 					hideLayer(layer)
 				}
@@ -97,6 +98,7 @@
 				}
 				map.setMaxZoom(8.5)
 				fitToViewport(result);
+
 				setTimeout(()=>{
 					map.setMaxZoom(22)
 				},500)
@@ -144,7 +146,6 @@
 				drawAll(apartments);
 			}
 
-
 			/* Search Markers Engine */
 			function SearchMarkersManager(map, options) {
 				this.map = map;
@@ -180,7 +181,6 @@
 				this.markers = {};
 				this._lastClickedMarker = null;
 			};
-
 
 			/* Add Remove Markers From Map */
 			function SearchMarker(poiData, options) {
@@ -220,12 +220,26 @@
 				this.marker.remove();
 				this._map = null;
 			};
-			/* Results Log */
+
+			/* Actions to do when selecting a result */
 			ttSearchBox.on('tomtom.searchbox.resultselected', (data) => {
 				console.log(data.data.result);
 				center = [data.data.result.position.lat , data.data.result.position.lng];
-				this.results = [];
-				
+				this.results = [];				
+				mapInteract(data);
+			});
+
+			/* Api apartments call */
+			axios.get('api/apartments').then(
+				(response) => {
+					this.apartments = response.data.data; 
+					apartments = response.data.data;
+					drawAll(apartments);
+				},
+			)
+			
+			/* interactions on the map(markers, distance , layer , results) */
+			function mapInteract(data){
 				for(let k = 0;k<apartments.length;k++){
 					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude'])
 					if(dist < 20){
@@ -249,18 +263,9 @@
 						}
 					}
 				}
-			});
-			let apartments = '';
-			axios.get('api/apartments').then(
-				(response) => {
-					this.apartments = response.data.data; 
-					apartments = response.data.data;
-					this.loading = false;
-					drawAll(apartments);
-				},
-			)
-			
+			}
 
+			/* Create Marker with Popup */
 			function createMarker(object){   
 				/* create the popup for the marker*/
 				var popup = new tt.Popup()
@@ -268,41 +273,41 @@
 				
 				/* Create the Marker */
 				var marker = new tt.Marker()
-				.setLngLat([object.longitude , object.latitude]) /* Coordinates here */
-				.setPopup(popup)
-				.addTo(map);
+					.setLngLat([object.longitude , object.latitude]) /* Coordinates here */
+					.setPopup(popup)
+					.addTo(map);
 				markers.push(marker)
 			}
 
-			function calcCrow(lat1, lon1, lat2, lon2) 
-			{
-			var R = 6371; // km
-			var dLat = toRad(lat2-lat1);
-			var dLon = toRad(lon2-lon1);
-			var lat1 = toRad(lat1);
-			var lat2 = toRad(lat2);
-
-			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-				Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-			var d = R * c;
-			return d;
+			/* Distance Calculator */
+			function calcCrow(lat1, lon1, lat2, lon2) {
+				var R = 6371; // km
+				var dLat = toRad(lat2-lat1);
+				var dLon = toRad(lon2-lon1);
+				var lat1 = toRad(lat1);
+				var lat2 = toRad(lat2);
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+				var d = R * c;
+				return d;
 			}
 
 			// Converts numeric degrees to radians
-			function toRad(Value) 
-			{
+			function toRad(Value) {
 				return Value * Math.PI / 180;
-			}
+			}		
 
+			/* hide layer on map */
 			function hideLayer(layerId) {
             	map.setLayoutProperty(layerId, 'visibility', 'none');
         	}
 
+			/* Show layer on map */
 			function showLayer(layerId){
 				map.setLayoutProperty(layerId, 'visibility' , 'visible')
 			}
 
+			/* Create layer on map */
 			function createLayer(result){
 				let exists = 0;
 				for(let i = 0;i<layers.length;i++){
@@ -310,7 +315,7 @@
 						exists = 1;
 					}
 				}
-				if(exists == 0){
+				if(exists == 0){					
 					map.addLayer({
 						'id': result.id,
 						'type': 'fill',
@@ -328,43 +333,52 @@
 				}
 			}
 
+			/* Draw markers on map */
 			function drawAll(data){
 				for(let k = 0;k<data.length;k++){
 					createMarker(data[k]);
 				}
 			}
 
-			map.on('load' , toggleLoading)
-			
-			function toggleLoading(){
-				this.mapLoading  = false;
-				console.log('loaded')
-				document.getElementById('map').classList.remove('d-none')
-				document.querySelector('.loaded').classList.remove('d-none')
-				map.addControl(new tt.FullscreenControl()); 
-            	map.addControl(new tt.NavigationControl());
+			/* rearch the result passed througth home component */
+			if(this.searching != null){
+				ttSearchBox.setValue(this.value)
+				map.on('load', ()=>{
+					handleResultSelection(this.searching)
+					mapInteract(this.searching)
+				})
 			}
-			
     	}  ,
 		
 		methods: {
+			/* This is a test interacting with computed properties */
 			addTest(){
 				this.x += 1;
 			}	
 		},
 
 		computed:{
+			/* This is a Computing test */
 			testComputed(){
 				return this.x;
 			},
 
+			/* Compute the apartments */
 			getApartments(){
 				return this.apartments;
 			}
+		},
+		
+		/* Manage data from home component */
+		created(){
+			this.searching = this.$route.params.data;
+			this.value = this.$route.params.value;
+			console.log(this.value)
 		}
 
 		
     } 
+
 </script>
 
 <style>
@@ -373,10 +387,12 @@
   height: 100vh;
   width: 40%;
 }
+
 .tt-search-marker>div{
 	background: none !important;
 	border: none !important;
 	height: 50px !important;
 	width: 50px !important;
 }
+
 </style>

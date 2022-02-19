@@ -18,13 +18,18 @@
             </span>
             <!-- Input text -->
             <div id="mySearchbar" class="form-control"></div>
+
+            <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
-              <!-- Route to advanced search page -->
-              <router-link
-                class="btn btn-danger text-white px-5 rounded-0 h-100"
-                to="/searchadv"
-                >SEARCH
-              </router-link>
+              <div id="link_router" class="d-none">
+                <button @click="emitSearchData()" class="btn btn-danger text-white px-5 rounded-0 h-100"> SEARCH</button>
+              </div>
+              <div
+                id="link_fake"
+                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+              >
+                SEARCH
+              </div>
             </div>
           </div>
         </form>
@@ -45,7 +50,7 @@
 
         <!-- API loaded -->
         <template v-else>
-          <div class="col" v-for="apartment in apartments" :key="apartments.id">
+          <div class="col" v-for="apartment in apartments" :key="apartment.id">
             <div class="card overflow-hidden">
               <!-- <a href="{{ route('guest.show', $apartment->slug) }}"> -->
               <img
@@ -72,7 +77,8 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: {},
+      mySearchResult: Object,
+      inputValue : null 
     };
   },
   mounted() {
@@ -89,6 +95,7 @@ export default {
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    this.printSearchbar(searchBoxHTML);
 
     let input = document.getElementById("mySearchbar");
     input.appendChild(searchBoxHTML);
@@ -96,12 +103,14 @@ export default {
     /* Results Log */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
       var self = this;
-      self.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
+      self.mySearchResult = data;
+      this.changeBtn();
+      setTimeout(()=>{
+        let value;
+        value = ttSearchBox.getValue();
+        this.inputValue = value
+      },100)
     });
-    function callTestMethod(p) {
-      console.log(p);
-    }
   },
   methods: {
     fetchApartments() {
@@ -117,6 +126,22 @@ export default {
           this.api_error = true;
         });
     },
+
+    printSearchbar(searchbar) {
+      let input = document.getElementById("mySearchbar");
+      input.appendChild(searchbar);
+    },
+
+    changeBtn() {
+      let fake = document.getElementById("link_fake");
+      fake.classList.add("d-none");
+      let real = document.getElementById("link_router");
+      real.classList.remove("d-none");
+    },
+
+    emitSearchData(){
+      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue}})
+    }
   },
 };
 </script>

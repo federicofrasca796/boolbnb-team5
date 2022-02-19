@@ -214,13 +214,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: {}
+      mySearchResult: Object,
+      inputValue: null
     };
   },
   mounted: function mounted() {
@@ -237,19 +243,23 @@ __webpack_require__.r(__webpack_exports__);
     };
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    this.printSearchbar(searchBoxHTML);
     var input = document.getElementById("mySearchbar");
     input.appendChild(searchBoxHTML);
     /* Results Log */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
       var self = _this;
-      self.mySearchResult = data.data.result;
-      callTestMethod(data.data.result);
-    });
+      self.mySearchResult = data;
 
-    function callTestMethod(p) {
-      console.log(p);
-    }
+      _this.changeBtn();
+
+      setTimeout(function () {
+        var value;
+        value = ttSearchBox.getValue();
+        _this.inputValue = value;
+      }, 100);
+    });
   },
   methods: {
     fetchApartments: function fetchApartments() {
@@ -262,6 +272,25 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         console.error(e);
         _this2.api_error = true;
+      });
+    },
+    printSearchbar: function printSearchbar(searchbar) {
+      var input = document.getElementById("mySearchbar");
+      input.appendChild(searchbar);
+    },
+    changeBtn: function changeBtn() {
+      var fake = document.getElementById("link_fake");
+      fake.classList.add("d-none");
+      var real = document.getElementById("link_router");
+      real.classList.remove("d-none");
+    },
+    emitSearchData: function emitSearchData() {
+      this.$router.push({
+        name: "Search",
+        params: {
+          data: this.mySearchResult,
+          value: this.inputValue
+        }
       });
     }
   }
@@ -298,9 +327,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
@@ -309,7 +335,7 @@ __webpack_require__.r(__webpack_exports__);
       x: 0,
       results: [],
       loading: true,
-      mapLoading: true
+      searching: null
     };
   },
   mounted: function mounted() {
@@ -319,14 +345,21 @@ __webpack_require__.r(__webpack_exports__);
     var layers = [];
     var layer;
     var center;
+    var apartments;
     var startCoords = [12.49427, 41.89056];
     var markers = [];
+    /* Create The Map */
+
     var map = tt.map({
       key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
       container: 'map',
       center: startCoords,
       zoom: 4
     });
+    map.addControl(new tt.FullscreenControl());
+    map.addControl(new tt.NavigationControl());
+    /* Search Options */
+
     var options = {
       searchOptions: {
         key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
@@ -353,8 +386,6 @@ __webpack_require__.r(__webpack_exports__);
       if (results.length === 0) {
         searchMarkersManager.clear();
       }
-      /* searchMarkersManager.draw(results); */
-
     }
 
     function handleResultSelection(event) {
@@ -364,8 +395,6 @@ __webpack_require__.r(__webpack_exports__);
       if (result.type === 'category' || result.type === 'brand') {
         return;
       }
-      /* searchMarkersManager.draw([result]); */
-
 
       if (layer != null) {
         hideLayer(layer);
@@ -514,22 +543,31 @@ __webpack_require__.r(__webpack_exports__);
       this.marker.remove();
       this._map = null;
     };
-    /* Results Log */
+    /* Actions to do when selecting a result */
 
 
     ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
       console.log(data.data.result);
       center = [data.data.result.position.lat, data.data.result.position.lng];
       _this.results = [];
+      mapInteract(data);
+    });
+    /* Api apartments call */
 
+    axios.get('api/apartments').then(function (response) {
+      _this.apartments = response.data.data;
+      apartments = response.data.data;
+      drawAll(apartments);
+    });
+    /* interactions on the map(markers, distance , layer , results) */
+
+    function mapInteract(data) {
       for (var k = 0; k < apartments.length; k++) {
         var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
 
         if (dist < 20) {
           createMarker(apartments[k]);
-
-          _this.results.push(apartments[k]);
-
+          this.results.push(apartments[k]);
           console.log(apartments[k]['title'], '_', dist, ' KM');
         }
       }
@@ -547,14 +585,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }
-    });
-    var apartments = '';
-    axios.get('api/apartments').then(function (response) {
-      _this.apartments = response.data.data;
-      apartments = response.data.data;
-      _this.loading = false;
-      drawAll(apartments);
-    });
+    }
+    /* Create Marker with Popup */
+
 
     function createMarker(object) {
       /* create the popup for the marker*/
@@ -566,6 +599,8 @@ __webpack_require__.r(__webpack_exports__);
       .setPopup(popup).addTo(map);
       markers.push(marker);
     }
+    /* Distance Calculator */
+
 
     function calcCrow(lat1, lon1, lat2, lon2) {
       var R = 6371; // km
@@ -584,14 +619,20 @@ __webpack_require__.r(__webpack_exports__);
     function toRad(Value) {
       return Value * Math.PI / 180;
     }
+    /* hide layer on map */
+
 
     function hideLayer(layerId) {
       map.setLayoutProperty(layerId, 'visibility', 'none');
     }
+    /* Show layer on map */
+
 
     function showLayer(layerId) {
       map.setLayoutProperty(layerId, 'visibility', 'visible');
     }
+    /* Create layer on map */
+
 
     function createLayer(result) {
       var exists = 0;
@@ -624,36 +665,48 @@ __webpack_require__.r(__webpack_exports__);
         layer = result.id;
       }
     }
+    /* Draw markers on map */
+
 
     function drawAll(data) {
       for (var k = 0; k < data.length; k++) {
         createMarker(data[k]);
       }
     }
+    /* rearch the result passed througth home component */
 
-    map.on('load', toggleLoading);
 
-    function toggleLoading() {
-      this.mapLoading = false;
-      console.log('loaded');
-      document.getElementById('map').classList.remove('d-none');
-      document.querySelector('.loaded').classList.remove('d-none');
-      map.addControl(new tt.FullscreenControl());
-      map.addControl(new tt.NavigationControl());
+    if (this.searching != null) {
+      ttSearchBox.setValue(this.value);
+      map.on('load', function () {
+        handleResultSelection(_this.searching);
+        mapInteract(_this.searching);
+      });
     }
   },
   methods: {
+    /* This is a test interacting with computed properties */
     addTest: function addTest() {
       this.x += 1;
     }
   },
   computed: {
+    /* This is a Computing test */
     testComputed: function testComputed() {
       return this.x;
     },
+
+    /* Compute the apartments */
     getApartments: function getApartments() {
       return this.apartments;
     }
+  },
+
+  /* Manage data from home component */
+  created: function created() {
+    this.searching = this.$route.params.data;
+    this.value = this.$route.params.value;
+    console.log(this.value);
   }
 });
 
@@ -671,7 +724,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#map {\r\n  height: 100vh;\r\n  width: 40%;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
+exports.push([module.i, "\n#map {\r\n  height: 100vh;\r\n  width: 40%;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -1878,22 +1931,37 @@ var render = function () {
                 attrs: { id: "mySearchbar" },
               }),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "h-100 bg-white p-2" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass:
-                        "btn btn-danger text-white px-5 rounded-0 h-100",
-                      attrs: { to: "/searchadv" },
-                    },
-                    [_vm._v("SEARCH\n            ")]
-                  ),
-                ],
-                1
-              ),
+              _c("div", { staticClass: "h-100 bg-white p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "d-none", attrs: { id: "link_router" } },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-danger text-white px-5 rounded-0 h-100",
+                        on: {
+                          click: function ($event) {
+                            return _vm.emitSearchData()
+                          },
+                        },
+                      },
+                      [_vm._v(" SEARCH")]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn btn-secondary text-white px-5 rounded-0 h-100",
+                    attrs: { id: "link_fake" },
+                  },
+                  [_vm._v("\n              SEARCH\n            ")]
+                ),
+              ]),
             ]),
           ]),
         ]),
@@ -1915,27 +1983,23 @@ var render = function () {
             : _vm.loading
             ? [_vm._v(" ⏳ Loading.. ")]
             : _vm._l(_vm.apartments, function (apartment) {
-                return _c(
-                  "div",
-                  { key: _vm.apartments.id, staticClass: "col" },
-                  [
-                    _c("div", { staticClass: "card overflow-hidden" }, [
-                      _c("img", {
-                        staticClass: "w-100",
-                        attrs: {
-                          src: "storage/" + apartment.thumbnail,
-                          alt: "...",
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("h5", { staticClass: "card-title" }, [
-                          _vm._v(_vm._s(apartment.title)),
-                        ]),
+                return _c("div", { key: apartment.id, staticClass: "col" }, [
+                  _c("div", { staticClass: "card overflow-hidden" }, [
+                    _c("img", {
+                      staticClass: "w-100",
+                      attrs: {
+                        src: "storage/" + apartment.thumbnail,
+                        alt: "...",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("h5", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(apartment.title)),
                       ]),
                     ]),
-                  ]
-                )
+                  ]),
+                ])
               }),
         ],
         2
@@ -1985,37 +2049,31 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid d-flex" }, [
-    _vm.loading && _vm.mapLoading
-      ? _c("div", { staticClass: "loading results" }, [
-          _c("p", [_vm._v("Loading")]),
-        ])
-      : _c("div", { staticClass: "loaded d-none flex-grow-1" }, [
-          _vm.results.length == 0
-            ? _c(
-                "div",
-                { staticClass: "all results" },
-                _vm._l(_vm.apartments, function (apartment) {
-                  return _c("div", { key: apartment.id, staticClass: "col" }, [
-                    _c("p", [_vm._v(_vm._s(apartment.title))]),
-                  ])
-                }),
-                0
-              )
-            : _c(
-                "div",
-                { staticClass: "search results" },
-                _vm._l(_vm.results, function (apartment) {
-                  return _c(
-                    "div",
-                    { key: apartment.title, staticClass: "col" },
-                    [_c("p", [_vm._v(_vm._s(apartment.title))])]
-                  )
-                }),
-                0
-              ),
-        ]),
+    _vm.results.length == 0
+      ? _c(
+          "div",
+          { staticClass: "all results" },
+          _vm._l(_vm.apartments, function (apartment) {
+            return _c("div", { key: apartment.id, staticClass: "col" }, [
+              _c("p", [_vm._v(_vm._s(apartment.title))]),
+            ])
+          }),
+          0
+        )
+      : _c(
+          "div",
+          { staticClass: "search results" },
+          _vm._l(_vm.results, function (apartment) {
+            return _c("div", { key: apartment.title, staticClass: "col" }, [
+              _c("p", [_vm._v(_vm._s(apartment.title))]),
+            ])
+          }),
+          0
+        ),
     _vm._v(" "),
     _c("div", { ref: "mapRef", attrs: { id: "map" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "div" }),
   ])
 }
 var staticRenderFns = []
