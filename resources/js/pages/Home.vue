@@ -140,7 +140,7 @@ export default {
     },
 
     emitSearchData(){
-      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue}})
+      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue , apartments: this.apartments}})
     }
   },
 };

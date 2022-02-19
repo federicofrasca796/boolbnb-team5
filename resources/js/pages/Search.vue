@@ -29,16 +29,17 @@
 				results: [],
 				loading : true,
 				searching: null,
+				startCoords: [12.49427, 41.89056]
 			}
 		},
 
       	mounted() {      
 			const tt = window.tt; 
 			let layers = [];
-			let layer;
-			let center;
+			let layer = 0;
+			let center = 0;
 			let apartments;
-			let startCoords = [12.49427, 41.89056];
+			let startCoords = this.startCoords;
 			let markers = [];
 
 			/* Create The Map */
@@ -68,7 +69,6 @@
 			var searchMarkersManager = new SearchMarkersManager(map);
 			ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
 			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
-			ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
 			document.body.appendChild(searchBoxHTML)
 
@@ -83,7 +83,6 @@
 
 			function handleResultSelection(event) {
 				var result = event.data.result;
-				console.log(event)
 				if (result.type === 'category' || result.type === 'brand') {
 					return;
 				}
@@ -133,6 +132,9 @@
 
 			function handleResultClearing() {
 				/* searchMarkersManager.clear(); */
+				if(layer != 0){
+					hideLayer(layer);
+				}
 				map.flyTo({
 					"center": startCoords,
 					"zoom":4
@@ -223,20 +225,12 @@
 
 			/* Actions to do when selecting a result */
 			ttSearchBox.on('tomtom.searchbox.resultselected', (data) => {
-				console.log(data.data.result);
 				center = [data.data.result.position.lat , data.data.result.position.lng];
 				this.results = [];				
 				mapInteract(data);
 			});
 
-			/* Api apartments call */
-			axios.get('api/apartments').then(
-				(response) => {
-					this.apartments = response.data.data; 
-					apartments = response.data.data;
-					drawAll(apartments);
-				},
-			)
+			
 			
 			/* interactions on the map(markers, distance , layer , results) */
 			function mapInteract(data){
@@ -244,8 +238,9 @@
 					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude'])
 					if(dist < 20){
 						createMarker(apartments[k]);
-						this.results.push(apartments[k])
-						console.log(apartments[k]['title'] , '_' , dist , ' KM');
+						()=>{
+							this.results.push(apartments[k])
+						}
 					}
 				}
 				if(layers.length == 0){
@@ -299,12 +294,15 @@
 
 			/* hide layer on map */
 			function hideLayer(layerId) {
+				console.log('hide ' , layerId)
             	map.setLayoutProperty(layerId, 'visibility', 'none');
         	}
 
 			/* Show layer on map */
 			function showLayer(layerId){
+				console.log('show ' , layerId)
 				map.setLayoutProperty(layerId, 'visibility' , 'visible')
+				layer = layerId;
 			}
 
 			/* Create layer on map */
@@ -330,6 +328,7 @@
 					});
 					layers.push(result.id);
 					layer = result.id;
+					console.log('created current ' , layer)
 				}
 			}
 
@@ -339,14 +338,26 @@
 					createMarker(data[k]);
 				}
 			}
-
+			let searching  =this.searching;
 			/* rearch the result passed througth home component */
-			if(this.searching != null){
+			if(searching != null){
+				center = [searching.data.result.position.lat , searching.data.result.position.lng]
 				ttSearchBox.setValue(this.value)
+				apartments = this.apartments
 				map.on('load', ()=>{
+					/* Api apartments call */
 					handleResultSelection(this.searching)
 					mapInteract(this.searching)
 				})
+			}
+			else{
+				axios.get('api/apartments').then(
+					(response) => {
+						this.apartments = response.data.data; 
+						apartments = response.data.data;
+						drawAll(apartments);
+					},
+				)
 			}
     	}  ,
 		
@@ -373,7 +384,8 @@
 		created(){
 			this.searching = this.$route.params.data;
 			this.value = this.$route.params.value;
-			console.log(this.value)
+			this.apartments = this.$route.params.apartments;
+			console.log(this.apartments)
 		}
 
 		
