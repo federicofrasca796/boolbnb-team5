@@ -11319,25 +11319,37 @@ header .modal button[type=submit] {
      object-fit: cover;
   filter: brightness(0.7);
 }
+#jumbo .search-destination {
+  width: 75%;
+}
 #jumbo .search-destination .input-group {
   height: 70px;
+}
+#jumbo .search-destination .input-group .container-button-search {
+  padding: 0.5rem;
+}
+#jumbo .search-destination .input-group .container-button-search button {
+  padding: 0px 3rem;
+}
+
+.search-destination .input-group {
   border-radius: 0.9rem;
 }
-#jumbo .search-destination .input-group #basic-addon1 {
+.search-destination .input-group #basic-addon1 {
   background-color: white;
   border: none;
   border-top-left-radius: 0.9rem;
   border-bottom-left-radius: 0.9rem;
 }
-#jumbo .search-destination .input-group input {
+.search-destination .input-group input {
   background-color: white;
   border: none;
 }
-#jumbo .search-destination .input-group .container-button-search {
+.search-destination .input-group .container-button-search {
   border-top-right-radius: 0.9rem;
   border-bottom-right-radius: 0.9rem;
 }
-#jumbo .search-destination .input-group .container-button-search button {
+.search-destination .input-group .container-button-search button {
   border-top-right-radius: 0.9rem;
   border-bottom-right-radius: 0.9rem;
   color: white;
@@ -11429,42 +11441,63 @@ header .modal button[type=submit] {
   font-family: "Josefin Sans", sans-serif;
 }
 
-.advanced-search {
+header .search-destination {
+  width: 40%;
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+header .search-destination .input-group {
+  border: 1px solid lightgrey;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+header .search-destination .input-group .container-button-search {
+  padding: 0.2rem;
+}
+header .search-destination .input-group .container-button-search button {
+  padding: 0px 2rem;
+}
+
+.container-advanced-search {
+  height: calc(100vh - 75px);
+}
+.container-advanced-search .advanced-search {
   width: 80%;
   margin: auto;
 }
-.advanced-search input[type=button] {
+.container-advanced-search .advanced-search input[type=button] {
   font-family: "Josefin Sans", sans-serif;
   padding: 8px 16px;
   border: 1px solid lightgrey;
   background-color: transparent;
 }
-.advanced-search input[type=button]:hover {
+.container-advanced-search .advanced-search input[type=button]:hover {
   border: 1px solid black;
 }
-
-.container_results_appartment {
+.container-advanced-search .container_results_appartment {
+  height: 85%;
   width: 80%;
   margin: auto;
   border: none;
   border-top: 1px solid lightgray;
 }
-.container_results_appartment .number_results {
+.container-advanced-search .container_results_appartment .results {
+  overflow-y: scroll;
+}
+.container-advanced-search .container_results_appartment .results .number_results {
   border-bottom: 1px solid lightgray;
 }
-.container_results_appartment .single-apartment .image-single img {
+.container-advanced-search .container_results_appartment .results .single-apartment .image-single img {
   border-radius: 1.9rem;
   height: 165px;
 }
-.container_results_appartment .single-apartment .info_apartment hr {
+.container-advanced-search .container_results_appartment .results .single-apartment .info_apartment hr {
   width: 50px;
 }
-.container_results_appartment .mappa {
-  margin-top: 150px;
-}
-.container_results_appartment .mappa img {
+.container-advanced-search .container_results_appartment .mappa img {
   width: 100%;
-  height: 400px;
+  height: 100%;
 }
 
 * {

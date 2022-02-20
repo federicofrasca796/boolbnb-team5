@@ -1,6 +1,14 @@
-<header class="{{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'guest.advanced-search' ? '' : 'position-fixed'}}  w-100 d-flex justify-content-start justify-content-sm-center py-3 px-4">
+<header class="{{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'guest.advanced-search' ? '' : 'position-fixed'}}
+                w-100 d-flex justify-content-start py-3 px-4
+                {{Route::currentRouteName() !== 'guest.advanced-search' ? 'justify-content-sm-center' : ''}}">
     <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
-    <h1 class="ms-3 {{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'register' || Route::currentRouteName() === 'guest.advanced-search'? 'text-black' : 'text-white'}}">BoolBnB</h1>
+    <h1 class="ms-3 {{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'register' || Route::currentRouteName() === 'guest.advanced-search'? 'text-black' : 'text-white'}}
+                {{Route::currentRouteName() === 'guest.advanced-search' ? 'd-none d-sm-block' : ''}}">BoolBnB</h1>
+
+    @if(Route::currentRouteName() === 'guest.advanced-search')
+    @include('partials.searchbar')
+    @endif
+
     <ul class="navbar-nav position-absolute end-0 d-flex flex-row me-4">
         <!-- Authentication Links -->
         @guest
