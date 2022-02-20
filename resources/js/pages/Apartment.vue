@@ -104,7 +104,7 @@
 
     <!-- Map section -->
     <section class="map">
-      <img class="w-100" src="../img/map.png" alt="" />
+      <img class="w-100" src="/img/map.png" alt="" />
     </section>
   </div>
 </template>

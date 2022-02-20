@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 // step 1 define route pages components
 const Search = Vue.component('Search', require('./pages/Search.vue').default);
 const Home = Vue.component('Home', require('./pages/Home.vue').default);
+const Apartment = Vue.component('Apartment', require('./pages/Apartment.vue').default);
 
 // Step 2 define vue router routes
 const routes = [
