@@ -86,155 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Apartment.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Apartment.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      apartment: Object,
-      loading: true,
-      api_error: false
-    };
-  },
-  mounted: function mounted() {
-    this.fetchApartment();
-  },
-  methods: {
-    fetchApartment: function fetchApartment() {
-      var _this = this;
-
-      axios.get("/api/apartments/" + this.$route.params.slug).then(function (r) {
-        //   console.log(r.data);
-        _this.apartment = r.data;
-        _this.loading = false;
-      })["catch"](function (e) {
-        //   console.error(e);
-        _this.api_error = true;
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Home.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Home.vue?vue&type=script&lang=js& ***!
@@ -401,9 +252,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Map",
+  name: 'Map',
   data: function data() {
     return {
       apartments: null,
@@ -414,16 +264,20 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var tt = window.tt;
+    var layers = [];
+    var layer;
+    var center;
+    var markers = [];
     var map = tt.map({
-      key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-      container: "map",
+      key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+      container: 'map',
       center: [12.49427, 41.89056],
       zoom: 5
     });
     var options = {
       searchOptions: {
-        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-        language: "en-GB",
+        key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+        language: 'en-GB',
         limit: 5
       }
     };
@@ -434,10 +288,10 @@ __webpack_require__.r(__webpack_exports__);
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     var searchMarkersManager = new SearchMarkersManager(map);
-    ttSearchBox.on("tomtom.searchbox.resultsfound", handleResultsFound);
-    ttSearchBox.on("tomtom.searchbox.resultselected", handleResultSelection);
-    ttSearchBox.on("tomtom.searchbox.resultfocused", handleResultSelection);
-    ttSearchBox.on("tomtom.searchbox.resultscleared", handleResultClearing);
+    ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
+    ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
+    ttSearchBox.on('tomtom.searchbox.resultfocused', handleResultSelection);
+    ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
     document.body.appendChild(searchBoxHTML);
     /* Search Event Functions */
 
@@ -450,13 +304,25 @@ __webpack_require__.r(__webpack_exports__);
       /* searchMarkersManager.draw(results); */
 
 
+      if (layer != null) {
+        hideLayer(layer);
+      }
+
+      if (markers.length != 0) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].remove();
+        }
+
+        markers = [];
+      }
+
       fitToViewport(results);
     }
 
     function handleResultSelection(event) {
       var result = event.data.result;
 
-      if (result.type === "category" || result.type === "brand") {
+      if (result.type === 'category' || result.type === 'brand') {
         return;
       }
       /* searchMarkersManager.draw([result]); */
@@ -519,7 +385,7 @@ __webpack_require__.r(__webpack_exports__);
         var markerId = poi.id;
         var poiOpts = {
           name: poi.poi ? poi.poi.name : undefined,
-          address: poi.address ? poi.address.freeformAddress : "",
+          address: poi.address ? poi.address.freeformAddress : '',
           distance: poi.dist,
           classification: poi.poi ? poi.poi.classifications[0].code : undefined,
           position: poi.position,
@@ -548,7 +414,7 @@ __webpack_require__.r(__webpack_exports__);
       this.options = options || {};
       this.marker = new tt.Marker({
         element: this.createMarker(),
-        anchor: "bottom"
+        anchor: 'bottom'
       });
       var lon = this.poiData.position.lng || this.poiData.position.lon;
       this.marker.setLngLat([lon, this.poiData.position.lat]);
@@ -561,15 +427,15 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     SearchMarker.prototype.createMarker = function () {
-      var elem = document.createElement("div");
-      elem.className = "tt-icon-marker-black tt-search-marker";
+      var elem = document.createElement('div');
+      elem.className = 'tt-icon-marker-black tt-search-marker';
 
       if (this.options.markerClassName) {
-        elem.className += " " + this.options.markerClassName;
+        elem.className += ' ' + this.options.markerClassName;
       }
 
-      var innerElem = document.createElement("div");
-      innerElem.setAttribute("style", "background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;");
+      var innerElem = document.createElement('div');
+      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
       elem.appendChild(innerElem);
       return elem;
     };
@@ -581,27 +447,37 @@ __webpack_require__.r(__webpack_exports__);
     /* Results Log */
 
 
-    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      console.log(data.data.result.position);
-    });
-    var apartments = "";
-    axios.get("/api/apartments").then(function (r) {
-      // console.log(r);
-      _this.apartments = r.data.data;
-      _this.loading = false;
-      apartments = _this.apartments;
-      initializeCreate();
-      calculateDistance();
-    })["catch"](function (e) {
-      console.error(e);
-      _this.api_error = true;
-    });
+    ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
+      console.log(data.data.result);
+      center = [data.data.result.position.lat, data.data.result.position.lng];
 
-    function initializeCreate() {
       for (var i = 0; i < apartments.length; i++) {
-        createMarker(apartments[i]);
+        var dist = calcCrow(center[0], center[1], apartments[i]['latitude'], apartments[i]['longitude']);
+
+        if (dist < 20) {
+          createMarker(apartments[i]);
+          console.log(apartments[i]['title'], '_', dist, ' KM');
+        }
       }
-    }
+
+      if (layers.length == 0) {
+        createLayer(data.data.result);
+      } else {
+        for (var _i = 0; _i < layers.length; _i++) {
+          if (layers[_i] == data.data.result.id) {
+            showLayer(layers[_i]);
+            break;
+          } else {
+            createLayer(data.data.result);
+          }
+        }
+      }
+    });
+    var apartments = '';
+    axios.get('api/apartments').then(function (response) {
+      _this.apartments = response.data.data;
+      apartments = response.data.data;
+    });
 
     function createMarker(object) {
       /* create the popup for the marker*/
@@ -611,6 +487,8 @@ __webpack_require__.r(__webpack_exports__);
       var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
       /* Coordinates here */
       .setPopup(popup).addTo(map);
+      markers.push(marker);
+      console.log(markers);
     }
 
     function calcCrow(lat1, lon1, lat2, lon2) {
@@ -623,7 +501,7 @@ __webpack_require__.r(__webpack_exports__);
       var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c;
-      console.log(d);
+      return d;
     } // Converts numeric degrees to radians
 
 
@@ -632,23 +510,42 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function calculateDistance() {
-      var lat1 = apartments[3]["latitude"];
-      var lon1 = apartments[3]["longitude"];
-      var lat2 = apartments[4]["latitude"];
-      var lon2 = apartments[4]["longitude"];
+      var lat1 = apartments[3]['latitude'];
+      var lon1 = apartments[3]['longitude'];
+      var lat2 = apartments[4]['latitude'];
+      var lon2 = apartments[4]['longitude'];
       calcCrow(lat1, lon1, lat2, lon2);
     }
 
-    var config = {
-      name: "Bool",
-      type: "Feature",
-      geometry: {
-        radius: 50,
-        type: "Point",
-        shapeType: "Circle",
-        coordinates: [-67.137343, 45.137451]
-      }
-    };
+    function hideLayer(layerId) {
+      map.setLayoutProperty(layerId, 'visibility', 'none');
+    }
+
+    function showLayer(layerId) {
+      map.setLayoutProperty(layerId, 'visibility', 'visible');
+    }
+
+    function createLayer(result) {
+      map.addLayer({
+        'id': result.id,
+        'type': 'fill',
+        'source': {
+          'type': 'geojson',
+          'data': turf.circle([result.position.lng, result.position.lat], 20000, {
+            units: 'metres',
+            properties: {
+              key: result.id
+            }
+          })
+        },
+        'paint': {
+          'fill-color': 'blue',
+          'fill-opacity': 0.3
+        }
+      });
+      layers.push(result.id);
+      layer = result.id;
+    }
   },
   methods: {
     addTest: function addTest() {
@@ -1805,180 +1702,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e&":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e& ***!
-  \*******************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "apartment_main" } }, [
-    _c(
-      "section",
-      { staticClass: "container_img w-100 px-3 d-flex flex-wrap" },
-      [
-        _c("div", { staticClass: "col-12 h-100 p-2" }, [
-          _c("img", {
-            staticClass: "w-100 h-100",
-            attrs: {
-              src: "/storage/" + _vm.apartment.thumbnail,
-              alt: _vm.apartment.slug,
-            },
-          }),
-        ]),
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "container_home d-flex flex-wrap m-auto py-5" },
-      [
-        _c("div", { staticClass: "col-12 col-md-8" }, [
-          _c("p", [_vm._v(_vm._s(_vm.apartment.address))]),
-          _vm._v(" "),
-          _c("h1", [_vm._v(_vm._s(_vm.apartment.title))]),
-          _vm._v(" "),
-          _c("h4", [_vm._v("About this home")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,\n        optio praesentium libero quis ratione facilis molestias quod odit\n        reiciendis hic sed magnam deserunt. Facere, fugit dolorem. Quidem nisi\n        totam voluptates. Consectetur eligendi corrupti, ratione illum\n        delectus vitae veritatis cupiditate? Recusandae beatae blanditiis\n        aliquid, repellat illum impedit inventore, odio ipsa repellendus\n        cumque amet incidunt! Fugiat, doloremque optio. Porro libero sit\n        vitae. Quaerat deleniti laborum tempore aperiam nostrum eum cumque,\n        fugit earum. Voluptatum cupiditate consequuntur inventore rem, dolor,\n        ut cumque magnam magni atque quisquam similique esse? Voluptatum nemo\n        consectetur numquam beatae praesentium. Nostrum iste accusamus iure\n        assumenda laudantium quasi odit consequatur veritatis! Necessitatibus\n        aspernatur molestiae error voluptatibus molestias incidunt saepe a\n        corrupti nesciunt. Non, maxime. Nesciunt minus sed sunt. Error, amet\n        cupiditate? Minus explicabo alias ullam distinctio illo iusto, iste\n        voluptatibus nesciunt modi eos veritatis voluptatem asperiores\n        blanditiis et optio magni excepturi dolor ex ea dolorem nostrum\n        quisquam eum quas? Veniam, magnam. Dolore dolorem repellat quo quam\n        possimus, tempora neque quod delectus esse alias et aspernatur\n        reprehenderit ex fuga similique est ut. Velit mollitia illum minus\n        laborum porro ex sunt atque praesentium.\n      "
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-      ]
-    ),
-    _vm._v(" "),
-    _c("section", { staticClass: "container_details m-auto" }, [
-      _c("hr", { staticClass: "col-12 col-md-8" }),
-      _vm._v(" "),
-      _c("h1", { staticClass: "text-center text-md-start mt-4" }, [
-        _vm._v("All the details"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-8 d-flex mt-4 flex-wrap" }, [
-        _c(
-          "div",
-          { staticClass: "col-6 col-md-3 text-center text-md-start mb-5" },
-          [
-            _c("img", { attrs: { src: "/img/plans.png", alt: "floors icon" } }),
-            _c("span", { staticClass: "ms-4" }, [
-              _vm._v(_vm._s(_vm.apartment.square_metres) + " m²"),
-            ]),
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", {
-            attrs: { src: "/img/open-door.png", alt: "rooms icon" },
-          }),
-          _c("span", { staticClass: "ms-4" }, [
-            _vm._v(_vm._s(_vm.apartment.number_of_rooms) + " rooms"),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", { attrs: { src: "/img/bed.png", alt: "bed icon" } }),
-          _c("span", { staticClass: "ms-4" }, [
-            _vm._v(_vm._s(_vm.apartment.number_of_beds) + " beds"),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 col-md-3 text-center text-md-start" }, [
-          _c("img", { attrs: { src: "/img/shower.png", alt: "shower icon" } }),
-          _c("span", { staticClass: "ms-4" }, [
-            _vm._v(_vm._s(_vm.apartment.number_of_baths) + " bath"),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("section", { staticClass: "container-extra-service mb-5 m-auto" }, [
-      _c("h3", { staticClass: "text-center text-md-start mt-4 mb-3" }, [
-        _vm._v("Extra services"),
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
-        _vm._l(_vm.apartment.services, function (service) {
-          return _c(
-            "div",
-            {
-              key: service.id,
-              staticClass: "col-4 col-md-3 text-md-start mb-2",
-            },
-            [
-              _c("img", {
-                attrs: {
-                  src: "../img/" + service.slug + ".png",
-                  alt: service.slug,
-                },
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "ms-2 me-3 mb-3" }, [
-                _vm._v(_vm._s(service.name)),
-              ]),
-            ]
-          )
-        }),
-        0
-      ),
-    ]),
-    _vm._v(" "),
-    _vm._m(1),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "col-12 col-md-4 d-flex justify-content-center align-items-center",
-      },
-      [
-        _c("div", { staticClass: "card w-50 m-auto rounded-pill sticky-top" }, [
-          _c("div", { staticClass: "card-body text-center" }, [
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v("Contact the owner"),
-            ]),
-          ]),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "map" }, [
-      _c("img", {
-        staticClass: "w-100",
-        attrs: { src: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '../img/map.png'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())), alt: "" },
-      }),
-    ])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Home.vue?vue&type=template&id=b3c5cf30&":
 /*!**************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Home.vue?vue&type=template&id=b3c5cf30& ***!
@@ -2147,8 +1870,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { ref: "mapRef", attrs: { id: "map" } }),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "geofencing" } }),
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s(_vm.testComputed))]),
     _vm._v(" "),
@@ -17526,75 +17247,6 @@ module.exports = "/images/logo.png?04df678b06e62a0076b754282d29839a";
 
 /***/ }),
 
-/***/ "./resources/js/pages/Apartment.vue":
-/*!******************************************!*\
-  !*** ./resources/js/pages/Apartment.vue ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Apartment.vue?vue&type=template&id=37b4720e& */ "./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e&");
-/* harmony import */ var _Apartment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Apartment.vue?vue&type=script&lang=js& */ "./resources/js/pages/Apartment.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Apartment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/pages/Apartment.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/pages/Apartment.vue?vue&type=script&lang=js&":
-/*!*******************************************************************!*\
-  !*** ./resources/js/pages/Apartment.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Apartment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Apartment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Apartment.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Apartment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e& ***!
-  \*************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Apartment.vue?vue&type=template&id=37b4720e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Apartment.vue?vue&type=template&id=37b4720e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Apartment_vue_vue_type_template_id_37b4720e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/pages/Home.vue":
 /*!*************************************!*\
   !*** ./resources/js/pages/Home.vue ***!
@@ -17769,8 +17421,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // step 1 define route pages components
 
 var Search = Vue.component('Search', __webpack_require__(/*! ./pages/Search.vue */ "./resources/js/pages/Search.vue")["default"]);
-var Home = Vue.component('Home', __webpack_require__(/*! ./pages/Home.vue */ "./resources/js/pages/Home.vue")["default"]);
-var Apartment = Vue.component('Apartment', __webpack_require__(/*! ./pages/Apartment.vue */ "./resources/js/pages/Apartment.vue")["default"]); // Step 2 define vue router routes
+var Home = Vue.component('Home', __webpack_require__(/*! ./pages/Home.vue */ "./resources/js/pages/Home.vue")["default"]); // Step 2 define vue router routes
 
 var routes = [{
   path: '/',
