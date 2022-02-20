@@ -1,16 +1,51 @@
 <template>
-  	<div class="container-fluid d-flex">
-		<div class="all results" v-if="results.length == 0">
-			<div class="col" v-for="apartment in apartments" :key="apartment.id">
-				<p>{{apartment.title}}</p>
+  	<div class="container-fluid d-flex position-relative" id="mainDiv">
+    <div class="container_results_appartment d-flex flex-wrap flex-md-nowrap px-4 py-3 w-50">
+		
+        <div class="results col-12 col-md-6 w-100">
+            <div id="searchBox"></div>         
+			<div class="services d-flex flex-wrap">
+				<div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
+					<input type="button" class="rounded-pill" :value="service.name"></input>
+				</div>
 			</div>
-		</div>
-		<div class="search results" v-else>
-			<div class="col" v-for="apartment in results" :key="apartment.title">
-				<p>{{apartment.title}}</p>
-			</div>
-		</div>
-		<div id="map" ref="mapRef"></div>
+            <div v-for="apartment in getApartments" :key="apartment.id">
+            <div class=" single-apartment d-flex flex-wrap py-3">
+                <div class="image-single h-100 overflow-hidden col-12 col-md-4">
+                    <a href="#" class=" w-100">
+                        <img :src="'storage/' + apartment.thumbnail" class="w-100 " alt="...">
+                    </a>
+
+                </div>
+                <div class="info_apartment col-12 col-md-8 ps-4 d-flex align-items-center">
+                    <div>
+                        <p>{{apartment.address}}</p>
+                        <h5>{{apartment.title}}</h5>
+                        <hr>
+                        <p class="m-0"><span>{{apartment.square_metres}} m&sup2;-</span>
+                            <span>
+                                {{apartment.number_of_rooms}} rooms -
+                            </span>
+                            <span>
+                                {{apartment.number_of_beds}} beds -
+                            </span>
+                            <span>
+                                {{apartment.number_of_baths}} baths
+                            </span>
+                        </p>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+            </div>
+        </div>
+
+    </div>
+		<div id="map" ref="mapRef" class="w-50"></div>
 	<div class="div"></div>
 	<!-- This is the computed test -->
 	<!-- <p>{{testComputed}}</p>
@@ -29,7 +64,8 @@
 				results: [],
 				loading : true,
 				searching: null,
-				startCoords: [12.49427, 41.89056]
+				startCoords: [12.49427, 41.89056],
+				services:[]
 			}
 		},
 
@@ -70,7 +106,7 @@
 			ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
 			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
 			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
-			document.body.appendChild(searchBoxHTML)
+			document.getElementById('searchBox').appendChild(searchBoxHTML)
 
 			/* Search Event Functions */
 			function handleResultsFound(event) {
@@ -86,7 +122,7 @@
 				if (result.type === 'category' || result.type === 'brand') {
 					return;
 				}
-				if(layer != null){
+				if(layer != 0){
 					hideLayer(layer)
 				}
 				if(markers.length != 0){
@@ -225,22 +261,13 @@
 
 			/* Actions to do when selecting a result */
 			ttSearchBox.on('tomtom.searchbox.resultselected', (data) => {
-				center = [data.data.result.position.lat , data.data.result.position.lng];
-				this.results = [];				
-				mapInteract(data);
-			});
-
-			
-			
-			/* interactions on the map(markers, distance , layer , results) */
-			function mapInteract(data){
+				this.results = []
+				center = [data.data.result.position.lat , data.data.result.position.lng];		
 				for(let k = 0;k<apartments.length;k++){
-					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude'])
+					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
 					if(dist < 20){
 						createMarker(apartments[k]);
-						()=>{
-							this.results.push(apartments[k])
-						}
+						this.results.push(apartments[k])
 					}
 				}
 				if(layers.length == 0){
@@ -258,7 +285,7 @@
 						}
 					}
 				}
-			}
+			});
 
 			/* Create Marker with Popup */
 			function createMarker(object){   
@@ -338,16 +365,41 @@
 					createMarker(data[k]);
 				}
 			}
+			
 			let searching  =this.searching;
 			/* rearch the result passed througth home component */
 			if(searching != null){
 				center = [searching.data.result.position.lat , searching.data.result.position.lng]
 				ttSearchBox.setValue(this.value)
 				apartments = this.apartments
+				this.results = this.apartments
 				map.on('load', ()=>{
 					/* Api apartments call */
 					handleResultSelection(this.searching)
-					mapInteract(this.searching)
+					this.results = []
+					center = [this.searching.data.result.position.lat ,this.searching.data.result.position.lng];		
+					for(let k = 0;k<apartments.length;k++){
+						let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
+						if(dist < 20){
+							createMarker(apartments[k]);
+							this.results.push(apartments[k])
+						}
+					}
+					if(layers.length == 0){
+						createLayer(this.searching.data.result) 
+						console.log('first')
+					}
+					else{
+						for(let j = 0;j<layers.length;j++){
+							if(layers[j] == this.searching.data.result.id){
+								showLayer(layers[j])
+								break;
+							}
+							else{
+								createLayer(this.searching.data.result) 
+							}
+						}
+					}
 				})
 			}
 			else{
@@ -355,16 +407,28 @@
 					(response) => {
 						this.apartments = response.data.data; 
 						apartments = response.data.data;
+						this.results = this.apartments
 						drawAll(apartments);
 					},
 				)
 			}
+
+			this.getServices();
     	}  ,
 		
 		methods: {
 			/* This is a test interacting with computed properties */
 			addTest(){
 				this.x += 1;
+			},
+
+			getServices(){
+				axios.get('api/services').then(
+					(response) => {
+						this.services = response.data.data; 
+						console.log(this.services)
+					},
+				)
 			}	
 		},
 
@@ -376,7 +440,7 @@
 
 			/* Compute the apartments */
 			getApartments(){
-				return this.apartments;
+				return this.results;
 			}
 		},
 		
@@ -385,7 +449,6 @@
 			this.searching = this.$route.params.data;
 			this.value = this.$route.params.value;
 			this.apartments = this.$route.params.apartments;
-			console.log(this.apartments)
 		}
 
 		
@@ -394,10 +457,17 @@
 </script>
 
 <style>
+#mainDiv{
+	padding-top: 75px;
+}
+
 
 #map {
-  height: 100vh;
-  width: 40%;
+  height: calc(100vh - 75px);
+  width: 100%;
+  position: sticky;
+  top: 75px;
+  right: 0;
 }
 
 .tt-search-marker>div{
