@@ -20,9 +20,9 @@
 
                     <div class="mb-3">
                         <label for="thumbnail" class="form-label">Thumbnail*</label>
-                        <input type="file" name="thumbnail" id="thumbnail"
+                        <input required type="file" name="thumbnail" id="thumbnail"
                             class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Add image here"
-                            accept="jpeg,jpg,png,gif,bmp,svg,webp" required>
+                            accept="jpeg,jpg,png,gif,bmp,svg,webp" >
                         <small id="thumbnailHelper" class="text-muted">Add your apartment image, max 1024kB. Accept
                             jpeg,jpg,png,gif,bmp,svg,webp</small>
                         @error('thumbnail')
@@ -33,8 +33,8 @@
                     {{-- Title input --}}
                     <div class="mb-3">
                         <label for="title" class="form-label">Title*</label>
-                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                            placeholder="Type title here" value="{{ old('title') }}" maxlength="150" required>
+                        <input required type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
+                            placeholder="Type title here" value="{{ old('title') }}" maxlength="150" >
                         <small id="titleHelper" class="text-muted">Add your title, max 150 characters</small>
                         @error('title')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -53,9 +53,9 @@
                         {{-- Latitude --}}
                         <div class=" col-3">
                             <label for="latitude" class="form-label text-muted">Latitude</label>
-                            <input type="text" name="latitude" id="latitude"
+                            <input required type="text" name="latitude" id="latitude"
                                 class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude') }}"
-                                required readonly>
+                                 readonly>
                             @error('latitude')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -63,9 +63,9 @@
                         {{-- Longitude --}}
                         <div class=" col-3">
                             <label for="longitude" class="form-label text-muted">Longitude</label>
-                            <input type="text" name="longitude" id="longitude"
+                            <input required type="text" name="longitude" id="longitude"
                                 class="form-control @error('longitude') is-invalid @enderror"
-                                value="{{ old('longitude') }}" required readonly>
+                                value="{{ old('longitude') }}"  readonly>
                             @error('longitude')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -75,9 +75,9 @@
                     {{-- Square meters input --}}
                     <div class="mb-3">
                         <label for="square_metres" class="form-label">Floor area (mq)*</label>
-                        <input type="number" name="square_metres" id="square_metres"
+                        <input required type="number" name="square_metres" id="square_metres"
                             class="form-control @error('square_metres') is-invalid @enderror"
-                            placeholder="Type floor area in square meters" value="{{ old('square_metres') }}" required
+                            placeholder="Type floor area in square meters" value="{{ old('square_metres') }}" 
                             min="1" max="65535">
                         <small id="square_metresHelper" class="text-muted">Add the number of square metres.</small>
                         @error('square_metres')
@@ -88,8 +88,8 @@
                     {{-- Rooms input --}}
                     <div class="mb-3">
                         <label for="number_of_rooms" class="form-label">Rooms*</label>
-                        <select class="form-control @error('number_of_rooms') is-invalid @enderror" name="number_of_rooms"
-                            id="number_of_rooms" required>
+                        <select required class="form-control @error('number_of_rooms') is-invalid @enderror" name="number_of_rooms"
+                            id="number_of_rooms" >
                             <option value="">Select rooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -106,9 +106,9 @@
 
                     {{-- Beds input --}}
                     <div class="mb-3">
-                        <label for="number_of_beds" class="form-label">Beds*</label>
-                        <select class="form-control @error('number_of_beds') is-invalid @enderror" name="number_of_beds"
-                            id="number_of_beds" required>
+                        <label for="number_of_beds" class="form-label">Number of bedrooms*</label>
+                        <select required class="form-control @error('number_of_beds') is-invalid @enderror" name="number_of_beds"
+                            id="number_of_beds" >
                             <option value="">Select beds</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}" {{ old('number_of_beds') == $i ? 'selected' : '' }}>
@@ -125,8 +125,8 @@
                     {{-- Bathrooms input --}}
                     <div class="mb-3">
                         <label for="number_of_baths" class="form-label">Bathrooms*</label>
-                        <select class="form-control @error('number_of_baths') is-invalid @enderror" name="number_of_baths"
-                            id="number_of_baths" required>
+                        <select required class="form-control @error('number_of_baths') is-invalid @enderror" name="number_of_baths"
+                            id="number_of_baths" >
                             <option value="">Select bathrooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -144,38 +144,30 @@
                     {{-- Availability input --}}
                     <div class="mb-3">
                         <label class="d-block">Instantly available*</label>
-                        <div class="form-check form-check-inline">
-                            <span class="mr-3">
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes" value="1"
-                                    required checked>
-                                <label class="form-check-label" for="is_aviable_yes">Yes</label>
-                            </span>
-
-                            <span class="mr-3">
-                                <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no" value="0"
-                                    required>
-                                <label class="form-check-label" for="is_aviable_no">No</label>
-                            </span>
+                        <div class="form-check">
+                            <label class="form-check-label" for="is_aviable">Nascondi</label>
+                            <input class="form-check-input" type="checkbox" name="is_aviable" id="is_aviable" value="0">
                         </div>
                         @error('is_aviable')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    
 
                     {{-- Services input --}}
-                    {{-- There could be buttons with icons insted of checkboxes --}}
-                    <div class="mb-5">
-                        <label class="d-block">Services*</label>
-                        @foreach ($services as $service)
-                            <label class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="service_id[]"
-                                    id="service_id_{{ $service->id }}" value="{{ $service->id }}"
-                                    @if (is_array(old('service_id')) && in_array($service->id, old('service_id'))) checked @endif>
-                                {{ $service->name }}
-                            </label>
-                        @endforeach
-                    </div>
+                    <div class="mb-3">
+                          <label class="form-label">Services*</label>
+                          <select multiple class="form-select @error('services') is_invalid @enderror" name="services[]" id="service_id" required>
+                            <option disabled>Select all services</option>
+                            @foreach ($services as $item)
+                               <option value="{{ $item->id }}">{{ $item->name }}</option>  
+                            @endforeach
+                           
+                          </select>
+                          @error('services')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                     {{-- Submit form --}}
                     <div class="d-flex justify-content-end">
@@ -190,8 +182,41 @@
         </script>
         <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js">
         </script>
-
         <!-- Main Script -->
-        <script src="{{ asset('js/create-apartment-search.js') }}"></script>
+        {{-- <script src="{{ asset('js/create-apartment-search.js') }}"></script> --}}
+        <script>
+            var options = {
+                searchOptions: {
+                    key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
+                    language: 'it-IT',
+                    limit: 5
+                }
+            };
+            var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+            var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+            document.getElementById('address').append(searchBoxHTML);
+            document.querySelector('.tt-search-box-input').name = 'address';
+            document.querySelector('.tt-search-box-input').id = 'address';
+            document.querySelector('.tt-search-box-input').placeholder = 'Search your address';
+            document.querySelector('.tt-search-box-input').autocomplete = 'off';
+
+
+
+
+
+            /* Results Log */
+            ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
+                console.log(data.data.result.position);
+                document.getElementById('latitude').value = data.data.result.position.lat;
+                document.getElementById('longitude').value = data.data.result.position.lng;
+            });
+            var value = {!! json_encode(old('address')) !!}
+
+            if (value != null) {
+                var value = {!! json_encode(old('address')) !!}.toString()
+                ttSearchBox.setValue(value)
+            }
+            
+        </script>
     </div>
 @endsection

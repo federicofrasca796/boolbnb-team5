@@ -4,20 +4,28 @@
 
 .container-apartments{
     width: 85%;
-
-.card{
+    
+        .card{
     border-radius: 2rem!important;
     font-family: $font-family-primary;
+    height: 100%;
 
     a{
         text-decoration: none;
         color: black;
+        height: 100%;
         &:visited{
             color: black;
         }
     }
+    img {
+        height: 80%;
+    }
 
-}
+
+    }
+
+
 
 
 }

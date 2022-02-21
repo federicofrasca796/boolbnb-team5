@@ -1,7 +1,6 @@
 header {
    height: 75px;
    background-color: transparent;
-   
    z-index: 99;
 
    button{
@@ -46,6 +45,11 @@ header {
             color: lightgrey;
         }
 
+    }
+    .modal {
+        button[type=submit]{
+            background-color: $raspberry;
+        }
     }
 }
 

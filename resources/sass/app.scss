@@ -6,14 +6,13 @@
 @import '~bootstrap/scss/bootstrap';
 @import 'guest.header';
 @import 'guest.jumbo';
+@import 'guest.searchbar';
 @import 'guest.index';
 @import 'guest.show';
+@import 'guest.register';
+@import 'guest.advanced-search';
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-}
-
-.register-container {
-    padding-top: calc(75px + 2rem);
 }

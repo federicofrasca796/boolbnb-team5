@@ -11295,6 +11295,9 @@ header .modal.show .modal-dialog-aside {
 header .form-group input::-webkit-input-placeholder {
   color: lightgrey;
 }
+header .modal button[type=submit] {
+  background-color: #e41c5bff;
+}
 
 .modal-backdrop {
   z-index: 10;
@@ -11316,16 +11319,41 @@ header .form-group input::-webkit-input-placeholder {
      object-fit: cover;
   filter: brightness(0.7);
 }
+#jumbo .search-destination {
+  width: 75%;
+}
 #jumbo .search-destination .input-group {
   height: 70px;
 }
-#jumbo .search-destination .input-group #basic-addon1 {
+#jumbo .search-destination .input-group .container-button-search {
+  padding: 0.5rem;
+}
+#jumbo .search-destination .input-group .container-button-search button {
+  padding: 0px 3rem;
+}
+
+.search-destination .input-group {
+  border-radius: 0.9rem;
+}
+.search-destination .input-group #basic-addon1 {
+  background-color: white;
+  border: none;
+  border-top-left-radius: 0.9rem;
+  border-bottom-left-radius: 0.9rem;
+}
+.search-destination .input-group input {
   background-color: white;
   border: none;
 }
-#jumbo .search-destination .input-group input {
-  background-color: white;
-  border: none;
+.search-destination .input-group .container-button-search {
+  border-top-right-radius: 0.9rem;
+  border-bottom-right-radius: 0.9rem;
+}
+.search-destination .input-group .container-button-search button {
+  border-top-right-radius: 0.9rem;
+  border-bottom-right-radius: 0.9rem;
+  color: white;
+  background-color: #e41c5bff;
 }
 
 .sponsor_title {
@@ -11338,35 +11366,142 @@ header .form-group input::-webkit-input-placeholder {
 .container-apartments .card {
   border-radius: 2rem !important;
   font-family: "Josefin Sans", sans-serif;
+  height: 100%;
 }
 .container-apartments .card a {
   text-decoration: none;
   color: black;
+  height: 100%;
 }
 .container-apartments .card a:visited {
   color: black;
+}
+.container-apartments .card img {
+  height: 80%;
 }
 
 .container_img {
   height: 60vh;
 }
+.container_img img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 
 .container_home, .container_details {
   width: 85%;
 }
-.container_home h1, .container_home .h1, .container_home h4, .container_home .h4, .container_details h1, .container_details .h1, .container_details h4, .container_details .h4 {
+.container_home h1, .container_home .h1, .container_home h4, .container_home .h4, .container_home h3, .container_home .h3, .container_details h1, .container_details .h1, .container_details h4, .container_details .h4, .container_details h3, .container_details .h3 {
   font-family: "Josefin Sans", sans-serif;
 }
 .container_home p, .container_details p {
   font-family: "Urbanist", sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.container-extra-service {
+  width: 85%;
+}
+.container-extra-service h1, .container-extra-service .h1, .container-extra-service h4, .container-extra-service .h4, .container-extra-service h3, .container-extra-service .h3 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.container-extra-service p {
+  font-family: "Urbanist", sans-serif;
+}
+
+@media only screen and (max-width: 575px) {
+  .container-extra-service {
+    width: 92%;
+    margin: auto;
+  }
+}
+.container_details img {
+  width: 70px;
+}
+
+.container-extra-service img {
+  width: 30px;
+}
+.container-extra-service span {
+  line-height: 30px;
+}
+
+.map {
+  width: 100%;
+  height: 560px;
 }
 
 .register-container {
   padding-top: calc(75px + 2rem);
+}
+.register-container .form-group input::-webkit-input-placeholder {
+  color: lightgrey;
+}
+.register-container button[type=submit] {
+  background-color: #e41c5bff;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+header .search-destination {
+  width: 40%;
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+header .search-destination .input-group {
+  border: 1px solid lightgrey;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+header .search-destination .input-group .container-button-search {
+  padding: 0.2rem;
+}
+header .search-destination .input-group .container-button-search button {
+  padding: 0px 2rem;
+}
+
+.container-advanced-search {
+  height: calc(100vh - 75px);
+}
+.container-advanced-search .advanced-search {
+  width: 80%;
+  margin: auto;
+}
+.container-advanced-search .advanced-search input[type=button] {
+  font-family: "Josefin Sans", sans-serif;
+  padding: 8px 16px;
+  border: 1px solid lightgrey;
+  background-color: transparent;
+}
+.container-advanced-search .advanced-search input[type=button]:hover {
+  border: 1px solid black;
+}
+.container-advanced-search .container_results_appartment {
+  height: 85%;
+  width: 80%;
+  margin: auto;
+  border: none;
+  border-top: 1px solid lightgray;
+}
+.container-advanced-search .container_results_appartment .results {
+  overflow-y: scroll;
+}
+.container-advanced-search .container_results_appartment .results .number_results {
+  border-bottom: 1px solid lightgray;
+}
+.container-advanced-search .container_results_appartment .results .single-apartment .image-single img {
+  border-radius: 1.9rem;
+  height: 165px;
+}
+.container-advanced-search .container_results_appartment .results .single-apartment .info_apartment hr {
+  width: 50px;
+}
+.container-advanced-search .container_results_appartment .mappa img {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }

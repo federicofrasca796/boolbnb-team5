@@ -20,7 +20,7 @@
         {{-- Generate cards for each apartment --}}
         @forelse ($apartments as $apartment)
             <div class="card mb-3 w-100">
-                <div class="row g-0">
+                <div class="row g-0 {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
                     {{-- Apartment thumb --}}
                     <div class="col-md-4">
                         <a href="{{ route('ura.apartments.show', $apartment->slug) }}">
@@ -31,71 +31,12 @@
                     {{-- Apartment Body --}}
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h4 class="card-title">
-                                <a
-                                    href="{{ route('ura.apartments.show', $apartment->slug) }}">{{ $apartment->title }}</a>
-                            </h4>
-                            <p class="card-text">{{ $apartment->address }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Services:
-                                    @forelse($apartment->services as $service)
-                                        {{ $service->name }}
-                                        @if (!$loop->last)
-                                            ,
-                                        @endif
-
-                                    @empty
-                                        None
-                                    @endforelse
-                                </small>
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted">Created on
-                                    {{ $apartment->created_at }}</small>
-                            </p>
-                            <div class="d-flex">
-                                <a href="{{ route('ura.apartments.show', $apartment->slug) }}" class="btn btn-light mx-1">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </a>
-                                <a href="{{ route('ura.apartments.edit', $apartment->slug) }}"
-                                    class="btn btn-light mx-1">
-                                    <i class="fas fa-user-edit text-secondary"></i>
-                                </a>
-                                <button type="button" class="btn btn-light mx-1" data-bs-toggle="modal"
-                                    data-bs-target="#delete{{ $apartment->slug }}">
-                                    <i class="fas fa-trash-alt text-danger"></i>
-                                </button>
-                                <div class="modal fade" id="delete{{ $apartment->slug }}" tabindex="-1"
-                                    aria-labelledby="modal-{{ $apartment->slug }}Label" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="{{ $apartment->slug }}Label">You are
-                                                    trying to delete apartment: "{{ $apartment->title }}"</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Are you sure you want to remove it?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ route('ura.apartments.destroy', $apartment->slug) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger mx-1">
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-content">
+                                @include('partials.ura.apartment.content')
                             </div>
+                            
                         </div>
+                        @include('partials.ura.apartment.actions')
                     </div>
                 </div>
             </div>
@@ -110,6 +51,9 @@
         @endforelse
 
         {{-- Pagination --}}
-        {{-- {{ $collection->links() }} --}}
+        <div id="paginate" class="mt-5 d-flex justify-content-center">
+            {{ $apartments->links() }}
+        </div>
     </div>
 @endsection
+

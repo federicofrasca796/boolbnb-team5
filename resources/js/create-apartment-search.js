@@ -1,4 +1,3 @@
-
 var options = {
     searchOptions: {
         key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
@@ -16,10 +15,11 @@ document.querySelector('.tt-search-box-input').autocomplete = 'off';
 
 
 
+
+
 /* Results Log */
 ttSearchBox.on('tomtom.searchbox.resultselected', function(data) {
     console.log(data.data.result.position);
     document.getElementById('latitude').value = data.data.result.position.lat;
     document.getElementById('longitude').value = data.data.result.position.lng;
 });
-

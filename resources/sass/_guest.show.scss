@@ -1,12 +1,54 @@
 .container_img {
     height: 60vh;
+    img{
+        object-fit: cover;
+    }
 }
 .container_home,.container_details {
     width: 85%;
-    h1,h4 {
+    h1,h4,h3 {
         font-family: $font-family-primary;
     }
     p {
         font-family: $font-family-secondary;
     }
+}
+
+.container-extra-service {
+    width: 85%;
+    h1,h4,h3 {
+        font-family: $font-family-primary;
+    }
+    p {
+        font-family: $font-family-secondary;
+    }
+    
+}
+
+@media only screen and (max-width: 575px) {
+    .container-extra-service{
+        width: 92%;
+        margin: auto;
+    }
+  }
+
+
+.container_details{
+    img{
+        width: 70px
+    }
+}
+
+.container-extra-service{
+    img{
+        width: 30px;
+    }
+    span{
+        line-height: 30px;
+    }
+
+}
+.map{
+    width: 100%;
+    height: 560px;
 }

@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'surname' => ['required', 'string', 'max:25'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'date_of_birth' => ['nullable', 'date'],
+            'date_of_birth' => ['nullable', 'date', 'before:today', 'after:1900-01-01', 'before_or_equal:' . now()->subYears(18)->toDateString()],
         ]);
     }
 

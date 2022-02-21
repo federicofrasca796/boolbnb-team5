@@ -15,16 +15,17 @@
     }
 
     .search-destination {
+        width: 75%;
         .input-group {
             height: 70px;
-            #basic-addon1 {
-                background-color: white;
-                border: none;
-            }
-            input {
-                background-color: white;
-                border: none;
+            .container-button-search {
+                padding: 0.5rem;
+                button {
+                    padding: 0px 3rem;
+                }
             }
         }
     }
+
+
 }
