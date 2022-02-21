@@ -1,9 +1,10 @@
 @extends ('layouts.app')
-@section('content')
-    <div class="container_img w-100 px-3 d-flex flex-wrap">
-        <div class="col-12 h-100 p-2">
-            <img src="{{ asset('storage/' . $apartment->thumbnail) }}" class="w-100 h-100" alt="">
-        </div>
+@section ('css')
+@section ('content')
+<div class="container_img w-100 px-3 d-flex flex-wrap">
+    <div class="col-12 h-100 p-2">
+        <img src="{{asset('storage/' . $apartment->thumbnail)}}" class="w-100 h-100" alt="">
+    </div>
 
     </div>
 

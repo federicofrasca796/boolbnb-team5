@@ -1,0 +1,24 @@
+.container-dashboard {
+    #logged-message {
+        height: 225px;
+        background-image: linear-gradient(to right, #001632ff, #e41c5bff, #2477e3ff);
+    }
+    #ura-cards {
+        width: 85%;
+        .card-body {
+            .btn {
+                color: white;
+                text-transform: uppercase;
+            }
+           .btn-apartment {
+            background-color: #001632ff;
+            }
+            .btn-inbox {
+                background-color: $raspberry;
+            }
+            .btn-sponsor {
+                background-color: #2477e3ff;
+            }
+        }
+    }
+}

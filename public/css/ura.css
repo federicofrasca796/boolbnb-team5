@@ -1,4 +1,35 @@
 @import url(https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Urbanist:ital,wght@0,300;1,300&display=swap);@charset "UTF-8";
+#ura_header {
+  height: 75px;
+}
+#ura_header .dropdown-menu-right {
+  position: absolute;
+  inset: 0px 0px auto auto;
+  margin: 0px;
+  transform: translate3d(0px, 41px, 0px);
+}
+
+.container-dashboard #logged-message {
+  height: 225px;
+  background-image: linear-gradient(to right, #001632ff, #e41c5bff, #2477e3ff);
+}
+.container-dashboard #ura-cards {
+  width: 85%;
+}
+.container-dashboard #ura-cards .card-body .btn {
+  color: white;
+  text-transform: uppercase;
+}
+.container-dashboard #ura-cards .card-body .btn-apartment {
+  background-color: #001632ff;
+}
+.container-dashboard #ura-cards .card-body .btn-inbox {
+  background-color: #e41c5bff;
+}
+.container-dashboard #ura-cards .card-body .btn-sponsor {
+  background-color: #2477e3ff;
+}
+
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -11243,6 +11274,12 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 body {
   font-family: "Josefin Sans", sans-serif;
 }
