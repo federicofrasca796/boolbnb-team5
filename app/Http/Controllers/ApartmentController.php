@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
-use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
@@ -15,8 +14,8 @@ class ApartmentController extends Controller
     public function index()
     {
 
-
-        $apartments = Apartment::all();
+        $apartments = Apartment::where('is_aviable', '1')->get();
+        //$apartments = Apartment::all();
         return view('guest.index', compact('apartments'));
     }
     /**
