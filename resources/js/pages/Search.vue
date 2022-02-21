@@ -1,56 +1,44 @@
 <template>
   	<div class="container-fluid d-flex position-relative" id="mainDiv">
-    <div class="container_results_appartment d-flex flex-wrap flex-md-nowrap px-4 py-3 w-50">
-		
-        <div class="results col-12 col-md-6 w-100">
-            <div id="searchBox"></div>         
-			<div class="services d-flex flex-wrap">
-				<div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
-					<input type="button" class="rounded-pill" :value="service.name"></input>
+		<div class="container_results_appartment d-flex flex-wrap flex-md-nowrap px-4 py-3 w-50">		
+			<div class="results col-12 col-md-6 w-100">
+				<div id="searchBox"></div>         
+				<div class="services d-flex flex-wrap">
+					<div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
+						<input type="button" class="rounded-pill" :value="service.name"></input>
+					</div>
+				</div>
+				<div v-for="apartment in getApartments" :key="apartment.id">
+					<div class=" single-apartment d-flex flex-wrap py-3">
+						<div class="image-single h-100 overflow-hidden col-12 col-md-4">
+							<a href="#" class=" w-100">
+								<img :src="'storage/' + apartment.thumbnail" class="w-100 " alt="...">
+							</a>
+						</div>
+						<div class="info_apartment col-12 col-md-8 ps-4 d-flex align-items-center">
+							<div>
+								<p>{{apartment.address}}</p>
+								<h5>{{apartment.title}}</h5>
+								<hr>
+								<p class="m-0"><span>{{apartment.square_metres}} m&sup2;-</span>
+									<span>
+										{{apartment.number_of_rooms}} rooms -
+									</span>
+									<span>
+										{{apartment.number_of_beds}} beds -
+									</span>
+									<span>
+										{{apartment.number_of_baths}} baths
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-            <div v-for="apartment in getApartments" :key="apartment.id">
-            <div class=" single-apartment d-flex flex-wrap py-3">
-                <div class="image-single h-100 overflow-hidden col-12 col-md-4">
-                    <a href="#" class=" w-100">
-                        <img :src="'storage/' + apartment.thumbnail" class="w-100 " alt="...">
-                    </a>
-
-                </div>
-                <div class="info_apartment col-12 col-md-8 ps-4 d-flex align-items-center">
-                    <div>
-                        <p>{{apartment.address}}</p>
-                        <h5>{{apartment.title}}</h5>
-                        <hr>
-                        <p class="m-0"><span>{{apartment.square_metres}} m&sup2;-</span>
-                            <span>
-                                {{apartment.number_of_rooms}} rooms -
-                            </span>
-                            <span>
-                                {{apartment.number_of_beds}} beds -
-                            </span>
-                            <span>
-                                {{apartment.number_of_baths}} baths
-                            </span>
-                        </p>
-                    </div>
-
-
-
-
-                </div>
-
-            </div>
-            </div>
-        </div>
-
-    </div>
+		</div>
 		<div id="map" ref="mapRef" class="w-50"></div>
-	<div class="div"></div>
-	<!-- This is the computed test -->
-	<!-- <p>{{testComputed}}</p>
-	<button @click="addTest()">Add</button> -->
-  </div>
+  	</div>
 </template>
 
 <script>
@@ -60,7 +48,6 @@
 		data(){
 			return{
 				apartments: null,
-				x: 0,
 				results: [],
 				loading : true,
 				searching: null,
@@ -452,10 +439,6 @@
 		},
 
 		computed:{
-			/* This is a Computing test */
-			testComputed(){
-				return this.x;
-			},
 
 			/* Compute the apartments */
 			getApartments(){

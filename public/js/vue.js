@@ -351,24 +351,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
     return {
       apartments: null,
-      x: 0,
       results: [],
       loading: true,
       searching: null,
@@ -786,11 +773,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    /* This is a Computing test */
-    testComputed: function testComputed() {
-      return this.x;
-    },
-
     /* Compute the apartments */
     getApartments: function getApartments() {
       this.results = this.shuffle(this.results);
@@ -2237,25 +2219,25 @@ var render = function () {
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n\t\t\t\t\t\t\t\t\t\t" +
                                     _vm._s(apartment.number_of_rooms) +
-                                    " rooms -\n                            "
+                                    " rooms -\n\t\t\t\t\t\t\t\t\t"
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n\t\t\t\t\t\t\t\t\t\t" +
                                     _vm._s(apartment.number_of_beds) +
-                                    " beds -\n                            "
+                                    " beds -\n\t\t\t\t\t\t\t\t\t"
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n\t\t\t\t\t\t\t\t\t\t" +
                                     _vm._s(apartment.number_of_baths) +
-                                    " baths\n                            "
+                                    " baths\n\t\t\t\t\t\t\t\t\t"
                                 ),
                               ]),
                             ]),
@@ -2273,8 +2255,6 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("div", { ref: "mapRef", staticClass: "w-50", attrs: { id: "map" } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "div" }),
     ]
   )
 }
