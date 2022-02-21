@@ -1,12 +1,12 @@
 <template>
-  <div id="main_wrap">
+  <div id="home_main">
     <!-- Jumbo -->
     <section
       id="jumbo"
       class="w-100 d-flex justify-content-center align-items-center"
     >
       <!-- BG image -->
-      <img src="img/jumbo-2.jpg" alt="" />
+      <img src="img/jumbo-2.jpg" alt="bg image" />
 
       <!-- Searchbar -->
       <div class="search-destination w-75">
@@ -52,16 +52,16 @@
         <template v-else>
           <div class="col" v-for="apartment in apartments" :key="apartment.id">
             <div class="card overflow-hidden">
-              <!-- <a href="{{ route('guest.show', $apartment->slug) }}"> -->
-              <img
-                :src="'storage/' + apartment.thumbnail"
-                class="w-100"
-                alt="..."
-              />
-              <div class="card-body">
-                <h5 class="card-title">{{ apartment.title }}</h5>
-              </div>
-              <!-- </a> -->
+              <router-link :to="'/apartments/' + apartment.slug">
+                <img
+                  :src="'storage/' + apartment.thumbnail"
+                  class="w-100"
+                  :alt="apartment.slug"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ apartment.title }}</h5>
+                </div>
+              </router-link>
             </div>
           </div>
         </template>
@@ -97,10 +97,7 @@ export default {
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
     this.printSearchbar(searchBoxHTML);
 
-    let input = document.getElementById("mySearchbar");
-    input.appendChild(searchBoxHTML);
-
-    /* Results Log */
+    /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
       var self = this;
       self.mySearchResult = data;

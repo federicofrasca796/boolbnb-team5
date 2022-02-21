@@ -5,7 +5,7 @@
 				<div id="searchBox"></div>         
 				<div class="services d-flex flex-wrap">
 					<div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
-						<input type="button" class="rounded-pill" :value="service.name"></input>
+						<input type="button" class="rounded-pill" :value="service.name">
 					</div>
 				</div>
 				<div v-for="apartment in getApartments" :key="apartment.id">
