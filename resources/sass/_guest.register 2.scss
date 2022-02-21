@@ -1,0 +1,13 @@
+.register-container {
+    padding-top: calc(75px + 2rem);
+
+    .form-group input{
+        &::-webkit-input-placeholder{
+            color: lightgrey;
+        }
+    }
+    button[type=submit]{
+        background-color: $raspberry;
+        font-family: 'Josefin Sans', sans-serif;
+    }
+}
