@@ -549,6 +549,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       drawAll(apartments);
+      _this.results = apartments;
     });
     /* Tomtom viewport Handling */
 
@@ -764,6 +765,24 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('api/services').then(function (response) {
         _this2.services = response.data.data;
       });
+    },
+
+    /* Shuffles an Array */
+    shuffle: function shuffle(array) {
+      var currentIndex = array.length,
+          randomIndex; // While there remain elements to shuffle...
+
+      while (currentIndex != 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--; // And swap it with the current element.
+
+        var _ref = [array[randomIndex], array[currentIndex]];
+        array[currentIndex] = _ref[0];
+        array[randomIndex] = _ref[1];
+      }
+
+      return array;
     }
   },
   computed: {
@@ -774,6 +793,7 @@ __webpack_require__.r(__webpack_exports__);
 
     /* Compute the apartments */
     getApartments: function getApartments() {
+      this.results = this.shuffle(this.results);
       return this.results;
     }
   },
