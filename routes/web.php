@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Ura\ApartmentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,35 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 //rotte lato guest
 Route::get('/', 'ApartmentController@index')->name('guest.index');
 Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
 Auth::routes();
 
-Route::get('login' , 'Middleware\LoginController@login')->name('login');
+Route::get('login', 'Middleware\LoginController@login')->name('login');
 
-route::get('requireLogin' , 'Middleware\LoginController@login')->name('requireLogin');
+route::get('requireLogin', 'Middleware\LoginController@login')->name('requireLogin');
 
+//rotte messages
+Route::post('messages', 'MessageController@store')->name('messages.store');
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
-
 
     Route::get('dashboard', function () {
         return view('ura.dashboard');
     })->name('dashboard');
 
-
-
     Route::resource('apartments', 'ApartmentController')->scoped([
         'apartments' => 'slug',
     ]);
 
-
     Route::put('apartments/{apartment}/make-visible', 'ApartmentController@makeVisible')->name('apartments.makeVisibile');
-
-
 
     /* Routes index and show messages */
     Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([

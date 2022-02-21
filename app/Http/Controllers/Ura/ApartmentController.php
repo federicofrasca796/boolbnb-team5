@@ -7,9 +7,10 @@ use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+
 class ApartmentController extends Controller
 {
     /**
@@ -69,9 +70,9 @@ class ApartmentController extends Controller
 
         $latest = DB::table('apartments')->latest()->first()->id + 1;
         $validator['slug'] = Str::slug($request->title) . '_' . $latest;
-        $validator['user_id'] = Auth::user()->id;
-        $new_apartment = Apartment::create($validator);
-        $new_apartment->services()->attach($validator['services']);
+        //$validator['user_id'] = Auth::user()->id;
+        //$new_apartment = Apartment::create($validator);
+        //$new_apartment->services()->attach($validator['services']);
 
         $validator['user_id'] = Auth::user()->id;
 
@@ -175,7 +176,7 @@ class ApartmentController extends Controller
     {
         if (Auth::id() === $apartment->user_id) {
             $validator = $request->validate([
-                'is_aviable' => 'max:1|boolean|required'
+                'is_aviable' => 'max:1|boolean|required',
             ]);
             $apartment->update($validator);
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
