@@ -11283,3 +11283,9 @@ textarea.form-control-lg {
 body {
   font-family: "Josefin Sans", sans-serif;
 }
+
+.blur .col-md-4 img {
+  filter: grayscale(100%) blur(2px);
+  -webkit-filter: grayscale(100%) blur(2px);
+  -moz-filter: grayscale(100%) blur(2px);
+}
