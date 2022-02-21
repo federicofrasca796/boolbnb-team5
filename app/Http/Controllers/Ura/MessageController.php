@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Ura;
+
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -13,7 +15,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::orderByDesc('id')->paginate(5);
+        //$messages = Message::orderByDesc('id')->paginate(5);
+        $messages = Auth::user()->messages()->orderByDesc('id')->paginate(5);
         return view('ura.messages.index', compact('messages'));
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Models\Apartment;
+use Illuminate\Http\Request;
 
-class ApartmentController extends Controller
+class SearchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,11 +15,15 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-
-        $apartments = Apartment::where('is_aviable', '1')->get();
-        //$apartments = Apartment::all();
-        return view('guest.index', compact('apartments'));
+        $apartments = Apartment::all();
+        $services = Service::all();
+        return view('guest.advanced-search', compact('apartments', 'services'));
     }
+
+
+
+
+
     /**
      * Display the specified resource.
      *
@@ -26,7 +32,6 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-
-        return view('guest.show', compact('apartment'));
+        //
     }
 }
