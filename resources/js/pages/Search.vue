@@ -107,8 +107,25 @@
 				apartments = this.apartments
 				this.results = this.apartments
 				map.on('load', ()=>{
-					/* Api apartments call */
-					handleResultSelection(this.searching)
+					var result = this.searching.data.result;
+					if (result.type === 'category' || result.type === 'brand') {
+						return;
+					}
+					if(layer != 0){
+						hideLayer(layer)
+					}
+					if(markers.length != 0){
+						for(let i = 0;i<markers.length;i++){
+							markers[i].remove();
+						}
+						markers = [];
+					}
+					map.setMaxZoom(8.5)
+					fitToViewport(result);
+
+					setTimeout(()=>{
+						map.setMaxZoom(22)
+					},500)
 					this.results = []
 					center = [this.searching.data.result.position.lat ,this.searching.data.result.position.lng];		
 					for(let k = 0;k<apartments.length;k++){
