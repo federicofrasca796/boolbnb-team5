@@ -21,21 +21,14 @@
 
             <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
-              <!-- Disabled btn -->
+              <div id="link_router" class="d-none">
+                <button @click="emitSearchData()" class="btn btn-danger text-white px-5 rounded-0 h-100"> SEARCH</button>
+              </div>
               <div
                 id="link_fake"
                 class="btn btn-secondary text-white px-5 rounded-0 h-100"
               >
                 SEARCH
-              </div>
-
-              <!-- Active btn after TomTom query -->
-              <div id="link_router" class="d-none">
-                <router-link
-                  class="btn btn-danger text-white px-5 rounded-0 h-100"
-                  :to="{ name: 'Search', params: mySearchResult }"
-                  >SEARCH
-                </router-link>
               </div>
             </div>
           </div>
@@ -57,7 +50,7 @@
 
         <!-- API loaded -->
         <template v-else>
-          <div class="col" v-for="apartment in apartments" :key="apartments.id">
+          <div class="col" v-for="apartment in apartments" :key="apartment.id">
             <div class="card overflow-hidden">
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
@@ -85,6 +78,7 @@ export default {
       loading: true,
       api_error: false,
       mySearchResult: Object,
+      inputValue : null 
     };
   },
   mounted() {
@@ -105,9 +99,14 @@ export default {
 
     /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      this.mySearchResult = data.data.result;
+      var self = this;
+      self.mySearchResult = data;
       this.changeBtn();
-      //   console.log(this.mySearchResult);
+      setTimeout(()=>{
+        let value;
+        value = ttSearchBox.getValue();
+        this.inputValue = value
+      },100)
     });
   },
   methods: {
@@ -136,6 +135,10 @@ export default {
       let real = document.getElementById("link_router");
       real.classList.remove("d-none");
     },
+
+    emitSearchData(){
+      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue , apartments: this.apartments}})
+    }
   },
 };
 </script>
