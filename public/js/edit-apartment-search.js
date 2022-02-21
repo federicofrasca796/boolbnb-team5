@@ -127,7 +127,7 @@ function setSearchValue(value) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolbnb\resources\js\edit-apartment-search.js */"./resources/js/edit-apartment-search.js");
+module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/edit-apartment-search.js */"./resources/js/edit-apartment-search.js");
 
 
 /***/ })

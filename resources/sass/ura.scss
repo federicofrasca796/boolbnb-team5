@@ -1,14 +1,19 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Urbanist:ital,wght@0,300;1,300&display=swap');
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
-
-
-body{
+body {
     font-family: $font-family-primary;
 }
 
+.blur {
+    .col-md-4 {
+        img {
+            filter: grayscale(100%) blur(2px);
+            -webkit-filter: grayscale(100%) blur(2px);
+            -moz-filter: grayscale(100%) blur(2px);
+        }
+    }
+}
