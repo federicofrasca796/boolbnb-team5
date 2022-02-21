@@ -28,7 +28,7 @@ class MessageController extends Controller
 
         //Message::create($validated_Data);
 
-        return (new InfoApartmentMail($message))->render();
+        //return (new InfoApartmentMail($message))->render();
 
         Mail::to('admin@admin.com')->send(new InfoApartmentMail($message));
         return redirect()->back()->with(session()->flash('success', "Message send succesfully"));
