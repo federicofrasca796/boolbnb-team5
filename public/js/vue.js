@@ -918,7 +918,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n#mainDiv{\n\tpadding-top: 75px;\n}\n#map {\n  height: calc(100vh - 75px);\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -18133,7 +18133,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
 
 
 /***/ })

@@ -47,6 +47,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+        //ddd($request->all());
         $validator = $request->validate([
             'title' => 'required',
             'thumbnail' => 'required|mimes:jpeg,jpg,png,gif,bmp,svg,webp|max:1024',
@@ -61,7 +62,6 @@ class ApartmentController extends Controller
             /*'sponsor_id' => 'required|numeric|exists:sponsors,id, */
             'services' => 'required|exists:services,id',
         ]);
-
         if ($request->file('thumbnail')) {
             $image_path = Storage::put('apartments_img', $request->file('thumbnail'));
 
