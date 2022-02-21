@@ -21,7 +21,7 @@ class ApartmentController extends Controller
     public function index()
     {
         //$apartments = Apartment::where('user_id', Auth::user()->id);
-        $apartments = Auth::user()->apartment()->orderBy('id', 'desc')->paginate(4);
+        $apartments = Auth::User()->apartment()->orderBy('id', 'desc')->paginate(4);
 
         //$apartments = Apartment::all();
         return view('ura.apartments.index', compact('apartments'));
@@ -70,13 +70,7 @@ class ApartmentController extends Controller
 
         $latest = DB::table('apartments')->latest()->first()->id + 1;
         $validator['slug'] = Str::slug($request->title) . '_' . $latest;
-        //$validator['user_id'] = Auth::user()->id;
-        //$new_apartment = Apartment::create($validator);
-        //$new_apartment->services()->attach($validator['services']);
-
         $validator['user_id'] = Auth::user()->id;
-
-        // ddd($request, $validator);
         $new_apartment = Apartment::create($validator);
         $new_apartment->services()->attach($validator['services']);
         //ddd($new_apartment);

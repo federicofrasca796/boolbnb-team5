@@ -154,6 +154,23 @@
                     class="ms-4">{{ $apartment->number_of_baths }} bath</span>
             </div>
 
+    </div>
+</div>
+<div class=" container-extra-service mb-5 m-auto">
+    <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
+    <div class="col-12 col-md-8 d-flex flex-wrap ">
+        @foreach ($apartment->services as $service)
+        @if ($service->name == 'WiFi')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/wifi.png')}}" alt=""><span class="ms-2 me-3 mb-3">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Kitchen')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/kitchen-utensils.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
+        </div>
+        @elseif($service->name=='Self check-in')
+        <div class="col-4 col-md-3 text-md-start mb-2">
+            <img src="{{asset('img/room-key.png')}}" alt=""><span class="ms-2 me- mb-33 ">{{$service->name}}</span>
         </div>
     </div>
     <div class=" container-extra-service mb-5 m-auto">

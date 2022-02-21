@@ -3,5 +3,6 @@
     "/css/ura.css": "/css/ura.css",
     "/css/app.css": "/css/app.css",
     "/js/create-apartment-search.js": "/js/create-apartment-search.js",
-    "/js/edit-apartment-search.js": "/js/edit-apartment-search.js"
+    "/js/edit-apartment-search.js": "/js/edit-apartment-search.js",
+    "/js/vue.js": "/js/vue.js"
 }

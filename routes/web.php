@@ -14,9 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-//rotte lato guest
-Route::get('/', 'ApartmentController@index')->name('guest.index');
-Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
+
+//Guest routes (deprecated with vue routes)
+// Route::get('/', 'ApartmentController@index')->name('guest.index');
+// Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
+
+Route::get('/advanced-search', function () {
+    $apartments = App\Models\Apartment::all();
+    $services = App\Models\Service::all();
+    return view('guest.advanced-search', compact('apartments', 'services'));
+})->name('guest.advanced-search');
 
 Route::get('/advanced-search',  'SearchController@index')->name('guest.advanced-search');
 
@@ -46,3 +53,7 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
         'messages' => 'slug',
     ]);
 });
+
+Route::get('/{any}', function () {
+    return view('guest.index');
+})->where('any', '.*');

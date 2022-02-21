@@ -15,7 +15,7 @@ header {
                 }
             }
         }
-}
+    }
 }
 
 .container-advanced-search {
@@ -31,10 +31,9 @@ header {
             &:hover {
                 border: 1px solid black;
             }
-            
         }
     }
-    .container_results_appartment{
+    .container_results_appartment {
         height: 85%;
         width: 80%;
         margin: auto;
@@ -42,33 +41,28 @@ header {
         border-top: 1px solid lightgray;
         .results {
             overflow-y: scroll;
-            .number_results{
+            .number_results {
                 border-bottom: 1px solid lightgray;
             }
-            .single-apartment{
-                .image-single{
-                    img{
-                       border-radius: 1.9rem; 
-                       height: 165px;
-                    }  
+            .single-apartment {
+                .image-single {
+                    img {
+                        border-radius: 1.9rem;
+                        height: 165px;
+                    }
                 }
-                .info_apartment{
-                    hr{
+                .info_apartment {
+                    hr {
                         width: 50px;
                     }
                 }
             }
-
         }
-        
-        .mappa{
-            
-            img{
+        .mappa {
+            img {
                 width: 100%;
                 height: 100%;
             }
         }
-        
-    
     }
 }

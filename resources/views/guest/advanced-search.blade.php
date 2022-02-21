@@ -3,7 +3,7 @@
 <div class="container-advanced-search">
     <div class="advanced-search py-3 px-4">
         @foreach($services as $service)
-        <input type="button" class="rounded-pill" value="{{$service->name}}"></input>
+        <input type="button" class="rounded-pill" value="{{$service->name}}">
         @endforeach
     </div>
     <div class="container_results_appartment d-flex flex-wrap flex-md-nowrap px-4 py-3">
