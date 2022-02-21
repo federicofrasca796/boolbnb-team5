@@ -11354,13 +11354,18 @@ header .modal button[type=submit] {
 .container-apartments .card {
   border-radius: 2rem !important;
   font-family: "Josefin Sans", sans-serif;
+  height: 100%;
 }
 .container-apartments .card a {
   text-decoration: none;
   color: black;
+  height: 100%;
 }
 .container-apartments .card a:visited {
   color: black;
+}
+.container-apartments .card img {
+  height: 80%;
 }
 
 .container_img {
@@ -11422,6 +11427,16 @@ header .modal button[type=submit] {
 .register-container button[type=submit] {
   background-color: #e41c5bff;
   font-family: "Josefin Sans", sans-serif;
+}
+
+.advanced-search input[type=button] {
+  font-family: "Josefin Sans", sans-serif;
+  padding: 8px 16px;
+  border: 1px solid lightgrey;
+  background-color: transparent;
+}
+.advanced-search input[type=button]:hover {
+  border: 1px solid black;
 }
 
 * {

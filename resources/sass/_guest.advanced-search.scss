@@ -1,0 +1,12 @@
+.advanced-search {
+    input[type=button] {
+        font-family: 'Josefin Sans', sans-serif;
+        padding: 8px 16px;
+        border: 1px solid lightgrey;
+        background-color: transparent;
+        &:hover {
+            border: 1px solid black;
+        }
+        
+    }
+}
