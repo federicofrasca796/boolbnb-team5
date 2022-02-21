@@ -77,6 +77,7 @@
 			let apartments;
 			let startCoords = this.startCoords;
 			let markers = [];
+			let searching = this.searching;
 
 			/* Create The Map */
 			var map = tt.map({ 
@@ -85,9 +86,6 @@
 				center: startCoords,
     			zoom: 4
 			}); 
-
-			map.addControl(new tt.FullscreenControl()); 
-            map.addControl(new tt.NavigationControl());
 
 			/* Search Options */
 			var options = {
@@ -98,27 +96,81 @@
 					countrySet: 'IT',
 				},
 			};
+
+			/* Map  Controls */
+			map.addControl(new tt.FullscreenControl()); 
+            map.addControl(new tt.NavigationControl());
   
 			/* Search Events Handler */
 			var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
 			var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
 			var searchMarkersManager = new SearchMarkersManager(map);
-			ttSearchBox.on('tomtom.searchbox.resultsfound', handleResultsFound);
-			ttSearchBox.on('tomtom.searchbox.resultselected', handleResultSelection);
-			ttSearchBox.on('tomtom.searchbox.resultscleared', handleResultClearing);
+
+			/* Services Api call */
+			this.getServices();
+			
+			/* Append the searchbox on the map */
 			document.getElementById('searchBox').appendChild(searchBoxHTML)
 
+			/* Check if there is data inherited from home component*/
+			searching  = this.searching;
+			if(searching != null){
+				center = [searching.data.result.position.lat , searching.data.result.position.lng]
+				ttSearchBox.setValue(this.value)
+				apartments = this.apartments
+				this.results = this.apartments
+				map.on('load', ()=>{
+					/* Api apartments call */
+					handleResultSelection(this.searching)
+					this.results = []
+					center = [this.searching.data.result.position.lat ,this.searching.data.result.position.lng];		
+					for(let k = 0;k<apartments.length;k++){
+						let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
+						if(dist < 20){
+							createMarker(apartments[k]);
+							this.results.push(apartments[k])
+						}
+					}
+					if(layers.length == 0){
+						createLayer(this.searching.data.result) 
+					}
+					else{
+						for(let j = 0;j<layers.length;j++){
+							if(layers[j] == this.searching.data.result.id){
+								showLayer(layers[j])
+								break;
+							}
+							else{
+								createLayer(this.searching.data.result) 
+							}
+						}
+					}
+				})				
+			}
+			else{
+				axios.get('api/apartments').then(
+					(response) => {
+						this.apartments = response.data.data; 
+						apartments = response.data.data;
+						this.results = this.apartments
+						drawAll(apartments);
+					},
+				)
+			}
+
 			/* Search Event Functions */
-			function handleResultsFound(event) {
+			ttSearchBox.on('tomtom.searchbox.resultsfound', (event) =>{
 				var results = event.data.results.fuzzySearch.results;
 
 				if (results.length === 0) {
 					searchMarkersManager.clear();
 				}
-			}
+			});
 
-			function handleResultSelection(event) {
-				var result = event.data.result;
+			/* Actions to do when selecting a result */
+			ttSearchBox.on('tomtom.searchbox.resultselected', (data) =>{
+				
+				var result = data.data.result;
 				if (result.type === 'category' || result.type === 'brand') {
 					return;
 				}
@@ -137,8 +189,51 @@
 				setTimeout(()=>{
 					map.setMaxZoom(22)
 				},500)
-			}
 
+				this.results = []
+				center = [data.data.result.position.lat , data.data.result.position.lng];		
+				for(let k = 0;k<apartments.length;k++){
+					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
+					if(dist < 20){
+						createMarker(apartments[k]);
+						this.results.push(apartments[k])
+					}
+				}
+				if(layers.length == 0){
+					createLayer(data.data.result) 
+				}
+				else{
+					for(let j = 0;j<layers.length;j++){
+						if(layers[j] == data.data.result.id){
+							showLayer(layers[j])
+							break;
+						}
+						else{
+							createLayer(data.data.result) 
+						}
+					}
+				}
+			});
+			
+			/* Actions to do while results are cleared */
+			ttSearchBox.on('tomtom.searchbox.resultscleared', ()=>{
+				if(layer != 0){
+					hideLayer(layer);
+				}
+				map.flyTo({
+					"center": startCoords,
+					"zoom":4
+            	})
+				if(markers.length != 0){
+					for(let i = 0;i<markers.length;i++){
+						markers[i].remove();
+					}
+					markers = [];
+				}
+				drawAll(apartments);
+			});
+
+			/* Tomtom viewport Handling */
 			function fitToViewport(markerData) {
 				if (!markerData || markerData instanceof Array && !markerData.length) {
 					return;
@@ -164,24 +259,6 @@
 					topLeft = [data.viewport.topLeftPoint.lng, data.viewport.topLeftPoint.lat];
 				}
 				return [btmRight, topLeft];
-			}
-
-			function handleResultClearing() {
-				/* searchMarkersManager.clear(); */
-				if(layer != 0){
-					hideLayer(layer);
-				}
-				map.flyTo({
-					"center": startCoords,
-					"zoom":4
-            	})
-				if(markers.length != 0){
-					for(let i = 0;i<markers.length;i++){
-						markers[i].remove();
-					}
-					markers = [];
-				}
-				drawAll(apartments);
 			}
 
 			/* Search Markers Engine */
@@ -259,39 +336,11 @@
 				this._map = null;
 			};
 
-			/* Actions to do when selecting a result */
-			ttSearchBox.on('tomtom.searchbox.resultselected', (data) => {
-				this.results = []
-				center = [data.data.result.position.lat , data.data.result.position.lng];		
-				for(let k = 0;k<apartments.length;k++){
-					let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
-					if(dist < 20){
-						createMarker(apartments[k]);
-						this.results.push(apartments[k])
-					}
-				}
-				if(layers.length == 0){
-					createLayer(data.data.result) 
-					console.log('first')
-				}
-				else{
-					for(let j = 0;j<layers.length;j++){
-						if(layers[j] == data.data.result.id){
-							showLayer(layers[j])
-							break;
-						}
-						else{
-							createLayer(data.data.result) 
-						}
-					}
-				}
-			});
-
 			/* Create Marker with Popup */
 			function createMarker(object){   
 				/* create the popup for the marker*/
 				var popup = new tt.Popup()
-					.setHTML("<p>"+object.title+"</p>")
+					.setHTML("<h4>This is</h4><h1>"+object.title+"</h1><p>This i an Apartment Popup</p>")
 				
 				/* Create the Marker */
 				var marker = new tt.Marker()
@@ -321,13 +370,11 @@
 
 			/* hide layer on map */
 			function hideLayer(layerId) {
-				console.log('hide ' , layerId)
             	map.setLayoutProperty(layerId, 'visibility', 'none');
         	}
 
 			/* Show layer on map */
 			function showLayer(layerId){
-				console.log('show ' , layerId)
 				map.setLayoutProperty(layerId, 'visibility' , 'visible')
 				layer = layerId;
 			}
@@ -355,7 +402,6 @@
 					});
 					layers.push(result.id);
 					layer = result.id;
-					console.log('created current ' , layer)
 				}
 			}
 
@@ -365,55 +411,6 @@
 					createMarker(data[k]);
 				}
 			}
-			
-			let searching  =this.searching;
-			/* rearch the result passed througth home component */
-			if(searching != null){
-				center = [searching.data.result.position.lat , searching.data.result.position.lng]
-				ttSearchBox.setValue(this.value)
-				apartments = this.apartments
-				this.results = this.apartments
-				map.on('load', ()=>{
-					/* Api apartments call */
-					handleResultSelection(this.searching)
-					this.results = []
-					center = [this.searching.data.result.position.lat ,this.searching.data.result.position.lng];		
-					for(let k = 0;k<apartments.length;k++){
-						let dist = calcCrow(center[0] , center[1] , apartments[k]['latitude'] , apartments[k]['longitude']);
-						if(dist < 20){
-							createMarker(apartments[k]);
-							this.results.push(apartments[k])
-						}
-					}
-					if(layers.length == 0){
-						createLayer(this.searching.data.result) 
-						console.log('first')
-					}
-					else{
-						for(let j = 0;j<layers.length;j++){
-							if(layers[j] == this.searching.data.result.id){
-								showLayer(layers[j])
-								break;
-							}
-							else{
-								createLayer(this.searching.data.result) 
-							}
-						}
-					}
-				})
-			}
-			else{
-				axios.get('api/apartments').then(
-					(response) => {
-						this.apartments = response.data.data; 
-						apartments = response.data.data;
-						this.results = this.apartments
-						drawAll(apartments);
-					},
-				)
-			}
-
-			this.getServices();
     	}  ,
 		
 		methods: {
@@ -422,11 +419,11 @@
 				this.x += 1;
 			},
 
+			/* Services Api */
 			getServices(){
 				axios.get('api/services').then(
 					(response) => {
 						this.services = response.data.data; 
-						console.log(this.services)
 					},
 				)
 			}	
