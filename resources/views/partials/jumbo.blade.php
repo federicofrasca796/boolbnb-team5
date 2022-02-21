@@ -9,8 +9,6 @@
                     <a class="h-100 px-5 border-0 bg-danger" type="submit">SEARCH</a>
                 </div>
 
-            </div>
-        </form>
-    </div>
+    @include('partials.searchbar')
 
 </div>

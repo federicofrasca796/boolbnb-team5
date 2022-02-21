@@ -7,9 +7,10 @@ use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+
 class ApartmentController extends Controller
 {
     /**
@@ -169,7 +170,7 @@ class ApartmentController extends Controller
     {
         if (Auth::id() === $apartment->user_id) {
             $validator = $request->validate([
-                'is_aviable' => 'max:1|boolean|required'
+                'is_aviable' => 'max:1|boolean|required',
             ]);
             $apartment->update($validator);
             return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));

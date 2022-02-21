@@ -512,6 +512,7 @@ __webpack_require__.r(__webpack_exports__);
       apartments = this.apartments;
       this.results = this.apartments;
       map.on('load', function () {
+<<<<<<< HEAD
         var result = _this.searching.data.result;
 
         if (result.type === 'category' || result.type === 'brand') {
@@ -535,6 +536,10 @@ __webpack_require__.r(__webpack_exports__);
         setTimeout(function () {
           map.setMaxZoom(22);
         }, 500);
+=======
+        /* Api apartments call */
+        handleResultSelection(_this.searching);
+>>>>>>> dev
         _this.results = [];
         center = [_this.searching.data.result.position.lat, _this.searching.data.result.position.lng];
 
@@ -918,7 +923,11 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n\r\n", ""]);
+=======
+exports.push([module.i, "\n#mainDiv{\n\tpadding-top: 75px;\n}\n#map {\n  height: calc(100vh - 75px);\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n\n", ""]);
+>>>>>>> dev
 
 // exports
 
@@ -18133,7 +18142,11 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
+=======
+module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+>>>>>>> dev
 
 
 /***/ })
