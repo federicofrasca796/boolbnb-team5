@@ -17,7 +17,7 @@ class ApartmentController extends Controller
     public function index()
     {
         // return Apartment::paginate(10);
-        return new ApartmentResource(Apartment::paginate(10));
+        return new ApartmentResource(Apartment::OrderBy('id', 'desc')->paginate(8));
     }
 
     /**
@@ -49,7 +49,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return Apartment::where('slug', $apartment->slug)->with(['services'])->first();
     }
 
     /**

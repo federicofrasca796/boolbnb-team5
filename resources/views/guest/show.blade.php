@@ -1,6 +1,6 @@
 @extends ('layouts.app')
-@section ('content')
-<div class="container_img w-100 px-3 d-flex flex-wrap">
+@section('content')
+    {{-- <div class="container_img w-100 px-3 d-flex flex-wrap">
     <div class="col-12 h-100 p-2">
         <img src="{{asset('storage/' . $apartment->thumbnail)}}" class="w-100 h-100" alt="">
     </div>
@@ -54,7 +54,7 @@
     <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
     <div class="col-12 col-md-8 d-flex flex-wrap ">
         @foreach ($apartment->services as $service)
-        @if($service->name=='WiFi')
+        @if ($service->name == 'WiFi')
         <div class="col-4 col-md-3 text-md-start mb-2">
             <img src="{{asset('img/wifi.png')}}" alt=""><span class="ms-2 me-3 mb-3">{{$service->name}}</span>
         </div>
@@ -120,6 +120,5 @@
 <div class="map">
     <img class="w-100" src="{{asset('img/map.png')}}" alt="">
 
-</div>
-
+</div> --}}
 @endsection

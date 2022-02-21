@@ -18,6 +18,7 @@ class ServiceSeeder extends Seeder
         foreach ($services as $service) {
             $newService = new Service;
             $newService->name = $service;
+            $newService->slug = Str::slug($newService->name, '-');
             $newService->save();
         }
     }
