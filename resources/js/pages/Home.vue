@@ -20,16 +20,21 @@
             <div id="mySearchbar" class="form-control"></div>
 
             <!-- Route to advanced search page -->
-            <div class="h-100 bg-white p-2">
+            <div class="container_search h-100 bg-white p-2">
               <div id="link_router" class="d-none">
-                <button @click="emitSearchData()" class="btn btn-danger text-white px-5 rounded-0 h-100"> SEARCH</button>
+                <button
+                  @click="emitSearchData()"
+                  class="btn btn-raspberry text-white px-5 h-100"
+                >
+                  SEARCH
+                </button>
               </div>
-              <div
+              <button
                 id="link_fake"
-                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+                class="btn btn-secondary text-white px-5 h-100"
               >
                 SEARCH
-              </div>
+              </button>
             </div>
           </div>
         </form>
@@ -78,7 +83,7 @@ export default {
       loading: true,
       api_error: false,
       mySearchResult: Object,
-      inputValue : null 
+      inputValue: null,
     };
   },
   mounted() {
@@ -102,11 +107,11 @@ export default {
       var self = this;
       self.mySearchResult = data;
       this.changeBtn();
-      setTimeout(()=>{
+      setTimeout(() => {
         let value;
         value = ttSearchBox.getValue();
-        this.inputValue = value
-      },100)
+        this.inputValue = value;
+      }, 100);
     });
   },
   methods: {
@@ -136,12 +141,74 @@ export default {
       real.classList.remove("d-none");
     },
 
-    emitSearchData(){
-      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue , apartments: this.apartments}})
-    }
+    emitSearchData() {
+      this.$router.push({
+        name: "Search",
+        params: {
+          data: this.mySearchResult,
+          value: this.inputValue,
+          apartments: this.apartments,
+        },
+      });
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../sass/variables";
+#jumbo {
+  height: 75vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  & > img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    filter: brightness(0.7);
+  }
+
+  .search-destination {
+    width: 75%;
+    .input-group {
+      height: 70px;
+      .container-button-search {
+        padding: 0.5rem;
+        button {
+          padding: 0px 3rem;
+        }
+      }
+    }
+  }
+  #mySearchbar {
+    .tt-search-box-input-container {
+      border: none;
+      height: 100%;
+    }
+    svg {
+      display: none;
+    }
+  }
+  .container_search {
+    border-top-right-radius: 0.9rem;
+    border-bottom-right-radius: 0.9rem;
+    #link_router {
+      border-top-right-radius: 0.9rem;
+      border-bottom-right-radius: 0.9rem;
+      height: 100%;
+    }
+    button {
+      border-top-right-radius: 0.9rem;
+      border-bottom-right-radius: 0.9rem;
+    }
+    .btn-raspberry {
+      background: $raspberry;
+    }
+  }
+}
 </style>
