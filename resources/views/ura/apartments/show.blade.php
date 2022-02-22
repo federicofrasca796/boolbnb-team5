@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container_img w-100 px-3 d-flex flex-wrap">
-    <div class="col-12 h-100 p-2">
+    <div class="col-12 h-100 p-2 {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
         <img src="{{ asset('storage/' . $apartment->thumbnail) }}" alt="{{ $apartment->slug }}" class="w-100 h-100">
     </div>
     {{-- /.thumbnail --}}
