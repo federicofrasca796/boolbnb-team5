@@ -106,6 +106,12 @@
     <section class="map">
       <img class="w-100" src="/img/map.png" alt="" />
     </section>
+
+    <div class="bottone_goUp" v-if="bottone_goUp_visible">
+      <a href="#app">
+        <i class="fa-solid fa-chevron-up"></i>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -116,12 +122,39 @@ export default {
       apartment: Object,
       loading: true,
       api_error: false,
+      bottone_goUp_visible: false,
     };
   },
   mounted() {
     this.fetchApartment();
+    //parte grafica header
+    this.styleHeader();
+    window.addEventListener("scroll", this.createButton);
   },
   methods: {
+    //parte grafica header
+    createButton() {
+      if (window.scrollY > 75) {
+        //console.log("string");
+        this.bottone_goUp_visible = true;
+      } else {
+        this.bottone_goUp_visible = false;
+      }
+    },
+    styleHeader() {
+      let header = document.querySelector("header");
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "black";
+      console.log(h1);
+      console.log(header);
+
+      if (window.screen.width >= 576) {
+        header.style.justifyContent = "center";
+      } else {
+        header.style.justifyContent = "flex-start";
+      }
+    },
+
     fetchApartment() {
       axios
         .get("/api/apartments/" + this.$route.params.slug)
@@ -139,5 +172,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../sass/variables";
+.bottone_goUp {
+  width: 50px;
+  height: 40px;
+  background-color: $raspberry;
+  position: fixed;
+  bottom: 0;
+  right: 45px;
+  text-align: center;
+  line-height: 40px;
+  i {
+    font-size: 20px;
+    color: white;
+  }
+}
 </style>

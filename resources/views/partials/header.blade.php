@@ -1,6 +1,10 @@
 <header class="w-100 d-flex py-3 px-4">
-    <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
-    <h1 class="ms-3 d-none d-md-block {{ Route::currentRouteName() === 'register' ? 'text-black' : 'text-white'}}">BoolBnB</h1>
+    <router-link to='/'>
+        <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
+    </router-link>
+    <h1 class="ms-3 d-none d-md-block ">BoolBnB</h1>
+
+
 
     @if(Route::currentRouteName() === 'guest.advanced-search')
     @include('partials.searchbar')

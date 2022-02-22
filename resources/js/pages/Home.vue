@@ -137,6 +137,8 @@ export default {
     },
     styleHeader() {
       let header = document.querySelector("header");
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "white";
       console.log(header);
 
       if (window.screen.width >= 576) {

@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid d-flex position-relative" id="mainDiv">
+  <div class="container-fluid d-flex position-relative flex-wrap" id="mainDiv">
+    <div id="searchBox" class="col-12"></div>
     <div
       class="
         container_results_appartment
@@ -11,7 +12,7 @@
       "
     >
       <div class="col-12 col-md-6 w-100">
-        <div id="searchBox"></div>
+        <!-- <div id="searchBox"></div> -->
         <div class="services d-flex flex-wrap">
           <div
             class="advanced-search px-1 py-1"
@@ -469,8 +470,18 @@ export default {
     styleHeader() {
       let header = document.querySelector("header");
       console.log(header);
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "black";
 
       header.style.justifyContent = "flex-start";
+      let search = document.getElementById("searchBox");
+
+      if (window.screen.width >= 576) {
+        search.style.position = "absolute";
+        search.style.width = "50%";
+        search.style.top = "-71px";
+        search.style.left = "27%";
+      }
     },
 
     /* This is a test interacting with computed properties */
@@ -525,6 +536,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../sass/variables";
 #mainDiv {
   padding-top: 75px;
   .advanced-search {
@@ -549,6 +561,25 @@ export default {
     .info_apartment {
       hr {
         width: 50px;
+      }
+    }
+  }
+  #searchBox {
+    .tt-search-box-input-container {
+      border-radius: 0.9rem;
+      div {
+        position: relative;
+        margin-bottom: 9px;
+        svg {
+          position: absolute;
+          border-radius: 100%;
+          top: -10px;
+          right: -906px;
+          width: 30px;
+          height: 30px;
+          background-color: $raspberry;
+          color: white;
+        }
       }
     }
   }
