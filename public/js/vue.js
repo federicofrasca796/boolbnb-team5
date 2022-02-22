@@ -446,6 +446,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Map',
   data: function data() {
@@ -455,34 +463,34 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       searching: null,
       startCoords: [12.49427, 41.89056],
-      services: []
+      services: [],
+      range: 20,
+      map: '',
+      markers: [],
+      layers: [],
+      layer: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     var tt = window.tt;
-    var layers = [];
-    var layer = 0;
-    var center = 0;
-    var apartments;
-    var startCoords = this.startCoords;
-    var markers = [];
-    var searching = this.searching;
+    ;
     /* Create The Map */
 
-    var map = tt.map({
+    var map = window.tt.map({
       key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
       container: 'map',
-      center: startCoords,
+      center: this.startCoords,
       zoom: 4
     });
+    this.map = map;
     /* Search Options */
 
     var options = {
       searchOptions: {
         key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-        language: 'en-GB',
+        language: 'it-IT',
         limit: 5,
         countrySet: 'IT'
       }
@@ -495,7 +503,6 @@ __webpack_require__.r(__webpack_exports__);
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
-    var searchMarkersManager = new SearchMarkersManager(map);
     /* Services Api call */
 
     this.getServices();
@@ -504,335 +511,39 @@ __webpack_require__.r(__webpack_exports__);
     document.getElementById('searchBox').appendChild(searchBoxHTML);
     /* Check if there is data inherited from home component*/
 
-    searching = this.searching;
-
-    if (searching != null) {
-      center = [searching.data.result.position.lat, searching.data.result.position.lng];
+    if (this.searching != null) {
       ttSearchBox.setValue(this.value);
-      apartments = this.apartments;
       this.results = this.apartments;
-      map.on('load', function () {
-        /* Api apartments call */
-        handleResultSelection(_this.searching);
-        _this.results = [];
-        center = [_this.searching.data.result.position.lat, _this.searching.data.result.position.lng];
-
-        for (var k = 0; k < apartments.length; k++) {
-          var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
-
-          if (dist < 20) {
-            createMarker(apartments[k]);
-
-            _this.results.push(apartments[k]);
-          }
-        }
-
-        if (layers.length == 0) {
-          createLayer(_this.searching.data.result);
-        } else {
-          for (var j = 0; j < layers.length; j++) {
-            if (layers[j] == _this.searching.data.result.id) {
-              showLayer(layers[j]);
-              break;
-            } else {
-              createLayer(_this.searching.data.result);
-            }
-          }
-        }
-      });
+      setTimeout(function () {
+        map.on('load', _this.execute(_this.searching));
+      }, 300);
     } else {
       axios.get('api/apartments').then(function (response) {
         _this.apartments = response.data.data;
-        apartments = response.data.data;
         _this.results = _this.apartments;
-        drawAll(apartments);
+
+        _this.drawAll(_this.apartments);
       });
     }
-    /* Search Event Functions */
-
-
-    ttSearchBox.on('tomtom.searchbox.resultsfound', function (event) {
-      var results = event.data.results.fuzzySearch.results;
-
-      if (results.length === 0) {
-        searchMarkersManager.clear();
-      }
-    });
     /* Actions to do when selecting a result */
 
+
     ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
-      var result = data.data.result;
+      _this.searching = data;
 
-      if (result.type === 'category' || result.type === 'brand') {
-        return;
-      }
-
-      if (layer != 0) {
-        hideLayer(layer);
-      }
-
-      if (markers.length != 0) {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].remove();
-        }
-
-        markers = [];
-      }
-
-      map.setMaxZoom(8.5);
-      fitToViewport(result);
-      setTimeout(function () {
-        map.setMaxZoom(22);
-      }, 500);
-      _this.results = [];
-      center = [data.data.result.position.lat, data.data.result.position.lng];
-
-      for (var k = 0; k < apartments.length; k++) {
-        var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
-
-        if (dist < 20) {
-          createMarker(apartments[k]);
-
-          _this.results.push(apartments[k]);
-        }
-      }
-
-      if (layers.length == 0) {
-        createLayer(data.data.result);
-      } else {
-        for (var j = 0; j < layers.length; j++) {
-          if (layers[j] == data.data.result.id) {
-            showLayer(layers[j]);
-            break;
-          } else {
-            createLayer(data.data.result);
-          }
-        }
-      }
+      _this.execute(data);
     });
     /* Actions to do while results are cleared */
 
     ttSearchBox.on('tomtom.searchbox.resultscleared', function () {
-      if (layer != 0) {
-        hideLayer(layer);
-      }
-
-      map.flyTo({
-        "center": startCoords,
-        "zoom": 4
-      });
-
-      if (markers.length != 0) {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].remove();
-        }
-
-        markers = [];
-      }
-
-      drawAll(apartments);
-      _this.results = apartments;
+      _this.clear();
     });
-    /* Tomtom viewport Handling */
+    var slider = document.getElementById('range');
+    document.getElementById('range_output').innerHTML = slider.value * 10 + ' Km';
 
-    function fitToViewport(markerData) {
-      if (!markerData || markerData instanceof Array && !markerData.length) {
-        return;
-      }
-
-      var bounds = new tt.LngLatBounds();
-
-      if (markerData instanceof Array) {
-        markerData.forEach(function (marker) {
-          bounds.extend(getBounds(marker));
-        });
-      } else {
-        bounds.extend(getBounds(markerData));
-      }
-
-      map.fitBounds(bounds, {
-        padding: {
-          left: 300
-        }
-      });
-    }
-
-    function getBounds(data) {
-      var btmRight;
-      var topLeft;
-
-      if (data.viewport) {
-        btmRight = [data.viewport.btmRightPoint.lng, data.viewport.btmRightPoint.lat];
-        topLeft = [data.viewport.topLeftPoint.lng, data.viewport.topLeftPoint.lat];
-      }
-
-      return [btmRight, topLeft];
-    }
-    /* Search Markers Engine */
-
-
-    function SearchMarkersManager(map, options) {
-      this.map = map;
-      this._options = options || {};
-      this._poiList = undefined;
-      this.markers = {};
-    }
-
-    SearchMarkersManager.prototype.draw = function (poiList) {
-      this._poiList = poiList;
-      this.clear();
-
-      this._poiList.forEach(function (poi) {
-        var markerId = poi.id;
-        var poiOpts = {
-          name: poi.poi ? poi.poi.name : undefined,
-          address: poi.address ? poi.address.freeformAddress : '',
-          distance: poi.dist,
-          classification: poi.poi ? poi.poi.classifications[0].code : undefined,
-          position: poi.position,
-          entryPoints: poi.entryPoints
-        };
-        var marker = new SearchMarker(poiOpts, this._options);
-        marker.addTo(this.map);
-        this.markers[markerId] = marker;
-      }, this);
+    slider.oninput = function () {
+      _this.sliderControl();
     };
-
-    SearchMarkersManager.prototype.clear = function () {
-      for (var markerId in this.markers) {
-        var marker = this.markers[markerId];
-        marker.remove();
-      }
-
-      this.markers = {};
-      this._lastClickedMarker = null;
-    };
-    /* Add Remove Markers From Map */
-
-
-    function SearchMarker(poiData, options) {
-      this.poiData = poiData;
-      this.options = options || {};
-      this.marker = new tt.Marker({
-        element: this.createMarker(),
-        anchor: 'bottom'
-      });
-      var lon = this.poiData.position.lng || this.poiData.position.lon;
-      this.marker.setLngLat([lon, this.poiData.position.lat]);
-    }
-
-    SearchMarker.prototype.addTo = function (map) {
-      this.marker.addTo(map);
-      this._map = map;
-      return this;
-    };
-
-    SearchMarker.prototype.createMarker = function () {
-      var elem = document.createElement('div');
-      elem.className = 'tt-icon-marker-black tt-search-marker';
-
-      if (this.options.markerClassName) {
-        elem.className += ' ' + this.options.markerClassName;
-      }
-
-      var innerElem = document.createElement('div');
-      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
-      elem.appendChild(innerElem);
-      return elem;
-    };
-
-    SearchMarker.prototype.remove = function () {
-      this.marker.remove();
-      this._map = null;
-    };
-    /* Create Marker with Popup */
-
-
-    function createMarker(object) {
-      /* create the popup for the marker*/
-      var popup = new tt.Popup().setHTML("<h4>This is</h4><h1>" + object.title + "</h1><p>This i an Apartment Popup</p>");
-      /* Create the Marker */
-
-      var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
-      /* Coordinates here */
-      .setPopup(popup).addTo(map);
-      markers.push(marker);
-    }
-    /* Distance Calculator */
-
-
-    function calcCrow(lat1, lon1, lat2, lon2) {
-      var R = 6371; // km
-
-      var dLat = toRad(lat2 - lat1);
-      var dLon = toRad(lon2 - lon1);
-      var lat1 = toRad(lat1);
-      var lat2 = toRad(lat2);
-      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-      return d;
-    } // Converts numeric degrees to radians
-
-
-    function toRad(Value) {
-      return Value * Math.PI / 180;
-    }
-    /* hide layer on map */
-
-
-    function hideLayer(layerId) {
-      map.setLayoutProperty(layerId, 'visibility', 'none');
-    }
-    /* Show layer on map */
-
-
-    function showLayer(layerId) {
-      map.setLayoutProperty(layerId, 'visibility', 'visible');
-      layer = layerId;
-    }
-    /* Create layer on map */
-
-
-    function createLayer(result) {
-      var exists = 0;
-
-      for (var i = 0; i < layers.length; i++) {
-        if (layers[i] == result.id) {
-          exists = 1;
-        }
-      }
-
-      if (exists == 0) {
-        map.addLayer({
-          'id': result.id,
-          'type': 'fill',
-          'source': {
-            'type': 'geojson',
-            'data': turf.circle([result.position.lng, result.position.lat], 20000, {
-              units: 'metres',
-              properties: {
-                key: result.id
-              }
-            })
-          },
-          'paint': {
-            'fill-color': 'blue',
-            'fill-opacity': 0.3
-          }
-        });
-        layers.push(result.id);
-        layer = result.id;
-      }
-    }
-    /* Draw markers on map */
-
-
-    function drawAll(data) {
-      for (var k = 0; k < data.length; k++) {
-        createMarker(data[k]);
-      }
-    }
   },
   methods: {
     /* This is a test interacting with computed properties */
@@ -849,28 +560,273 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
 
-    /* Shuffles an Array */
-    shuffle: function shuffle(array) {
-      var currentIndex = array.length,
-          randomIndex; // While there remain elements to shuffle...
+    /* Draw markers on map */
+    drawAll: function drawAll(data) {
+      for (var k = 0; k < data.length; k++) {
+        this.createMarker(data[k]);
+      }
+    },
 
-      while (currentIndex != 0) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--; // And swap it with the current element.
+    /* Create Marker with Popup */
+    createMarker: function createMarker(object) {
+      var tt = window.tt;
+      var map = this.map;
+      /* create the popup for the marker*/
 
-        var _ref = [array[randomIndex], array[currentIndex]];
-        array[currentIndex] = _ref[0];
-        array[randomIndex] = _ref[1];
+      var popup = new tt.Popup().setHTML("<h4>This is</h4><h1>" + object.title + "</h1><p>This i an Apartment Popup</p>");
+      /* Create the Marker */
+
+      var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
+      /* Coordinates here */
+      .setPopup(popup).addTo(map);
+      this.markers.push(marker);
+    },
+
+    /* Create layer on map */
+    createLayer: function createLayer(result, radius) {
+      var name = result.id + "-" + radius;
+      var exists = 0;
+      var layers = this.layers;
+      var tt = window.tt;
+      var map = this.map;
+      radius = radius * 1000;
+
+      for (var i = 0; i < layers.length; i++) {
+        if (layers[i] == name) {
+          exists = 1;
+        }
       }
 
-      return array;
+      if (exists == 0) {
+        map.addLayer({
+          'id': name,
+          'type': 'fill',
+          'source': {
+            'type': 'geojson',
+            'data': turf.circle([result.position.lng, result.position.lat], radius, {
+              units: 'metres',
+              properties: {
+                key: name
+              }
+            })
+          },
+          'paint': {
+            'fill-color': 'blue',
+            'fill-opacity': 0.3
+          }
+        });
+        this.layers.push(name);
+        this.layer = name;
+      }
+    },
+
+    /* Show layer on map */
+    showLayer: function showLayer(layerId) {
+      var map = this.map;
+      map.setLayoutProperty(layerId, 'visibility', 'visible');
+      this.layer = layerId;
+    },
+
+    /* hide layer on map */
+    hideLayer: function hideLayer(layerId) {
+      var map = this.map;
+      map.setLayoutProperty(layerId, 'visibility', 'none');
+    },
+    // Converts numeric degrees to radians
+    toRad: function toRad(Value) {
+      return Value * Math.PI / 180;
+    },
+
+    /* Distance Calculator */
+    calcCrow: function calcCrow(lat1, lon1, lat2, lon2) {
+      var R = 6371; // km
+
+      var dLat = this.toRad(lat2 - lat1);
+      var dLon = this.toRad(lon2 - lon1);
+      var lat1 = this.toRad(lat1);
+      var lat2 = this.toRad(lat2);
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      return d;
+    },
+
+    /* Get Tomtom Bounds */
+    getBounds: function getBounds(data) {
+      var btmRight;
+      var topLeft;
+
+      if (data.viewport) {
+        btmRight = [data.viewport.btmRightPoint.lng, data.viewport.btmRightPoint.lat];
+        topLeft = [data.viewport.topLeftPoint.lng, data.viewport.topLeftPoint.lat];
+      }
+
+      return [btmRight, topLeft];
+    },
+
+    /* Tomtom viewport Handling */
+    fitToViewport: function fitToViewport(markerData) {
+      var tt = window.tt;
+      var map = this.map;
+
+      if (!markerData || markerData instanceof Array && !markerData.length) {
+        return;
+      }
+
+      var bounds = new tt.LngLatBounds();
+
+      if (markerData instanceof Array) {
+        markerData.forEach(function (marker) {
+          bounds.extend(this.getBounds(marker));
+        });
+      } else {
+        bounds.extend(this.getBounds(markerData));
+      }
+
+      map.fitBounds(bounds, {
+        padding: {
+          left: 500
+        }
+      });
+    },
+
+    /* Search System main Execution */
+    execute: function execute(searching) {
+      var map = this.map;
+      var result = searching.data.result;
+
+      if (this.layer != 0) {
+        this.hideLayer(this.layer);
+      }
+
+      if (this.markers.length != 0) {
+        for (var i = 0; i < this.markers.length; i++) {
+          this.markers[i].remove();
+        }
+
+        this.markers = [];
+      }
+
+      this.fitToViewport(result);
+      map.setMaxZoom(8.5);
+      setTimeout(function () {
+        map.setMaxZoom(22);
+      }, 500);
+      this.results = [];
+      var center = [searching.data.result.position.lat, searching.data.result.position.lng];
+      var tt = window.tt;
+      /* create the popup for the marker*/
+
+      var popup = new tt.Popup().setHTML("<h4>This is</h4><h1>The Center</h1><p>This i an Apartment Popup</p>");
+      /* Create the Marker */
+
+      var marker = new tt.Marker().setLngLat(center)
+      /* Coordinates here */
+      .setPopup(popup).addTo(map);
+      this.markers.push(marker);
+      var sortion = [];
+
+      for (var k = 0; k < this.apartments.length; k++) {
+        var dist = this.calcCrow(center[0], center[1], this.apartments[k]['latitude'], this.apartments[k]['longitude']);
+
+        if (dist < this.range) {
+          this.createMarker(this.apartments[k]);
+          dist = Math.floor(dist * 10) / 10;
+          this.apartments[k]['distance'] = dist;
+          this.results.push(this.apartments[k]);
+          sortion.push(dist);
+        }
+      }
+
+      if (sortion.length > 0) {
+        sortion.sort(function (a, b) {
+          return a - b;
+        });
+        console.log(sortion);
+        var sorting = [];
+
+        for (var h = 0; h < sortion.length; h++) {
+          for (var index = 0; index < sortion.length; index++) {
+            if (sortion[h] == this.results[index]['distance']) {
+              sorting.push(this.results[index]);
+            }
+          }
+        }
+
+        console.log(sorting);
+        this.results = sorting;
+      }
+
+      if (this.layers.length == 0) {
+        this.createLayer(searching.data.result, this.range);
+      } else {
+        for (var j = 0; j < this.layers.length; j++) {
+          var name = searching.data.result.id + '-' + this.range;
+
+          if (this.layers[j] == name) {
+            this.showLayer(this.layers[j]);
+            break;
+          } else {
+            this.createLayer(searching.data.result, this.range);
+          }
+        }
+      }
+    },
+
+    /* Actions on searchbox Clearing */
+    clear: function clear() {
+      var map = this.map;
+
+      if (this.layer != 0) {
+        this.hideLayer(this.layer);
+      }
+
+      map.flyTo({
+        "center": this.startCoords,
+        "zoom": 4
+      });
+
+      if (this.markers.length != 0) {
+        for (var i = 0; i < this.markers.length; i++) {
+          this.markers[i].remove();
+        }
+
+        this.markers = [];
+      }
+
+      if (this.apartments != null) {
+        this.drawAll(this.apartments);
+        this.results = this.apartments;
+      }
+    },
+
+    /* Range Slider Controller */
+    sliderControl: function sliderControl() {
+      var map = this.map;
+      var slider = document.getElementById('range');
+      var counter = 0;
+      document.getElementById('range_output').innerHTML = slider.value * 10 + ' Km';
+
+      if (slider.value > 2 && counter == 0) {
+        map.setMaxZoom(9);
+        counter++;
+      } else {
+        if (counter == 1) {
+          map.setMaxZoom(8.5);
+          counter--;
+        }
+      }
+
+      this.range = slider.value * 10;
+
+      if (this.searching != null) {
+        this.execute(this.searching);
+      }
     }
   },
   computed: {
     /* Compute the apartments */
     getApartments: function getApartments() {
-      this.results = this.shuffle(this.results);
       return this.results;
     }
   },
@@ -897,7 +853,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#mainDiv{\n\tpadding-top: 75px;\n}\n#map {\n  height: calc(100vh - 75px);\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n\n", ""]);
+exports.push([module.i, "\nheader{\r\n\tbackground-color: white;\n}\n.container_results_appartment{\r\n\t    max-height: calc(100vh - 75px);\r\n    \toverflow: auto;\n}\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
 
 // exports
 
@@ -2376,6 +2332,21 @@ var render = function () {
                 0
               ),
               _vm._v(" "),
+              _c("span", [_vm._v("Searching range")]),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "range",
+                  name: "range",
+                  id: "range",
+                  min: "1",
+                  max: "5",
+                  value: "2",
+                },
+              }),
+              _vm._v(" "),
+              _c("span", { attrs: { id: "range_output" } }),
+              _vm._v(" "),
               _vm._l(_vm.getApartments, function (apartment) {
                 return _c("div", { key: apartment.id }, [
                   _c(
@@ -2450,11 +2421,23 @@ var render = function () {
                                 ),
                               ]),
                             ]),
+                            _vm._v(" "),
+                            apartment.distance
+                              ? _c("div", [
+                                  _c("h1", [_vm._v("Distance")]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(_vm._s(apartment.distance) + "  Km"),
+                                  ]),
+                                ])
+                              : _vm._e(),
                           ]),
                         ]
                       ),
                     ]
                   ),
+                  _vm._v(" "),
+                  _c("hr"),
                 ])
               }),
             ],
@@ -18112,7 +18095,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
