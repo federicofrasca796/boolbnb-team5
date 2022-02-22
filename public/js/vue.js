@@ -203,9 +203,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2069,7 +2066,15 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-12 col-md-4 d-flex justify-content-center align-items-center",
+          },
+          [_c("form-send-message")],
+          1
+        ),
       ]
     ),
     _vm._v(" "),
@@ -2150,31 +2155,10 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _vm._m(0),
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "col-12 col-md-4 d-flex justify-content-center align-items-center",
-      },
-      [
-        _c("div", { staticClass: "card w-50 m-auto rounded-pill sticky-top" }, [
-          _c("div", { staticClass: "card-body text-center" }, [
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v("Contact the owner"),
-            ]),
-          ]),
-        ]),
-      ]
-    )
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -18082,7 +18066,8 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // step 1 define ro
 
 var Search = Vue.component('Search', __webpack_require__(/*! ./pages/Search.vue */ "./resources/js/pages/Search.vue")["default"]);
 var Home = Vue.component('Home', __webpack_require__(/*! ./pages/Home.vue */ "./resources/js/pages/Home.vue")["default"]);
-var Apartment = Vue.component('Apartment', __webpack_require__(/*! ./pages/Apartment.vue */ "./resources/js/pages/Apartment.vue")["default"]); // Step 2 define vue router routes
+var Apartment = Vue.component('Apartment', __webpack_require__(/*! ./pages/Apartment.vue */ "./resources/js/pages/Apartment.vue")["default"]); //const FormSendMessage = Vue.component('FormSendMessage', require('./components/FormSendMessage.vue').default);
+// Step 2 define vue router routes
 
 var routes = [{
   path: '/',
