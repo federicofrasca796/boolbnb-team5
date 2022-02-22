@@ -34,9 +34,12 @@
                             <div class="card-content">
                                 @include('partials.ura.apartment.content')
                             </div>
-                            
+
                         </div>
                         @include('partials.ura.apartment.actions')
+                        <a href="{{ route('apartments.payment', $apartment->slug) }}" class="btn btn-light mx-1">
+                            Sponsorizza
+                        </a>
                     </div>
                 </div>
             </div>
@@ -56,4 +59,3 @@
         </div>
     </div>
 @endsection
-
