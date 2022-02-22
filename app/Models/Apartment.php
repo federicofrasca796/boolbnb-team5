@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\User;
 use App\Models\Message;
-use App\Models\View;
-use App\Models\Sponsor;
 use App\Models\Service;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Sponsor;
+use App\Models\View;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Apartment extends Model
 {
@@ -28,22 +28,18 @@ class Apartment extends Model
         'user_id',
         'sponsor_id',
         'slug',
-        'service_id'
+        'service_id',
     ];
-
 
     /**
      * Get the route key for the model
-     * 
+     *
      * @return string
      */
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
-
-
 
     /**
      * Get the user that owns the Apartment
@@ -82,9 +78,8 @@ class Apartment extends Model
      */
     public function sponsors(): BelongsToMany
     {
-        return $this->belongsToMany(Sponsor::class);
+        return $this->belongsToMany(Sponsor::class)->withTimestamps();
     }
-
 
     /**
      * The services that belong to the Apartment
