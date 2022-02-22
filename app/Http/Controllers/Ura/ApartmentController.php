@@ -172,8 +172,7 @@ class ApartmentController extends Controller
                 'is_aviable' => 'max:1|boolean|required',
             ]);
             $apartment->update($validator);
-            return redirect()->route('ura.apartments.index')->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
-
+            return redirect()->back()->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
         }
     }
 }

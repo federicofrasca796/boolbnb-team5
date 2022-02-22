@@ -7,7 +7,41 @@
         <img src="{{ asset('storage/' . $apartment->thumbnail) }}" alt="{{ $apartment->slug }}" class="w-100 h-100">
     </div>
     {{-- /.thumbnail --}}
-
+    @if ($apartment->is_aviable === 0)
+        <div class="d-flex w-100 justify-content-center mt-3">
+                <!-- Button trigger modal -->
+            <button type="button" class=" btn btn-outline-success btn-lg mx-1" data-bs-toggle="modal" data-bs-target="#serviceModal">
+                Make it visibile
+            </button>
+                                        
+            <!-- Modal -->
+            <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-75">You're trying to make the apartment visible: "{{ $apartment->slug }}"</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                                    
+                            <form action="{{ route('ura.apartments.makeVisibile', $apartment->slug) }}" method="post">
+                                @csrf
+                                @method('PUT')
+                                    <div class="form-group">
+                                        <label for="is_aviable">Do you want to make this apartment visible?</label>
+                                        <input required class="ms-3" type="checkbox" name="is_aviable" id="is_aviable" value="1">
+                                        <label for="">YES</label>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-2"> 
+                                    <button type="submit" class="btn btn-primary btn-lg">Make it visbile</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    @endif
     <div class="container_home d-flex flex-wrap m-auto py-5">
         <div class="row">
             <div class="col-12 col-md-8">
