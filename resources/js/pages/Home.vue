@@ -1,5 +1,5 @@
 <template>
-  <div id="home_main">
+  <div id="home_main" class="position-absolute top-0">
     <!-- Jumbo -->
     <section
       id="jumbo"
@@ -24,14 +24,14 @@
               <div id="link_router" class="d-none">
                 <button
                   @click="emitSearchData()"
-                  class="btn btn-raspberry text-white px-5 h-100"
+                  class="btn btn-raspberry text-white px-1 px-md-5 h-100"
                 >
                   SEARCH
                 </button>
               </div>
               <button
                 id="link_fake"
-                class="btn btn-secondary text-white px-5 h-100"
+                class="btn btn-secondary text-white px-1 px-md-5 h-100"
               >
                 SEARCH
               </button>
@@ -72,6 +72,12 @@
         </template>
       </div>
     </section>
+
+    <div class="bottone_goUp" v-if="bottone_goUp_visible">
+      <a href="#app">
+        <i class="fa-solid fa-chevron-up"></i>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -84,6 +90,7 @@ export default {
       api_error: false,
       mySearchResult: Object,
       inputValue: null,
+      bottone_goUp_visible: false,
     };
   },
   mounted() {
@@ -113,8 +120,32 @@ export default {
         this.inputValue = value;
       }, 100);
     });
+
+    /* funzioni per parte grafica Chandra */
+    this.styleHeader();
+    window.addEventListener("scroll", this.createButton);
   },
   methods: {
+    /* funzioni per parte grafica Chandra */
+    createButton() {
+      if (window.scrollY > 75) {
+        //console.log("string");
+        this.bottone_goUp_visible = true;
+      } else {
+        this.bottone_goUp_visible = false;
+      }
+    },
+    styleHeader() {
+      let header = document.querySelector("header");
+      console.log(header);
+
+      if (window.screen.width >= 576) {
+        header.style.justifyContent = "center";
+      } else {
+        header.style.justifyContent = "flex-start";
+      }
+    },
+
     fetchApartments() {
       axios
         .get("/api/apartments")
@@ -157,18 +188,17 @@ export default {
 
 <style lang="scss">
 @import "../../sass/variables";
+#home_main {
+  z-index: -99;
+}
 #jumbo {
   height: 75vh;
   background-size: cover;
   background-position: center;
-  position: relative;
 
   & > img {
-    position: absolute;
     height: 100%;
     width: 100%;
-    top: 0;
-    left: 0;
     object-fit: cover;
     filter: brightness(0.7);
   }
@@ -209,6 +239,20 @@ export default {
     .btn-raspberry {
       background: $raspberry;
     }
+  }
+}
+.bottone_goUp {
+  width: 50px;
+  height: 40px;
+  background-color: $raspberry;
+  position: fixed;
+  bottom: 0;
+  right: 45px;
+  text-align: center;
+  line-height: 40px;
+  i {
+    font-size: 20px;
+    color: white;
   }
 }
 </style>

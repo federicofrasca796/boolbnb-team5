@@ -47,6 +47,7 @@
         @include ('partials.header')
         <main>
             @yield('content')
+
         </main>
     </div>
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js"></script>
@@ -55,14 +56,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
 
     <script>
-        let header = document.querySelector('header')
-        console.log(header);
-        if (window.scrollY > 100) {
-            console.log("string");
-            header.style.justifyContent = "flex-start"
-        } else {
-            header.style.justifyContent = "center"
-        }
+
     </script>
 
 </body>

@@ -321,6 +321,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -328,7 +334,8 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       api_error: false,
       mySearchResult: Object,
-      inputValue: null
+      inputValue: null,
+      bottone_goUp_visible: false
     };
   },
   mounted: function mounted() {
@@ -360,8 +367,31 @@ __webpack_require__.r(__webpack_exports__);
         _this.inputValue = value;
       }, 100);
     });
+    /* funzioni per parte grafica Chandra */
+
+    this.styleHeader();
+    window.addEventListener("scroll", this.createButton);
   },
   methods: {
+    /* funzioni per parte grafica Chandra */
+    createButton: function createButton() {
+      if (window.scrollY > 75) {
+        //console.log("string");
+        this.bottone_goUp_visible = true;
+      } else {
+        this.bottone_goUp_visible = false;
+      }
+    },
+    styleHeader: function styleHeader() {
+      var header = document.querySelector("header");
+      console.log(header);
+
+      if (window.screen.width >= 576) {
+        header.style.justifyContent = "center";
+      } else {
+        header.style.justifyContent = "flex-start";
+      }
+    },
     fetchApartments: function fetchApartments() {
       var _this2 = this;
 
@@ -879,8 +909,16 @@ __webpack_require__.r(__webpack_exports__);
         createMarker(data[k]);
       }
     }
+
+    this.styleHeader();
   },
   methods: {
+    styleHeader: function styleHeader() {
+      var header = document.querySelector("header");
+      console.log(header);
+      header.style.justifyContent = "flex-start";
+    },
+
     /* This is a test interacting with computed properties */
     addTest: function addTest() {
       this.x += 1;
@@ -943,7 +981,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n  position: relative;\n}\n#jumbo > img {\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}", ""]);
+exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}", ""]);
 
 // exports
 
@@ -2282,115 +2320,124 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "home_main" } }, [
-    _c(
-      "section",
-      {
-        staticClass: "w-100 d-flex justify-content-center align-items-center",
-        attrs: { id: "jumbo" },
-      },
-      [
-        _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "bg image" } }),
-        _vm._v(" "),
-        _c("div", { staticClass: "search-destination w-75" }, [
-          _c("form", { attrs: { action: "#" } }, [
-            _c("div", { staticClass: "input-group w-100" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", {
-                staticClass: "form-control",
-                attrs: { id: "mySearchbar" },
-              }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "container_search h-100 bg-white p-2" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "d-none", attrs: { id: "link_router" } },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-raspberry text-white px-5 h-100",
-                          on: {
-                            click: function ($event) {
-                              return _vm.emitSearchData()
-                            },
-                          },
-                        },
-                        [_vm._v("\n                SEARCH\n              ")]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary text-white px-5 h-100",
-                      attrs: { id: "link_fake" },
-                    },
-                    [_vm._v("\n              SEARCH\n            ")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
-        ]),
-      ]
-    ),
-    _vm._v(" "),
-    _c("section", [
-      _vm._m(1),
-      _vm._v(" "),
+  return _c(
+    "div",
+    { staticClass: "position-absolute top-0", attrs: { id: "home_main" } },
+    [
       _c(
-        "div",
+        "section",
         {
-          staticClass:
-            "container-apartments row m-auto row-cols-1 row-cols-md-4 g-4",
+          staticClass: "w-100 d-flex justify-content-center align-items-center",
+          attrs: { id: "jumbo" },
         },
         [
-          _vm.api_error
-            ? [_vm._v("Apartments can't be reached")]
-            : _vm.loading
-            ? [_vm._v(" ⏳ Loading.. ")]
-            : _vm._l(_vm.apartments, function (apartment) {
-                return _c("div", { key: apartment.id, staticClass: "col" }, [
-                  _c(
-                    "div",
-                    { staticClass: "card overflow-hidden" },
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/apartments/" + apartment.slug } },
-                        [
-                          _c("img", {
-                            staticClass: "w-100",
-                            attrs: {
-                              src: "storage/" + apartment.thumbnail,
-                              alt: apartment.slug,
+          _c("img", { attrs: { src: "img/jumbo-2.jpg", alt: "bg image" } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "search-destination w-75" }, [
+            _c("form", { attrs: { action: "#" } }, [
+              _c("div", { staticClass: "input-group w-100" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "form-control",
+                  attrs: { id: "mySearchbar" },
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "container_search h-100 bg-white p-2" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "d-none", attrs: { id: "link_router" } },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-raspberry text-white px-1 px-md-5 h-100",
+                            on: {
+                              click: function ($event) {
+                                return _vm.emitSearchData()
+                              },
                             },
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-body" }, [
-                            _c("h5", { staticClass: "card-title" }, [
-                              _vm._v(_vm._s(apartment.title)),
-                            ]),
-                          ]),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ])
-              }),
-        ],
-        2
+                          },
+                          [_vm._v("\n                SEARCH\n              ")]
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-secondary text-white px-1 px-md-5 h-100",
+                        attrs: { id: "link_fake" },
+                      },
+                      [_vm._v("\n              SEARCH\n            ")]
+                    ),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+        ]
       ),
-    ]),
-  ])
+      _vm._v(" "),
+      _c("section", [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "container-apartments row m-auto row-cols-1 row-cols-md-4 g-4",
+          },
+          [
+            _vm.api_error
+              ? [_vm._v("Apartments can't be reached")]
+              : _vm.loading
+              ? [_vm._v(" ⏳ Loading.. ")]
+              : _vm._l(_vm.apartments, function (apartment) {
+                  return _c("div", { key: apartment.id, staticClass: "col" }, [
+                    _c(
+                      "div",
+                      { staticClass: "card overflow-hidden" },
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/apartments/" + apartment.slug } },
+                          [
+                            _c("img", {
+                              staticClass: "w-100",
+                              attrs: {
+                                src: "storage/" + apartment.thumbnail,
+                                alt: apartment.slug,
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("h5", { staticClass: "card-title" }, [
+                                _vm._v(_vm._s(apartment.title)),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+                  ])
+                }),
+          ],
+          2
+        ),
+      ]),
+      _vm._v(" "),
+      _vm.bottone_goUp_visible
+        ? _c("div", { staticClass: "bottone_goUp" }, [_vm._m(2)])
+        : _vm._e(),
+    ]
+  )
 }
 var staticRenderFns = [
   function () {
@@ -2409,6 +2456,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "sponsor_title my-5 text-center" }, [
       _c("h1", [_vm._v("Explore our best apartments")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#app" } }, [
+      _c("i", { staticClass: "fa-solid fa-chevron-up" }),
     ])
   },
 ]

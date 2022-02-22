@@ -461,9 +461,18 @@ export default {
         createMarker(data[k]);
       }
     }
+
+    this.styleHeader();
   },
 
   methods: {
+    styleHeader() {
+      let header = document.querySelector("header");
+      console.log(header);
+
+      header.style.justifyContent = "flex-start";
+    },
+
     /* This is a test interacting with computed properties */
     addTest() {
       this.x += 1;

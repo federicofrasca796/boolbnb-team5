@@ -1,8 +1,6 @@
-<header class=" w-100 d-flex py-3 px-4
-                {{Route::currentRouteName() !== 'guest.advanced-search' ? '' : ''}}">
+<header class="w-100 d-flex py-3 px-4">
     <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
-    <h1 class="ms-3 d-none d-md-block {{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'register' || Route::currentRouteName() === 'guest.advanced-search'? 'text-black' : 'text-white'}}
-                {{Route::currentRouteName() === 'guest.advanced-search' ? 'd-none d-sm-block' : ''}}">BoolBnB</h1>
+    <h1 class="ms-3 d-none d-md-block {{ Route::currentRouteName() === 'register' ? 'text-black' : 'text-white'}}">BoolBnB</h1>
 
     @if(Route::currentRouteName() === 'guest.advanced-search')
     @include('partials.searchbar')
@@ -12,7 +10,7 @@
         <!-- Authentication Links -->
         @guest
         <button class="nav-item-login rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#modal_aside_left_login" id="loginButton">
-            <a class="nav-link text-dark" {{-- href="{{ route('login') }}" --}}><i class="fa-solid fa-user"></i></a>
+            <a class="nav-link text-dark"><i class="fa-solid fa-user"></i></a>
         </button>
 
         <!-- Modal login -->
