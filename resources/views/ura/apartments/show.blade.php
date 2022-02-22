@@ -2,11 +2,15 @@
 
 @section('content')
 @include('partials.success')
-<div class="container_img w-100 px-3 d-flex flex-wrap">
-    <div class="col-12 h-100 p-2 {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
+<div class="container_img w-100 px-3 d-flex flex-wrap position-relative">
+    <div id="thumbnail" class="col-12 h-100 p-2 {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
         <img src="{{ asset('storage/' . $apartment->thumbnail) }}" alt="{{ $apartment->slug }}" class="w-100 h-100">
+        <div id="backward" class="d-flex justify-content-center position-absolute">
+            <a class="d-flex justify-content-center align-items-center btn btn-outline-dark btn-lg py-3" href="{{URL::previous()}}"><i class="fas fa-backward fa-lg fa-fw"></i></a> 
+        </div>
     </div>
 </div>
+
     {{-- /.thumbnail --}}
     @if ($apartment->is_aviable === 0)
         <div class="d-flex w-100 justify-content-center mt-3">
