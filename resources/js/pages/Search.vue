@@ -8,8 +8,13 @@
         flex-wrap
         w-100
         justify-content-start justify-content-md-center
+        align-items-baseline
       "
     >
+      <div class="range-filter rounded-pill d-flex align-items-center">
+        <label class="me-2" for="volume">Distance</label>
+        <input type="range" id="" name="" min="0" max="20" />
+      </div>
       <div
         class="advanced-search px-1 py-1"
         v-for="service in services"
@@ -578,6 +583,16 @@ export default {
           width: 50px;
         }
       }
+    }
+  }
+  .range-filter {
+    font-family: "Josefin Sans", sans-serif;
+    padding: 8px 16px;
+    border: 1px solid lightgrey;
+    background-color: transparent;
+    height: 39.31px;
+    &:hover {
+      border: 1px solid black;
     }
   }
   .advanced-search {

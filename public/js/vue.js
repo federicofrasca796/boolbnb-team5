@@ -597,6 +597,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1152,7 +1157,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n  /* div {\n    position: relative;\n    margin-bottom: 9px;\n    svg {\n      position: absolute;\n      border-radius: 100%;\n      top: -10px;\n      right: -906px;\n      width: 30px;\n      height: 30px;\n      background-color: $raspberry;\n      color: white;\n    }\n  } */\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker > div {\n  background: none !important;\n  border: none !important;\n  height: 50px !important;\n  width: 50px !important;\n}", ""]);
+exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .range-filter {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n  height: 39.31px;\n}\n#mainDiv .range-filter:hover {\n  border: 1px solid black;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n  /* div {\n    position: relative;\n    margin-bottom: 9px;\n    svg {\n      position: absolute;\n      border-radius: 100%;\n      top: -10px;\n      right: -906px;\n      width: 30px;\n      height: 30px;\n      background-color: $raspberry;\n      color: white;\n    }\n  } */\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker > div {\n  background: none !important;\n  border: none !important;\n  height: 50px !important;\n  width: 50px !important;\n}", ""]);
 
 // exports
 
@@ -2824,21 +2829,25 @@ var render = function () {
         "div",
         {
           staticClass:
-            "\n      services\n      d-flex\n      flex-wrap\n      w-100\n      justify-content-start justify-content-md-center\n    ",
+            "\n      services\n      d-flex\n      flex-wrap\n      w-100\n      justify-content-start justify-content-md-center\n      align-items-baseline\n    ",
         },
-        _vm._l(_vm.services, function (service) {
-          return _c(
-            "div",
-            { key: service.id, staticClass: "advanced-search px-1 py-1" },
-            [
-              _c("input", {
-                staticClass: "rounded-pill",
-                attrs: { type: "button", value: service.name },
-              }),
-            ]
-          )
-        }),
-        0
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.services, function (service) {
+            return _c(
+              "div",
+              { key: service.id, staticClass: "advanced-search px-1 py-1" },
+              [
+                _c("input", {
+                  staticClass: "rounded-pill",
+                  attrs: { type: "button", value: service.name },
+                }),
+              ]
+            )
+          }),
+        ],
+        2
       ),
       _vm._v(" "),
       _c(
@@ -2962,7 +2971,26 @@ var render = function () {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "range-filter rounded-pill d-flex align-items-center" },
+      [
+        _c("label", { staticClass: "me-2", attrs: { for: "volume" } }, [
+          _vm._v("Distance"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "range", id: "", name: "", min: "0", max: "20" },
+        }),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
