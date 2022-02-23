@@ -13,7 +13,19 @@
     >
       <div class="range-filter rounded-pill d-flex align-items-center">
         <label class="me-2" for="volume">Distance</label>
-        <input type="range" id="" name="" min="0" max="20" />
+        <input
+          type="range"
+          id="distanceRange"
+          name="distanceRange"
+          value="0"
+          min="0"
+          max="20"
+          step="1"
+          oninput="rangeOutput.value = distanceRange.value"
+        />
+
+        <output class="ms-2 me-1" name="rangeOutput" id="rangeOutput">0</output
+        ><span>km</span>
       </div>
       <div
         class="advanced-search px-1 py-1"
@@ -591,6 +603,7 @@ export default {
     border: 1px solid lightgrey;
     background-color: transparent;
     height: 39.31px;
+
     &:hover {
       border: 1px solid black;
     }

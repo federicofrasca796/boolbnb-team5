@@ -602,6 +602,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2985,8 +2997,27 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("input", {
-          attrs: { type: "range", id: "", name: "", min: "0", max: "20" },
+          attrs: {
+            type: "range",
+            id: "distanceRange",
+            name: "distanceRange",
+            value: "0",
+            min: "0",
+            max: "20",
+            step: "1",
+            oninput: "rangeOutput.value = distanceRange.value",
+          },
         }),
+        _vm._v(" "),
+        _c(
+          "output",
+          {
+            staticClass: "ms-2 me-1",
+            attrs: { name: "rangeOutput", id: "rangeOutput" },
+          },
+          [_vm._v("0")]
+        ),
+        _c("span", [_vm._v("km")]),
       ]
     )
   },
