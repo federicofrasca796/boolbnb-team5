@@ -78,11 +78,15 @@
         <i class="fa-solid fa-chevron-up"></i>
       </a>
     </div>
+
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import FooterComponent from "../components/FooterComponent.vue";
 export default {
+  components: { FooterComponent },
   data() {
     return {
       apartments: Array,

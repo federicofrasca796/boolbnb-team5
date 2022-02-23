@@ -31,7 +31,10 @@
       <div class="col-12 col-md-6 w-100">
         <!-- <div id="searchBox"></div> -->
         <div v-for="apartment in getApartments" :key="apartment.id">
-          <div class="single-apartment d-flex flex-wrap py-3">
+          <router-link
+            :to="'/apartments/' + apartment.slug"
+            class="single-apartment d-flex flex-wrap py-3"
+          >
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
@@ -62,18 +65,22 @@
                 </p>
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
     <div class="container_map w-50 px-4 py-3 d-none d-md-block">
       <div id="map" ref="mapRef" class="col-12 col-md-6 w-100"></div>
     </div>
+
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import FooterComponent from "../components/FooterComponent.vue";
 export default {
+  components: { FooterComponent },
   name: "Map",
   data() {
     return {
@@ -489,8 +496,12 @@ export default {
       if (window.screen.width >= 576) {
         search.style.position = "absolute";
         search.style.width = "50%";
-        search.style.top = "-71px";
+        search.style.top = "-59px";
         search.style.left = "27%";
+      } else {
+        search.style.position = "relative";
+        search.style.width = "100%";
+        search.style.marginBottom = "20px";
       }
     },
 
@@ -552,8 +563,10 @@ export default {
   height: calc(100vh - 75px);
   .container_results_appartment {
     overflow-y: scroll;
-    height: calc(100% - 50px);
+    height: calc(100% - 150px);
     .single-apartment {
+      text-decoration: none;
+      color: black;
       .image-single {
         img {
           border-radius: 1.9rem;
@@ -580,6 +593,9 @@ export default {
   }
 
   #searchBox {
+    .tt-search-box {
+      margin-top: 0px;
+    }
     .tt-search-box-input-container {
       border-radius: 0.9rem;
       /* div {
@@ -600,7 +616,7 @@ export default {
   }
 }
 .container_map {
-  height: calc(100% - 50px);
+  height: calc(100% - 150px);
   #map {
     height: 100%;
     width: 100%;

@@ -58,3 +58,5 @@ const app = new Vue({
     el: '#app',
 });
 
+/* footer */
+Vue.component('footer-component', require('./components/FooterComponent.vue').default);
