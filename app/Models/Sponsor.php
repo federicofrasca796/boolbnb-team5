@@ -17,6 +17,8 @@ class Sponsor extends Model
      */
     public function apartments(): BelongsToMany
     {
-        return $this->belongsToMany(Apartment::class)->withTimestamps();
+        return $this->belongsToMany(Apartment::class)
+            ->withPivot('expires_on')
+            ->withTimestamps();
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 class Apartment extends Model
 {
@@ -78,7 +79,10 @@ class Apartment extends Model
      */
     public function sponsors(): BelongsToMany
     {
-        return $this->belongsToMany(Sponsor::class)->withTimestamps();
+        return $this->belongsToMany(Sponsor::class)
+            ->where('expires_on', '>', Carbon::now('Europe/Rome'))
+            ->withPivot('expires_on')
+            ->withTimestamps();
     }
 
     /**
