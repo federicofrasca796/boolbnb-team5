@@ -24,8 +24,8 @@
                         @csrf
                         <div class="mb-3">
                             <div class="form-group">
-                                <label for="apartment_id">Appartamento</label>
-                                <select class="form-control" name="apartment_id" id="apartment_id">
+                                <label hidden for="apartment_id">Appartamento</label>
+                                <select hidden class="form-control" name="apartment_id" id="apartment_id">
 
                                     <option selected value="{{ $apartment->id }}">
                                         {{ $apartment->id }}
@@ -45,7 +45,8 @@
                                     <option value="">--Make a choice--</option>
                                     @foreach ($sponsors as $sponsor)
                                         <option value="{{ $sponsor->id }}" value="{{ $sponsor->price }}">
-                                            {{ $sponsor->name }} - {{ $sponsor->duration }} ore
+                                            {{ $sponsor->name }} - {{ $sponsor->duration }} ore -
+                                            {{ $sponsor->price }} €
                                         </option>
                                     @endforeach
                                 </select>
@@ -55,8 +56,8 @@
 
                         <section>
                             <label for="amount">
-                                <span class="input-label">Amount</span>
-                                <div id="container_input" class="input-wrapper amount-wrapper">
+                                <span hidden class="input-label">Amount</span>
+                                <div hidden id="container_input" class="input-wrapper amount-wrapper">
 
 
                                     <input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="">
