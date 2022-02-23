@@ -11298,6 +11298,20 @@ header .form-group input::-webkit-input-placeholder {
 header .modal button[type=submit] {
   background-color: #e41c5bff;
 }
+header .button_register_container {
+  text-decoration: none;
+  font-family: "Josefin Sans", sans-serif;
+}
+header .button_register_container:visited {
+  color: white;
+}
+header .button_register_container .button_register {
+  background-color: #2477e3ff;
+  border-radius: 0.9rem;
+  width: 200px;
+  height: 40px;
+  line-height: 43px;
+}
 
 .modal-backdrop {
   z-index: 10;

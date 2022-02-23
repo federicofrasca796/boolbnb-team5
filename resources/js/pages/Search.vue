@@ -3,25 +3,33 @@
     <div id="searchBox" class="col-12"></div>
     <div
       class="
+        services
+        d-flex
+        flex-wrap
+        w-100
+        justify-content-start justify-content-md-center
+      "
+    >
+      <div
+        class="advanced-search px-1 py-1"
+        v-for="service in services"
+        :key="service.id"
+      >
+        <input type="button" class="rounded-pill" :value="service.name" />
+      </div>
+    </div>
+    <div
+      class="
         container_results_appartment
         d-flex
         flex-wrap flex-md-nowrap
         px-4
         py-3
-        w-50
+        col-12 col-md-6
       "
     >
       <div class="col-12 col-md-6 w-100">
         <!-- <div id="searchBox"></div> -->
-        <div class="services d-flex flex-wrap">
-          <div
-            class="advanced-search px-1 py-1"
-            v-for="service in services"
-            :key="service.id"
-          >
-            <input type="button" class="rounded-pill" :value="service.name" />
-          </div>
-        </div>
         <div v-for="apartment in getApartments" :key="apartment.id">
           <div class="single-apartment d-flex flex-wrap py-3">
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
@@ -58,7 +66,9 @@
         </div>
       </div>
     </div>
-    <div id="map" ref="mapRef" class="w-50"></div>
+    <div class="container_map w-50 px-4 py-3 d-none d-md-block">
+      <div id="map" ref="mapRef" class="col-12 col-md-6 w-100"></div>
+    </div>
   </div>
 </template>
 
@@ -538,7 +548,25 @@ export default {
 <style lang="scss">
 @import "../../sass/variables";
 #mainDiv {
-  padding-top: 75px;
+  padding-top: 10px;
+  height: calc(100vh - 75px);
+  .container_results_appartment {
+    overflow-y: scroll;
+    height: calc(100% - 50px);
+    .single-apartment {
+      .image-single {
+        img {
+          border-radius: 1.9rem;
+          height: 165px;
+        }
+      }
+      .info_apartment {
+        hr {
+          width: 50px;
+        }
+      }
+    }
+  }
   .advanced-search {
     input[type="button"] {
       font-family: "Josefin Sans", sans-serif;
@@ -551,23 +579,10 @@ export default {
     }
   }
 
-  .single-apartment {
-    .image-single {
-      img {
-        border-radius: 1.9rem;
-        height: 165px;
-      }
-    }
-    .info_apartment {
-      hr {
-        width: 50px;
-      }
-    }
-  }
   #searchBox {
     .tt-search-box-input-container {
       border-radius: 0.9rem;
-      div {
+      /* div {
         position: relative;
         margin-bottom: 9px;
         svg {
@@ -580,17 +595,19 @@ export default {
           background-color: $raspberry;
           color: white;
         }
-      }
+      } */
     }
   }
 }
-
-#map {
-  height: calc(100vh - 75px);
-  width: 100%;
-  position: sticky;
-  top: 75px;
-  right: 0;
+.container_map {
+  height: calc(100% - 50px);
+  #map {
+    height: 100%;
+    width: 100%;
+    position: sticky;
+    top: 75px;
+    right: 0;
+  }
 }
 
 .tt-search-marker > div {

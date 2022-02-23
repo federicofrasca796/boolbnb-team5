@@ -22,7 +22,7 @@
             <div class="modal-dialog modal-dialog-aside">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between px-4 py-3">
-                        <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></div>
                         <h5 class="modal-title" id="exampleModalLabel">Sign in to your account</h5>
                     </div>
                     <div class="modal-body p-5 mt">
@@ -82,9 +82,17 @@
                                 </div>
 
                             </div>
-
-
                         </form>
+                        <div class="d-flex justify-content-center mt-3 flex-column align-items-center">
+                            <p>OR</p>
+                            <a class="button_register_container" href="{{ route('register') }}">
+                                <div class="button_register text-center">
+                                    REGISTER
+                                </div>
+                            </a>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
