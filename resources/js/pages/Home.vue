@@ -22,7 +22,12 @@
             <!-- Route to advanced search page -->
             <div class="h-100 bg-white p-2">
               <div id="link_router" class="d-none">
-                <button @click="emitSearchData()" class="btn btn-danger text-white px-5 rounded-0 h-100"> SEARCH</button>
+                <button
+                  @click="emitSearchData()"
+                  class="btn btn-danger text-white px-5 rounded-0 h-100"
+                >
+                  SEARCH
+                </button>
               </div>
               <div
                 id="link_fake"
@@ -78,7 +83,7 @@ export default {
       loading: true,
       api_error: false,
       mySearchResult: Object,
-      inputValue : null 
+      inputValue: null,
     };
   },
   mounted() {
@@ -102,20 +107,20 @@ export default {
       var self = this;
       self.mySearchResult = data;
       this.changeBtn();
-      setTimeout(()=>{
+      setTimeout(() => {
         let value;
         value = ttSearchBox.getValue();
-        this.inputValue = value
-      },100)
+        this.inputValue = value;
+      }, 100);
     });
   },
   methods: {
     fetchApartments() {
       axios
-        .get("/api/apartments")
+        .get("/api/apartments/")
         .then((r) => {
-          // console.log(r);
           this.apartments = r.data.data;
+          console.log(this.apartments);
           this.loading = false;
         })
         .catch((e) => {
@@ -136,9 +141,16 @@ export default {
       real.classList.remove("d-none");
     },
 
-    emitSearchData(){
-      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue , apartments: this.apartments}})
-    }
+    emitSearchData() {
+      this.$router.push({
+        path: "/searchadv/" + this.inputValue,
+        params: {
+          data: this.mySearchResult,
+          value: this.inputValue,
+          apartments: this.apartments,
+        },
+      });
+    },
   },
 };
 </script>
