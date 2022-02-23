@@ -111,7 +111,7 @@ export default {
         let value;
         value = ttSearchBox.getValue();
         this.inputValue = value;
-      }, 100);
+      }, 50);
     });
   },
   methods: {

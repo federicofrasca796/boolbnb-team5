@@ -359,7 +359,7 @@ __webpack_require__.r(__webpack_exports__);
         var value;
         value = ttSearchBox.getValue();
         _this.inputValue = value;
-      }, 100);
+      }, 50);
     });
   },
   methods: {
@@ -508,7 +508,8 @@ __webpack_require__.r(__webpack_exports__);
         key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
         language: "it-IT",
         limit: 5,
-        countrySet: "IT"
+        countrySet: "IT",
+        entityTypeSet: 'Municipality'
       }
     };
     /* Map  Controls */
@@ -526,18 +527,31 @@ __webpack_require__.r(__webpack_exports__);
     /* Append the searchbox on the map */
 
     document.getElementById("searchBox").appendChild(searchBoxHTML);
+    var slider = document.getElementById("range");
+    document.getElementById("range_output").innerHTML = slider.value * 10 + " Km";
+
+    slider.oninput = function () {
+      _this.sliderControl();
+    };
     /* Check if there is data inherited from home component*/
 
-    if (this.value != null) {
-      ttSearchBox.setValue(this.value);
-    }
 
-    axios.get('/api/apartments').then(function (response) {
-      console.log(response);
-      _this.apartments = response.data.data;
-      _this.results = _this.apartments;
+    ttSearchBox.setValue(this.value);
+    tt.services.fuzzySearch({
+      key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+      query: this.value
+    }).then(function (result) {
+      axios.get('/api/apartments').then(function (response) {
+        console.log(response);
+        _this.apartments = response.data.data;
+        _this.results = _this.apartments;
+        console.log(result);
+        result = result.results[0];
 
-      _this.drawAll(_this.apartments);
+        _this.mainExecute(result);
+
+        searchMarkersManager.draw([result]);
+      });
     });
     /* Actions to do when selecting a result */
 
@@ -556,14 +570,7 @@ __webpack_require__.r(__webpack_exports__);
 
       searchMarkersManager.clear();
     });
-    var slider = document.getElementById("range");
-    document.getElementById("range_output").innerHTML = slider.value * 10 + " Km";
-
-    slider.oninput = function () {
-      _this.sliderControl();
-    };
     /* Search Markers Engine */
-
 
     function SearchMarkersManager(map, options) {
       this.map = map;
@@ -785,8 +792,13 @@ __webpack_require__.r(__webpack_exports__);
 
     /* Search System main Execution */
     execute: function execute(searching) {
-      var map = this.map;
       var result = searching.data.result;
+      this.mainExecute(result);
+    },
+
+    /* Execute */
+    mainExecute: function mainExecute(result) {
+      var map = this.map;
 
       if (this.layer != 0) {
         this.hideLayer(this.layer);
@@ -806,7 +818,7 @@ __webpack_require__.r(__webpack_exports__);
         map.setMaxZoom(22);
       }, 500);
       this.results = [];
-      var center = [searching.data.result.position.lat, searching.data.result.position.lng];
+      var center = [result.position.lat, result.position.lng];
       var sortion = [];
 
       for (var k = 0; k < this.apartments.length; k++) {
@@ -839,16 +851,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.layers.length == 0) {
-        this.createLayer(searching.data.result, this.range);
+        this.createLayer(result, this.range);
       } else {
         for (var j = 0; j < this.layers.length; j++) {
-          var name = searching.data.result.id + "-" + this.range;
+          var name = result.id + "-" + this.range;
 
           if (this.layers[j] == name) {
             this.showLayer(this.layers[j]);
             break;
           } else {
-            this.createLayer(searching.data.result, this.range);
+            this.createLayer(result, this.range);
           }
         }
       }
