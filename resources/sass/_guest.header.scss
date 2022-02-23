@@ -23,7 +23,15 @@ header {
     }
 
     #navbarDropdown:first-of-type{
-        color: white !important;
+        background-color: rgba(255, 255, 255, 0.3);
+        color: black;
+        padding:0.5rem 16px;
+        &:visited{
+            color: black;
+        }
+        &:hover{
+            background: white;
+        }
     }
 
 
