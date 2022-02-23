@@ -203,12 +203,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       apartment: Object,
       loading: true,
-      api_error: false
+      api_error: false,
+      fields: {}
     };
   },
   mounted: function mounted() {
@@ -225,6 +242,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         //   console.error(e);
         _this.api_error = true;
+      });
+    },
+    submitMessage: function submitMessage() {
+      var _this2 = this;
+
+      axios.post("/api/messages/", this.fields).then(function (response) {
+        _this2.fields = {};
+        console.log(response.config.data);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -2072,8 +2099,130 @@ var render = function () {
             staticClass:
               "col-12 col-md-4 d-flex justify-content-center align-items-center",
           },
-          [_c("form-send-message")],
-          1
+          [
+            _c("div", { attrs: { id: "form" } }, [
+              _c(
+                "form",
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function ($event) {
+                      $event.preventDefault()
+                      return _vm.submitMessage.apply(null, arguments)
+                    },
+                  },
+                },
+                [
+                  _c("div", { staticClass: "mb-3" }, [
+                    _c(
+                      "label",
+                      { staticClass: "form-label", attrs: { for: "name" } },
+                      [_vm._v("Name")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fields.name,
+                          expression: "fields.name",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        id: "name",
+                        placeholder: "Type your name",
+                      },
+                      domProps: { value: _vm.fields.name },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.fields, "name", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-3" }, [
+                    _c(
+                      "label",
+                      { staticClass: "form-label", attrs: { for: "email" } },
+                      [_vm._v("Email")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fields.email,
+                          expression: "fields.email",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "email",
+                        id: "email",
+                        placeholder: "type your email",
+                      },
+                      domProps: { value: _vm.fields.email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.fields, "email", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-3" }, [
+                    _c(
+                      "label",
+                      { staticClass: "form-label", attrs: { for: "body" } },
+                      [_vm._v("Message")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fields.body,
+                          expression: "fields.body",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "body",
+                        id: "body",
+                        placeholder: "type your message",
+                      },
+                      domProps: { value: _vm.fields.body },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.fields, "body", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                ]
+              ),
+            ]),
+          ]
         ),
       ]
     ),
@@ -2155,10 +2304,29 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _vm._m(1),
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "w-100 d-flex justify-content-center",
+        attrs: { id: "send" },
+      },
+      [
+        _c(
+          "button",
+          { staticClass: "btn btn-outline-primary", attrs: { type: "submit" } },
+          [_vm._v("Send")]
+        ),
+      ]
+    )
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

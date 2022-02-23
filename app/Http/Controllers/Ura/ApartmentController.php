@@ -35,7 +35,6 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-
         return view('ura.apartments.create', compact('services'));
     }
 

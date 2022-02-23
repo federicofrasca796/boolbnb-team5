@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InfoApartmentMail;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
@@ -14,7 +17,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages = Message::all();
+        ddd($messages);
     }
 
     /**
@@ -25,7 +29,21 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
+        $validated_Data = $request->validate([
+            'name' => 'required|min:3|max:80',
+            'mail' => 'required',
+            'body' => 'required|min:30',
+        ]);
+
+        $message = Message::create($validated_Data);
+
+        //Message::create($validated_Data);
+
+        //return (new InfoApartmentMail($message))->render();
+
+        Mail::to('admin@admin.com')->send(new InfoApartmentMail($message));
+        return 'message sended';
     }
 
     /**

@@ -47,9 +47,25 @@
       <!-- Contact owner  -->
       <div
         class="col-12 col-md-4 d-flex justify-content-center align-items-center">
-
-        <form-send-message></form-send-message>
-    
+            <div id="form">
+                <form @submit.prevent="submitMessage" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Type your name" v-model="fields.name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="type your email" v-model="fields.email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="body" class="form-label">Message</label>
+                        <input type="text" name="body" id="body" class="form-control" placeholder="type your message" v-model="fields.body">
+                    </div>
+                    <div id="send" class="w-100 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-outline-primary">Send</button>
+                    </div>
+                </form>
+            </div>
       </div>
     </section>
 
@@ -113,10 +129,12 @@ export default {
       apartment: Object,
       loading: true,
       api_error: false,
+      fields:{},
     };
   },
   mounted() {
     this.fetchApartment();
+    
   },
   methods: {
     fetchApartment() {
@@ -131,6 +149,17 @@ export default {
           //   console.error(e);
           this.api_error = true;
         });
+    },
+    submitMessage(){
+           axios
+           .post("/api/messages/", this.fields)
+           .then(response => {
+               this.fields = {};
+               console.log(response.config.data);
+           })
+           .catch(error =>{
+               console.log(error);
+           })  
     },
   },
 };
