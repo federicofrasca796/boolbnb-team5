@@ -13,11 +13,7 @@
       <div class="results col-12 col-md-6 w-100">
         <div id="searchBox"></div>
         <div class="services d-flex flex-wrap">
-          <div
-            class="advanced-search px-1 py-1"
-            v-for="service in services"
-            :key="service.id"
-          >
+          <div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
             <input type="button" class="rounded-pill" :value="service.name" />
           </div>
         </div>
@@ -29,7 +25,7 @@
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
-                  :src="'storage/' + apartment.thumbnail"
+                  :src="'/storage/' + apartment.thumbnail"
                   class="w-100"
                   alt="..."
                 />
@@ -124,19 +120,16 @@ export default {
     document.getElementById("searchBox").appendChild(searchBoxHTML);
 
     /* Check if there is data inherited from home component*/
-    if (this.searching != null) {
-      ttSearchBox.setValue(this.value);
-      this.results = this.apartments;
-      setTimeout(() => {
-        map.on("load", this.execute(this.searching));
-      }, 300);
-    } else {
-      axios.get("api/apartments/").then((response) => {
-        this.apartments = response.data.data;
-        this.results = this.apartments;
-        this.drawAll(this.apartments);
-      });
+    if (this.value != null) {
+      	ttSearchBox.setValue(this.value);
+
     }
+	axios.get('/api/apartments').then((response) => {
+		console.log(response);
+		this.apartments = response.data.data;
+		this.results = this.apartments;
+		this.drawAll(this.apartments);
+	});
 
     /* Actions to do when selecting a result */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
@@ -153,10 +146,9 @@ export default {
     });
 
     let slider = document.getElementById("range");
-    document.getElementById("range_output").innerHTML =
-      slider.value * 10 + " Km";
-    slider.oninput = () => {
-      this.sliderControl();
+    document.getElementById("range_output").innerHTML = slider.value * 10 + " Km";
+    	slider.oninput = () => {
+      	this.sliderControl();
     };
 
     /* Search Markers Engine */
@@ -242,7 +234,7 @@ export default {
 
     /* Services Api */
     getServices() {
-      axios.get("api/services").then((response) => {
+      axios.get("/api/services").then((response) => {
         this.services = response.data.data;
       });
     },
@@ -426,7 +418,6 @@ export default {
         sortion.sort(function (a, b) {
           return a - b;
         });
-        console.log(sortion);
         let sorting = [];
         for (let h = 0; h < sortion.length; h++) {
           for (let index = 0; index < sortion.length; index++) {
@@ -435,7 +426,6 @@ export default {
             }
           }
         }
-        console.log(sorting);
         this.results = sorting;
       }
       if (this.layers.length == 0) {
@@ -507,14 +497,8 @@ export default {
 
   /* Manage data from home component */
   created() {
-    //ROSTYYYYYYY
-    axios.get("apartments/address/" + this.value).then((r) => {
-      // this.searching
-      console.log(r.data);
-    });
-    this.searching = this.$route.params.data;
-    this.value = this.$route.params.value;
-    this.apartments = this.$route.params.apartments;
+    this.value = this.$route.params.address;
+	console.log('value ' + this.value);
   },
 };
 </script>

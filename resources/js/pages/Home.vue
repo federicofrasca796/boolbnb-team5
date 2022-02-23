@@ -82,19 +82,20 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: Object,
+      mySearchResult: [],
       inputValue: null,
     };
   },
   mounted() {
     this.fetchApartments();
 
-    //Searchbar
+    /* Search Options */
     var options = {
       searchOptions: {
         key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-        language: "en-GB",
+        language: "it-IT",
         limit: 5,
+        countrySet: "IT",
       },
     };
 
@@ -104,8 +105,7 @@ export default {
 
     /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      var self = this;
-      self.mySearchResult = data;
+      this.mySearchResult = data.data.result;
       this.changeBtn();
       setTimeout(() => {
         let value;
@@ -144,11 +144,6 @@ export default {
     emitSearchData() {
       this.$router.push({
         path: "/searchadv/" + this.inputValue,
-        params: {
-          data: this.mySearchResult,
-          value: this.inputValue,
-          apartments: this.apartments,
-        },
       });
     },
   },

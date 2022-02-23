@@ -327,20 +327,22 @@ __webpack_require__.r(__webpack_exports__);
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: Object,
+      mySearchResult: [],
       inputValue: null
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    this.fetchApartments(); //Searchbar
+    this.fetchApartments();
+    /* Search Options */
 
     var options = {
       searchOptions: {
         key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-        language: "en-GB",
-        limit: 5
+        language: "it-IT",
+        limit: 5,
+        countrySet: "IT"
       }
     };
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
@@ -349,8 +351,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Results Log on select */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      var self = _this;
-      self.mySearchResult = data;
+      _this.mySearchResult = data.data.result;
 
       _this.changeBtn();
 
@@ -386,12 +387,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     emitSearchData: function emitSearchData() {
       this.$router.push({
-        path: "/searchadv/" + this.inputValue,
-        params: {
-          data: this.mySearchResult,
-          value: this.inputValue,
-          apartments: this.apartments
-        }
+        path: "/searchadv/" + this.inputValue
       });
     }
   }
@@ -408,10 +404,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -536,22 +528,18 @@ __webpack_require__.r(__webpack_exports__);
     document.getElementById("searchBox").appendChild(searchBoxHTML);
     /* Check if there is data inherited from home component*/
 
-    if (this.searching != null) {
+    if (this.value != null) {
       ttSearchBox.setValue(this.value);
-      this.results = this.apartments;
-      setTimeout(function () {
-        map.on("load", _this.execute(_this.searching));
-      }, 300);
-    } else {
-      axios.get("api/apartments/").then(function (response) {
-        _this.apartments = response.data.data;
-        _this.results = _this.apartments;
-
-        _this.drawAll(_this.apartments);
-      });
     }
-    /* Actions to do when selecting a result */
 
+    axios.get('/api/apartments').then(function (response) {
+      console.log(response);
+      _this.apartments = response.data.data;
+      _this.results = _this.apartments;
+
+      _this.drawAll(_this.apartments);
+    });
+    /* Actions to do when selecting a result */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
       _this.searching = data;
@@ -660,7 +648,7 @@ __webpack_require__.r(__webpack_exports__);
     getServices: function getServices() {
       var _this2 = this;
 
-      axios.get("api/services").then(function (response) {
+      axios.get("/api/services").then(function (response) {
         _this2.services = response.data.data;
       });
     },
@@ -837,7 +825,6 @@ __webpack_require__.r(__webpack_exports__);
         sortion.sort(function (a, b) {
           return a - b;
         });
-        console.log(sortion);
         var sorting = [];
 
         for (var h = 0; h < sortion.length; h++) {
@@ -848,7 +835,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        console.log(sorting);
         this.results = sorting;
       }
 
@@ -928,14 +914,8 @@ __webpack_require__.r(__webpack_exports__);
 
   /* Manage data from home component */
   created: function created() {
-    //ROSTYYYYYYY
-    axios.get("apartments/address/" + this.value).then(function (r) {
-      // this.searching
-      console.log(r.data);
-    });
-    this.searching = this.$route.params.data;
-    this.value = this.$route.params.value;
-    this.apartments = this.$route.params.apartments;
+    this.value = this.$route.params.address;
+    console.log('value ' + this.value);
   }
 });
 
@@ -2467,7 +2447,7 @@ var render = function () {
                               _c("img", {
                                 staticClass: "w-100",
                                 attrs: {
-                                  src: "storage/" + apartment.thumbnail,
+                                  src: "/storage/" + apartment.thumbnail,
                                   alt: "...",
                                 },
                               }),
@@ -18195,7 +18175,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
