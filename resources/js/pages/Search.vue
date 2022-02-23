@@ -97,7 +97,7 @@
 			/* Search Events Handler */
 			var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
 			var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
-
+			var searchMarkersManager = new SearchMarkersManager(map);
 			/* Services Api call */
 			this.getServices();
 			
@@ -126,11 +126,14 @@
 			ttSearchBox.on('tomtom.searchbox.resultselected', (data) =>{
 				this.searching = data; 
 				this.execute(data);
+				var result = data.data.result;
+				searchMarkersManager.draw([result]);
 			});
 			
 			/* Actions to do while results are cleared */
 			ttSearchBox.on('tomtom.searchbox.resultscleared', ()=>{
 				this.clear();
+				searchMarkersManager.clear();
 			});	
 
 			
@@ -139,7 +142,80 @@
 			slider.oninput = ()=>{
 				this.sliderControl();
 			};
+			
+			/* Search Markers Engine */
+			function SearchMarkersManager(map, options) {
+				this.map = map;
+				this._options = options || {};
+				this._poiList = undefined;
+				this.markers = {};
+			}
 
+			SearchMarkersManager.prototype.draw = function (poiList) {
+				this._poiList = poiList;
+				this.clear();
+				this._poiList.forEach(function (poi) {
+					var markerId = poi.id;
+					var poiOpts = {
+						name: poi.poi ? poi.poi.name : undefined,
+						address: poi.address ? poi.address.freeformAddress : '',
+						distance: poi.dist,
+						classification: poi.poi ? poi.poi.classifications[0].code : undefined,
+						position: poi.position,
+						entryPoints: poi.entryPoints
+					};
+					var marker = new SearchMarker(poiOpts, this._options);
+					marker.addTo(this.map);
+					this.markers[markerId] = marker;
+				}, this);
+			};
+
+			SearchMarkersManager.prototype.clear = function () {
+				for (var markerId in this.markers) {
+					var marker = this.markers[markerId];
+					marker.remove();
+				}
+				this.markers = {};
+				this._lastClickedMarker = null;
+			};
+
+			function SearchMarker(poiData, options) {
+				this.poiData = poiData;
+				this.options = options || {};
+				this.marker = new tt.Marker({
+					element: this.createMarker(),
+					anchor: 'bottom'
+				});
+				var lon = this.poiData.position.lng || this.poiData.position.lon;
+				this.marker.setLngLat([
+					lon,
+					this.poiData.position.lat
+				]);
+			}
+
+			SearchMarker.prototype.addTo = function (map) {
+				this.marker.addTo(map);
+				this._map = map;
+				return this;
+			};
+
+			SearchMarker.prototype.createMarker = function () {
+				var elem = document.createElement('div');
+				elem.className = 'tt-icon-marker-black tt-search-marker';
+				if (this.options.markerClassName) {
+					elem.className += ' ' + this.options.markerClassName;
+				}
+				var innerElem = document.createElement('div');
+				innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
+
+				elem.appendChild(innerElem);
+				return elem;
+			};
+
+			SearchMarker.prototype.remove = function () {
+				this.marker.remove();
+				this._map = null;
+			};
     	}  ,
 		
 		methods: {
@@ -170,7 +246,9 @@
 				let map = this.map;
 				/* create the popup for the marker*/
 				let popup = new tt.Popup()
-					.setHTML("<h4>This is</h4><h1>"+object.title+"</h1><p>This i an Apartment Popup</p>");
+					.setHTML(
+						"<img src='/storage/" + object.thumbnail + "' class='w-100' alt='...'><hr><h4>" + object.title + "</h4>"
+						);
 				
 				/* Create the Marker */
 				let marker = new tt.Marker()
@@ -293,17 +371,6 @@
 				},500)
 				this.results = []
 				let center = [searching.data.result.position.lat , searching.data.result.position.lng];	 
-				let tt = window.tt;
-				/* create the popup for the marker*/
-				let popup = new tt.Popup()
-					.setHTML("<h4>This is</h4><h1>The Center</h1><p>This i an Apartment Popup</p>");
-				
-				/* Create the Marker */
-				let marker = new tt.Marker()
-					.setLngLat(center) /* Coordinates here */
-					.setPopup(popup)
-					.addTo(map);
-				this.markers.push(marker);
 				let sortion = [];
 				for(let k = 0;k<this.apartments.length;k++){
 					let dist = this.calcCrow(center[0] , center[1] , this.apartments[k]['latitude'] , this.apartments[k]['longitude']);
@@ -430,10 +497,4 @@ header{
   right: 0;
 }
 
-.tt-search-marker>div{
-	background: none !important;
-	border: none !important;
-	height: 50px !important;
-	width: 50px !important;
-}
 </style>

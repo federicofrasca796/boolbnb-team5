@@ -503,6 +503,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
     var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+    var searchMarkersManager = new SearchMarkersManager(map);
     /* Services Api call */
 
     this.getServices();
@@ -532,17 +533,97 @@ __webpack_require__.r(__webpack_exports__);
       _this.searching = data;
 
       _this.execute(data);
+
+      var result = data.data.result;
+      searchMarkersManager.draw([result]);
     });
     /* Actions to do while results are cleared */
 
     ttSearchBox.on('tomtom.searchbox.resultscleared', function () {
       _this.clear();
+
+      searchMarkersManager.clear();
     });
     var slider = document.getElementById('range');
     document.getElementById('range_output').innerHTML = slider.value * 10 + ' Km';
 
     slider.oninput = function () {
       _this.sliderControl();
+    };
+    /* Search Markers Engine */
+
+
+    function SearchMarkersManager(map, options) {
+      this.map = map;
+      this._options = options || {};
+      this._poiList = undefined;
+      this.markers = {};
+    }
+
+    SearchMarkersManager.prototype.draw = function (poiList) {
+      this._poiList = poiList;
+      this.clear();
+
+      this._poiList.forEach(function (poi) {
+        var markerId = poi.id;
+        var poiOpts = {
+          name: poi.poi ? poi.poi.name : undefined,
+          address: poi.address ? poi.address.freeformAddress : '',
+          distance: poi.dist,
+          classification: poi.poi ? poi.poi.classifications[0].code : undefined,
+          position: poi.position,
+          entryPoints: poi.entryPoints
+        };
+        var marker = new SearchMarker(poiOpts, this._options);
+        marker.addTo(this.map);
+        this.markers[markerId] = marker;
+      }, this);
+    };
+
+    SearchMarkersManager.prototype.clear = function () {
+      for (var markerId in this.markers) {
+        var marker = this.markers[markerId];
+        marker.remove();
+      }
+
+      this.markers = {};
+      this._lastClickedMarker = null;
+    };
+
+    function SearchMarker(poiData, options) {
+      this.poiData = poiData;
+      this.options = options || {};
+      this.marker = new tt.Marker({
+        element: this.createMarker(),
+        anchor: 'bottom'
+      });
+      var lon = this.poiData.position.lng || this.poiData.position.lon;
+      this.marker.setLngLat([lon, this.poiData.position.lat]);
+    }
+
+    SearchMarker.prototype.addTo = function (map) {
+      this.marker.addTo(map);
+      this._map = map;
+      return this;
+    };
+
+    SearchMarker.prototype.createMarker = function () {
+      var elem = document.createElement('div');
+      elem.className = 'tt-icon-marker-black tt-search-marker';
+
+      if (this.options.markerClassName) {
+        elem.className += ' ' + this.options.markerClassName;
+      }
+
+      var innerElem = document.createElement('div');
+      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
+      elem.appendChild(innerElem);
+      return elem;
+    };
+
+    SearchMarker.prototype.remove = function () {
+      this.marker.remove();
+      this._map = null;
     };
   },
   methods: {
@@ -573,7 +654,7 @@ __webpack_require__.r(__webpack_exports__);
       var map = this.map;
       /* create the popup for the marker*/
 
-      var popup = new tt.Popup().setHTML("<h4>This is</h4><h1>" + object.title + "</h1><p>This i an Apartment Popup</p>");
+      var popup = new tt.Popup().setHTML("<img src='/storage/" + object.thumbnail + "' class='w-100' alt='...'><hr><h4>" + object.title + "</h4>");
       /* Create the Marker */
 
       var marker = new tt.Marker().setLngLat([object.longitude, object.latitude])
@@ -714,16 +795,6 @@ __webpack_require__.r(__webpack_exports__);
       }, 500);
       this.results = [];
       var center = [searching.data.result.position.lat, searching.data.result.position.lng];
-      var tt = window.tt;
-      /* create the popup for the marker*/
-
-      var popup = new tt.Popup().setHTML("<h4>This is</h4><h1>The Center</h1><p>This i an Apartment Popup</p>");
-      /* Create the Marker */
-
-      var marker = new tt.Marker().setLngLat(center)
-      /* Coordinates here */
-      .setPopup(popup).addTo(map);
-      this.markers.push(marker);
       var sortion = [];
 
       for (var k = 0; k < this.apartments.length; k++) {
@@ -853,7 +924,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nheader{\r\n\tbackground-color: white;\n}\n.container_results_appartment{\r\n\t    max-height: calc(100vh - 75px);\r\n    \toverflow: auto;\n}\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n", ""]);
+exports.push([module.i, "\nheader{\r\n\tbackground-color: white;\n}\n.container_results_appartment{\r\n\t    max-height: calc(100vh - 75px);\r\n    \toverflow: auto;\n}\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\r\n\r\n", ""]);
 
 // exports
 
