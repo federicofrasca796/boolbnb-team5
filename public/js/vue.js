@@ -202,13 +202,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       apartment: Object,
       loading: true,
-      api_error: false,
-      fields: {}
+      api_error: false
     };
   },
   mounted: function mounted() {
@@ -225,16 +229,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         //   console.error(e);
         _this.api_error = true;
-      });
-    },
-    submitMessage: function submitMessage() {
-      var _this2 = this;
-
-      axios.post("/api/messages/", this.fields).then(function (response) {
-        _this2.fields = {};
-        console.log(response.config.data);
-      })["catch"](function (error) {
-        console.log(error);
       });
     }
   }
@@ -2084,13 +2078,28 @@ var render = function () {
           },
           [
             _c(
-              "a",
-              {
-                attrs: {
-                  href: "http://127.0.0.1:8000/message/" + _vm.apartment.slug,
-                },
-              },
-              [_vm._v("Contact the owner")]
+              "div",
+              { staticClass: "card w-50 m-auto rounded-pill sticky-top" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "card-body text-center text-center" },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-dark text-decoration-none",
+                        attrs: {
+                          href:
+                            "http://127.0.0.1:8000/message/" +
+                            _vm.apartment.slug,
+                        },
+                      },
+                      [_vm._v("Contact the owner")]
+                    ),
+                  ]
+                ),
+              ]
             ),
           ]
         ),
