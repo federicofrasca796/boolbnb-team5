@@ -181,20 +181,25 @@ class ApartmentController extends Controller
     }
     public function showPayment(Apartment $apartment)
     {
-        $sponsors = Sponsor::all();
-        //$apartments = Apartment::all();
+        if (Auth::id() === $apartment->user_id) {
+            $sponsors = Sponsor::all();
+            //$apartments = Apartment::all();
 
-        $gateway = new Gateway([
-            'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey'),
-        ]);
+            $gateway = new Gateway([
+                'environment' => config('services.braintree.environment'),
+                'merchantId' => config('services.braintree.merchantId'),
+                'publicKey' => config('services.braintree.publicKey'),
+                'privateKey' => config('services.braintree.privateKey'),
+            ]);
 
-        $token = $gateway->ClientToken()->generate();
+            $token = $gateway->ClientToken()->generate();
 
-        return view('ura.sponsors.show', [
-            'token' => $token,
-        ], compact('apartment', 'sponsors'));
+            return view('ura.sponsors.show', [
+                'token' => $token,
+            ], compact('apartment', 'sponsors'));
+        } else {
+            abort(403);
+        }
+
     }
 }
