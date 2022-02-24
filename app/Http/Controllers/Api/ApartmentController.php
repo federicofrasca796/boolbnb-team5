@@ -74,8 +74,32 @@ class ApartmentController extends Controller
      * @param  \App\Models\Apartment  $apartment
      * @return \Illuminate\Http\Response
      */
-    public function search(String $address)
+    public function search(String $address, String $center)
     {
+        $apartments = Apartment::with(['services'])->get();
+        $center_arr = explode('+', $center);
+        $lat1 = $center_arr[0];
+        $lon1 = $center_arr[1];
+        $return = [];
+
+        /* Distance Calculator */
+        foreach ($apartments as $apartment) {
+            $earthRadius = 6371;
+            $latFrom = deg2rad($apartment->latitude);
+            $lonFrom = deg2rad($apartment->longitude);
+            $latTo = deg2rad($lat1);
+            $lonTo = deg2rad($lon1);
+            $lonDelta = $lonTo - $lonFrom;
+            $a = pow(cos($latTo) * sin($lonDelta), 2) +
+                pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+            $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+            $angle = atan2(sqrt($a), $b);
+            $distance = $angle  * $earthRadius;
+            if($distance <= 50){
+                $apartment->distance = $distance;
+                array_push($return , $apartment);
+            }
+        }
         // Catch error
         if (!request()->address) {
             return response([
@@ -83,7 +107,7 @@ class ApartmentController extends Controller
                 'description' => 'Missing required parameter ADDRESS.'
             ], 422);
         }
-        return Apartment::where('address', 'like', '%' . $address . '%')->with(['services'])->paginate(8);
+       return $return;
     }
 
     /**

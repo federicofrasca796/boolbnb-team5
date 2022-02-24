@@ -99,6 +99,7 @@ export default {
       results: [],
       loading: true,
       searching: null,
+      searchPosition: [],
       startCoords: [12.49427, 41.89056],
       services: [],
       range: 20,
@@ -106,6 +107,7 @@ export default {
       markers: [],
       layers: [],
       layer: "",
+      firstSearch: [],
     };
   },
 
@@ -161,11 +163,12 @@ export default {
       })
       .then((result) => {
         axios.get("/api/apartments").then((response) => {
-          console.log(response);
+          //   console.log(response);
           this.apartments = response.data.data;
           this.results = this.apartments;
-          console.log(result);
+          //   console.log(result);
           result = result.results[0];
+          this.firstSearch = result;
           this.mainExecute(result);
           searchMarkersManager.draw([result]);
         });
@@ -174,6 +177,7 @@ export default {
     /* Actions to do when selecting a result */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
       this.searching = data;
+      //   console.log(this.searching);
       this.execute(data);
       var result = data.data.result;
       searchMarkersManager.draw([result]);
@@ -221,7 +225,6 @@ export default {
       this._lastClickedMarker = null;
     };
 
-    /* Add Remove Markers From Map */
     function SearchMarker(poiData, options) {
       this.poiData = poiData;
       this.options = options || {};
@@ -286,6 +289,9 @@ export default {
 
     addTest() {
       this.x += 1;
+    },
+    log() {
+      console.log(this.results);
     },
 
     /* Services Api */
@@ -427,7 +433,7 @@ export default {
         bounds.extend(this.getBounds(markerData));
       }
       map.fitBounds(bounds, {
-        padding: { left: 500 },
+        padding: { left: 450 },
       });
     },
 
@@ -441,6 +447,9 @@ export default {
 
     mainExecute(result) {
       let map = this.map;
+
+      let mapCenter = [result.position.lng, result.position.lat];
+      this.map.setCenter(mapCenter);
       if (this.layer != 0) {
         this.hideLayer(this.layer);
       }
@@ -451,10 +460,6 @@ export default {
         this.markers = [];
       }
       this.fitToViewport(result);
-      map.setMaxZoom(8.5);
-      setTimeout(() => {
-        map.setMaxZoom(22);
-      }, 500);
       this.results = [];
       let center = [result.position.lat, result.position.lng];
       let sortion = [];
@@ -500,6 +505,7 @@ export default {
           }
         }
       }
+      this.map.setMaxZoom(22);
     },
 
     /* Actions on searchbox Clearing */
@@ -532,17 +538,20 @@ export default {
       document.getElementById("range_output").innerHTML =
         slider.value * 10 + " Km";
       if (slider.value > 2 && counter == 0) {
-        map.setMaxZoom(9);
+        map.setMaxZoom(8.5);
         counter++;
       } else {
         if (counter == 1) {
-          map.setMaxZoom(8.5);
+          map.setMaxZoom(9);
           counter--;
         }
       }
       this.range = slider.value * 10;
+
       if (this.searching != null) {
         this.execute(this.searching);
+      } else {
+        this.mainExecute(this.firstSearch);
       }
     },
   },
@@ -557,10 +566,11 @@ export default {
   /* Manage data from home component */
   created() {
     this.value = this.$route.params.address;
-    console.log("value " + this.value);
+    // console.log("value " + this.value);
   },
 };
 </script>
+
 
 <style lang="scss">
 @import "../../sass/variables";
@@ -615,20 +625,6 @@ export default {
     }
     .tt-search-box-input-container {
       border-radius: 0.9rem;
-      /* div {
-        position: relative;
-        margin-bottom: 9px;
-        svg {
-          position: absolute;
-          border-radius: 100%;
-          top: -10px;
-          right: -906px;
-          width: 30px;
-          height: 30px;
-          background-color: $raspberry;
-          color: white;
-        }
-      } */
     }
   }
 }
@@ -641,12 +637,5 @@ export default {
     top: 75px;
     right: 0;
   }
-}
-
-.tt-search-marker > div {
-  background: none !important;
-  border: none !important;
-  height: 50px !important;
-  width: 50px !important;
 }
 </style>
