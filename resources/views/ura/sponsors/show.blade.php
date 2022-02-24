@@ -70,7 +70,7 @@
                         </section>
 
                         <input id="nonce" name="payment_method_nonce" type="hidden" />
-                        <button class="btn btn-success pt-2" type="submit"><span>Test Transaction</span></button>
+                        <button class="btn btn-success pt-2" type="submit"><span>Buy package</span></button>
                     </form>
                 </div>
             </div>
