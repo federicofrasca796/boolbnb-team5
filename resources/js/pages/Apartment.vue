@@ -48,11 +48,7 @@
       <div
         class="col-12 col-md-4 d-flex justify-content-center align-items-center"
       >
-        <div class="card w-50 m-auto rounded-pill sticky-top">
-          <div class="card-body text-center">
-            <p class="card-text">Contact the owner</p>
-          </div>
-        </div>
+        <a :href="'http://127.0.0.1:8000/message/'+ apartment.slug">Contact the owner</a>
       </div>
     </section>
 

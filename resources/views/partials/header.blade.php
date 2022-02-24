@@ -1,4 +1,4 @@
-<header class="{{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'guest.advanced-search' ? '' : 'position-fixed'}}
+<header class="{{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'guest.advanced-search' || Route::currentRouteName() === '{apartment}.message' ?  '' : 'position-fixed'}}
                 w-100 d-flex justify-content-start py-3 px-4
                 {{Route::currentRouteName() !== 'guest.advanced-search' ? 'justify-content-sm-center' : ''}}">
     <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">

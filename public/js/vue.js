@@ -202,10 +202,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -918,7 +914,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#mainDiv{\r\n\tpadding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker>div{\r\n\tbackground: none !important;\r\n\tborder: none !important;\r\n\theight: 50px !important;\r\n\twidth: 50px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n#mainDiv{\n\tpadding-top: 75px;\n}\n#map {\n  height: calc(100vh - 75px);\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n\n", ""]);
 
 // exports
 
@@ -2069,7 +2065,24 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-12 col-md-4 d-flex justify-content-center align-items-center",
+          },
+          [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "http://127.0.0.1:8000/message/" + _vm.apartment.slug,
+                },
+              },
+              [_vm._v("Contact the owner")]
+            ),
+          ]
+        ),
       ]
     ),
     _vm._v(" "),
@@ -2150,31 +2163,10 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _vm._m(0),
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "col-12 col-md-4 d-flex justify-content-center align-items-center",
-      },
-      [
-        _c("div", { staticClass: "card w-50 m-auto rounded-pill sticky-top" }, [
-          _c("div", { staticClass: "card-body text-center" }, [
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v("Contact the owner"),
-            ]),
-          ]),
-        ]),
-      ]
-    )
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -18133,7 +18125,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
 
 
 /***/ })
