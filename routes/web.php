@@ -45,11 +45,10 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
     Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
         'messages' => 'slug',
     ]);
+    //rotte payments
+    Route::get('apartments/{apartment}/payment', 'ApartmentController@showPayment')->name('apartments.payment');
+    Route::post('/apartments', 'SponsorController@sendPayment')->name('checkout');
 });
-
-//rotte payments
-Route::get('apartments/{apartment}/payment', 'Ura\ApartmentController@showPayment')->name('apartments.payment');
-Route::post('/ura/checkout', 'Ura\SponsorController@sendPayment')->name('ura.checkout');
 
 Route::get('/{any}', function () {
     return view('guest.index');
