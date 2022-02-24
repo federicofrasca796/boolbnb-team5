@@ -30,36 +30,50 @@
                             </div>
                         </div>
 
-                        {{-- Surname --}}
-                        <div class="form-group row mb-4">
-                            <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus maxlength="25" minlength="3" placeholder="Type your surname">
-                                <!-- <small class="text-muted">Add your surname min: 3 | max: 25 characters</small> -->
+                            {{-- Surname --}}
+                            <div class="form-group row mb-4">
+                                <label for="surname"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
+                                <div class="col-md-6">
+                                    <input id="surname" type="text"
+                                        class="form-control @error('surname') is-invalid @enderror" name="surname"
+                                        value="{{ old('surname') }}" required autocomplete="surname" autofocus
+                                        maxlength="25" minlength="3" placeholder="Type your surname">
+                                    <!-- <small class="text-muted">Add your surname min: 3 | max: 25 characters</small> -->
 
-                                @error('surname')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                    @error('surname')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
 
                         {{-- Date of birth --}}
                         <div class="form-group row mb-4">
-                            <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
+                            <label for="date_of_birth"
+                                        class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="date_of_birth" type="date" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus min="1900-01-01" max="{{ now()->toDateString('d/m/Y') }}">
-                                <small class="text-muted">Choose your date of birth</small>
+                                    <div class="col-md-6">
+                                        <input id="date_of_birth" type="date"
+                                            class="form-control @error('date_of_birth') is-invalid @enderror"
+                                            name="date_of_birth" value="{{ old('date_of_birth') }}" required
+                                            autocomplete="date_of_birth" autofocus min="1900-01-01"
+                                            max="{{ now()->subYears(18)->toDateString('d/m/Y') }}">
+                                        <small class="text-muted">Choose your date of birth</small>
 
-                                @error('date_of_birth')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                        @error('date_of_birth')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                             </div>
+                             @error('date_of_birth')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                         </div>
                         {{-- Email --}}
                         <div class="form-group row mb-4">

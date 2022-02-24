@@ -17,9 +17,9 @@ class CreateApartmentSponsorTable extends Migration
             $table->id();
             $table->unsignedBigInteger('apartment_id')->nullable();
             $table->unsignedBigInteger('sponsor_id')->nullable();
-            $table->foreign('apartment_id')->references('id')->on('sponsors');
-            $table->foreign('sponsor_id')->references('id')->on('apartments');
-            $table->dateTime('expires_on');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('sponsor_id')->references('id')->on('sponsors');
+            $table->dateTime('expires_on')->nullable();
             $table->timestamps();
         });
     }

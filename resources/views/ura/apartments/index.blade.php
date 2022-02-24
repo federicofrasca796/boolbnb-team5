@@ -3,7 +3,7 @@
 
 @section('content')
     @include('partials.success')
-
+    @include('partials.errors')
     <div class="container my-5">
         <div class="row justify-content-between mb-5">
             <div class="col">
@@ -34,9 +34,12 @@
                             <div class="card-content">
                                 @include('partials.ura.apartment.content')
                             </div>
-                            
+
                         </div>
                         @include('partials.ura.apartment.actions')
+                        <a href="{{ route('ura.apartments.payment', $apartment->slug) }}" class="btn btn-light mx-1">
+                            Sponsors the apartment
+                        </a>
                     </div>
                 </div>
             </div>
@@ -56,4 +59,3 @@
         </div>
     </div>
 @endsection
-
