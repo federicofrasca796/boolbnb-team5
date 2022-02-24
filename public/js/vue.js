@@ -207,7 +207,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       apartment: Object,
       loading: true,
-      api_error: false
+      api_error: false,
+      fields: {}
     };
   },
   mounted: function mounted() {
@@ -224,6 +225,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         //   console.error(e);
         _this.api_error = true;
+      });
+    },
+    submitMessage: function submitMessage() {
+      var _this2 = this;
+
+      axios.post("/api/messages/", this.fields).then(function (response) {
+        _this2.fields = {};
+        console.log(response.config.data);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -18074,7 +18085,8 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // step 1 define ro
 
 var Search = Vue.component('Search', __webpack_require__(/*! ./pages/Search.vue */ "./resources/js/pages/Search.vue")["default"]);
 var Home = Vue.component('Home', __webpack_require__(/*! ./pages/Home.vue */ "./resources/js/pages/Home.vue")["default"]);
-var Apartment = Vue.component('Apartment', __webpack_require__(/*! ./pages/Apartment.vue */ "./resources/js/pages/Apartment.vue")["default"]); // Step 2 define vue router routes
+var Apartment = Vue.component('Apartment', __webpack_require__(/*! ./pages/Apartment.vue */ "./resources/js/pages/Apartment.vue")["default"]); //const FormSendMessage = Vue.component('FormSendMessage', require('./components/FormSendMessage.vue').default);
+// Step 2 define vue router routes
 
 var routes = [{
   path: '/',

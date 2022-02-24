@@ -176,30 +176,15 @@
 
 
                     {{-- Services input --}}
-                    {{-- There could be buttons with icons insted of checkboxes
-                    <div class="mb-5">
-                        <label class="d-block">Services*</label>
-                        @foreach ($services as $service)
-                            <label class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="service_id[]"
-                                    id="service_id_{{ $service->id }}" value="{{ $service->id }}"
-                                    @if (is_array($apartment->service_id) && in_array($service->id, $apartment->service_id)) checked @endif>
-                                {{ $service->name }}
-                            </label>
-                        @endforeach
-                    </div> --}}
-
                     <div class="mb-3">
-                        <label class="form-label">Services*</label>
-                        <select multiple class="form-select" name="services[]" id="services" required>
-                            <option disabled>Select all services</option>
-                            @foreach ($services as $item)
-                                <option value="{{ $item->id }}"
-                                    {{ $apartment->services->contains($item) ? 'selected' : '' }}>{{ $item->name }}
-                                </option>
-                            @endforeach
+                        <small>Services*</small>
 
-                        </select>
+                        @foreach ($services as $service)    
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="services[]" id="services" value="{{ $service->id }}" {{ $apartment->services->contains($service) ? 'checked' : '' }}>
+                                <label for="form-check-label">{{ $service->name }}</label>
+                            </div>
+                        @endforeach
                     </div>
 
                     {{-- Submit form --}}
