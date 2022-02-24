@@ -41,7 +41,7 @@
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
-                  :src="'storage/' + apartment.thumbnail"
+                  :src="'/storage/' + apartment.thumbnail"
                   class="w-100"
                   alt="..."
                 />
@@ -162,7 +162,7 @@ export default {
 				this.results = this.apartments;
 				console.log(result)
 				result = result.results[0]
-        this.firstSearch = result;
+        		this.firstSearch = result;
 				this.mainExecute(result)
 				searchMarkersManager.draw([result]);
 			});		
@@ -617,12 +617,5 @@ export default {
     top: 75px;
     right: 0;
   }
-}
-
-.tt-search-marker > div {
-  background: none !important;
-  border: none !important;
-  height: 50px !important;
-  width: 50px !important;
 }
 </style>
