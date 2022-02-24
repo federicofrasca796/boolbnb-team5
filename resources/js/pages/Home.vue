@@ -42,12 +42,12 @@
     </section>
 
     <!-- Sponsored Apartments -->
-      <section>
-          <div class="sponsor_title my-5 text-center">
-         <h1 v-show="visible">Apartments in evidence</h1>
+    <section>
+      <div class="sponsor_title my-5 text-center">
+        <h1 v-show="visible">Apartments in evidence</h1>
       </div>
 
-     <!-- Apartments cards -->
+      <!-- Apartments cards -->
       <div class="container-apartments row m-auto row-cols-1 row-cols-md-4 g-4">
         <template v-if="api_error">Apartments can't be reached</template>
 
@@ -56,8 +56,11 @@
 
         <!-- API loaded -->
         <template v-else>
-
-          <div class="col" v-for="apartment in apartments_sponsored" :key="apartment.id">
+          <div
+            class="col"
+            v-for="apartment in apartments_sponsored"
+            :key="apartment.id"
+          >
             <div class="card overflow-hidden">
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
@@ -76,7 +79,6 @@
     </section>
 
     <section>
-
       <div class="sponsor_title my-5 text-center">
         <h1>Explore our best apartments</h1>
       </div>
@@ -163,15 +165,12 @@ export default {
       }, 50);
     });
 
-    /* funzioni per parte grafica Chandra */
     this.styleHeader();
     window.addEventListener("scroll", this.createButton);
   },
   methods: {
-    /* funzioni per parte grafica Chandra */
     createButton() {
       if (window.scrollY > 75) {
-        //console.log("string");
         this.bottone_goUp_visible = true;
       } else {
         this.bottone_goUp_visible = false;
@@ -181,7 +180,6 @@ export default {
       let header = document.querySelector("header");
       let h1 = document.querySelector("header>h1");
       h1.style.color = "white";
-      console.log(header);
 
       if (window.screen.width >= 576) {
         header.style.justifyContent = "center";
@@ -195,7 +193,6 @@ export default {
         .get("/api/apartments/")
         .then((r) => {
           this.apartments = r.data.data;
-          console.log(this.apartments);
           this.loading = false;
         })
         .catch((e) => {
@@ -219,15 +216,14 @@ export default {
     getSponsored() {
       axios
         .get("/api/sponsored")
-        .then(r => {
-            if (r.data.data == "") {
-                this.visible = false;
-            } else {
-                console.log(r);
-                this.apartments_sponsored = r.data.data;
-                this.loading = false;
-                this.visible = true;
-            }
+        .then((r) => {
+          if (r.data.data == "") {
+            this.visible = false;
+          } else {
+            this.apartments_sponsored = r.data.data;
+            this.loading = false;
+            this.visible = true;
+          }
         })
         .catch((e) => {
           console.error(e);

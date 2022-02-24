@@ -95,9 +95,9 @@ class ApartmentController extends Controller
             $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
             $angle = atan2(sqrt($a), $b);
             $distance = $angle  * $earthRadius;
-            if($distance <= 50){
+            if ($distance <= 50) {
                 $apartment->distance = $distance;
-                array_push($return , $apartment);
+                array_push($return, $apartment);
             }
         }
         // Catch error
@@ -107,7 +107,7 @@ class ApartmentController extends Controller
                 'description' => 'Missing required parameter ADDRESS.'
             ], 422);
         }
-       return $return;
+        return $return;
     }
 
     /**
