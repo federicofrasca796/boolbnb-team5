@@ -243,8 +243,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -257,7 +255,8 @@ __webpack_require__.r(__webpack_exports__);
       api_error: false,
       bottone_goUp_visible: false,
       center: [],
-      map: null
+      map: null,
+      hasServices: 0
     };
   },
   mounted: function mounted() {
@@ -295,7 +294,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/apartments/" + this.$route.params.slug).then(function (r) {
         //   console.log(r.data);
         _this.apartment = r.data;
-        console.log(_this.apartment.latitude);
+
+        if (_this.apartment.services.length != 0) {
+          _this.hasServices = 1;
+        }
+
         _this.loading = false;
 
         _this.center.push(_this.apartment.longitude);
@@ -959,7 +962,7 @@ __webpack_require__.r(__webpack_exports__);
 
       map.fitBounds(bounds, {
         padding: {
-          left: 500
+          left: 450
         }
       });
     },
@@ -973,6 +976,8 @@ __webpack_require__.r(__webpack_exports__);
     /* Execute */
     mainExecute: function mainExecute(result) {
       var map = this.map;
+      var mapCenter = [result.position.lng, result.position.lat];
+      this.map.setCenter(mapCenter);
 
       if (this.layer != 0) {
         this.hideLayer(this.layer);
@@ -987,10 +992,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.fitToViewport(result);
-      map.setMaxZoom(8.5);
-      setTimeout(function () {
-        map.setMaxZoom(22);
-      }, 500);
       this.results = [];
       var center = [result.position.lat, result.position.lng];
       var sortion = [];
@@ -1043,6 +1044,8 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }
+
+      this.map.setMaxZoom(22);
     },
 
     /* Actions on searchbox Clearing */
@@ -1080,11 +1083,11 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("range_output").innerHTML = slider.value * 10 + " Km";
 
       if (slider.value > 2 && counter == 0) {
-        map.setMaxZoom(9);
+        map.setMaxZoom(8.5);
         counter++;
       } else {
         if (counter == 1) {
-          map.setMaxZoom(8.5);
+          map.setMaxZoom(9);
           counter--;
         }
       }
@@ -1182,7 +1185,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .range-filter {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n  height: 39.31px;\n}\n#mainDiv .range-filter:hover {\n  border: 1px solid black;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n  /* div {\n    position: relative;\n    margin-bottom: 9px;\n    svg {\n      position: absolute;\n      border-radius: 100%;\n      top: -10px;\n      right: -906px;\n      width: 30px;\n      height: 30px;\n      background-color: $raspberry;\n      color: white;\n    }\n  } */\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}", ""]);
+exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .range-filter {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n  height: 39.31px;\n}\n#mainDiv .range-filter:hover {\n  border: 1px solid black;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}", ""]);
 
 // exports
 
@@ -2467,17 +2470,15 @@ var render = function () {
     [
       _c(
         "section",
-        { staticClass: "container_img w-100 px-3 d-flex flex-wrap" },
+        { staticClass: "container_img w-100 d-flex flex-wrap col-12" },
         [
-          _c("div", { staticClass: "col-12 h-100 p-2" }, [
-            _c("img", {
-              staticClass: "w-100 h-100",
-              attrs: {
-                src: "/storage/" + _vm.apartment.thumbnail,
-                alt: _vm.apartment.slug,
-              },
-            }),
-          ]),
+          _c("img", {
+            staticClass: "w-100 h-100",
+            attrs: {
+              src: "/storage/" + _vm.apartment.thumbnail,
+              alt: _vm.apartment.slug,
+            },
+          }),
         ]
       ),
       _vm._v(" "),
@@ -2563,38 +2564,44 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("section", { staticClass: "container-extra-service mb-5 m-auto" }, [
-        _c("h3", { staticClass: "text-center text-md-start mt-4 mb-3" }, [
-          _vm._v("Extra services"),
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
-          _vm._l(_vm.apartment.services, function (service) {
-            return _c(
-              "div",
-              {
-                key: service.id,
-                staticClass: "col-4 col-md-3 text-md-start mb-2",
-              },
-              [
-                _c("img", {
-                  attrs: {
-                    src: "../img/" + service.slug + ".png",
-                    alt: service.slug,
-                  },
+      this.hasServices == 1
+        ? _c(
+            "section",
+            { staticClass: "container-extra-service mb-5 m-auto" },
+            [
+              _c("h3", { staticClass: "text-center text-md-start mt-4 mb-3" }, [
+                _vm._v("Extra services"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
+                _vm._l(_vm.apartment.services, function (service) {
+                  return _c(
+                    "div",
+                    {
+                      key: service.id,
+                      staticClass: "col-4 col-md-3 text-md-start mb-2",
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: "../img/" + service.slug + ".png",
+                          alt: service.slug,
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ms-2 me-3 mb-3" }, [
+                        _vm._v(_vm._s(service.name)),
+                      ]),
+                    ]
+                  )
                 }),
-                _vm._v(" "),
-                _c("span", { staticClass: "ms-2 me-3 mb-3" }, [
-                  _vm._v(_vm._s(service.name)),
-                ]),
-              ]
-            )
-          }),
-          0
-        ),
-      ]),
+                0
+              ),
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("section", { staticClass: "map w-100", attrs: { id: "map" } }),
       _vm._v(" "),

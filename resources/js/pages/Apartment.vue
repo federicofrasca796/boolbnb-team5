@@ -1,14 +1,12 @@
 <template>
   <div id="apartment_main">
     <!-- Apartment gallery -->
-    <section class="container_img w-100 px-3 d-flex flex-wrap">
-      <div class="col-12 h-100 p-2">
-        <img
+    <section class="container_img w-100 d-flex flex-wrap col-12">
+      <img
           :src="'/storage/' + apartment.thumbnail"
           class="w-100 h-100"
           :alt="apartment.slug"
         />
-      </div>
     </section>
 
     <!-- Home description and contacts section -->
@@ -87,7 +85,7 @@
     </section>
 
     <!-- Services section-->
-    <section class="container-extra-service mb-5 m-auto">
+    <section class="container-extra-service mb-5 m-auto" v-if="this.hasServices == 1">
       <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
 
       <div class="col-12 col-md-8 d-flex flex-wrap">
@@ -128,6 +126,7 @@ export default {
       bottone_goUp_visible: false,
       center : [],
       map: null,
+	  hasServices: 0,
     };
   },
   mounted() {
@@ -168,7 +167,9 @@ export default {
         .then((r) => {
 			//   console.log(r.data);
 			this.apartment = r.data;
-			console.log(this.apartment.latitude);
+			if(this.apartment.services.length != 0){
+				this.hasServices = 1;
+			}
 			this.loading = false;
 			this.center.push(this.apartment.longitude);
 			this.center.push(this.apartment.latitude);
