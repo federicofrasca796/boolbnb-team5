@@ -245,7 +245,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -253,10 +252,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      apartment: Object,
+      apartment: [],
       loading: true,
       api_error: false,
-      bottone_goUp_visible: false
+      bottone_goUp_visible: false,
+      center: [],
+      map: null
     };
   },
   mounted: function mounted() {
@@ -294,11 +295,36 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/apartments/" + this.$route.params.slug).then(function (r) {
         //   console.log(r.data);
         _this.apartment = r.data;
+        console.log(_this.apartment.latitude);
         _this.loading = false;
+
+        _this.center.push(_this.apartment.longitude);
+
+        _this.center.push(_this.apartment.latitude);
+
+        _this.initilizeMap();
       })["catch"](function (e) {
         //   console.error(e);
         _this.api_error = true;
       });
+    },
+    initilizeMap: function initilizeMap() {
+      /* Create The Map */
+      var tt = window.tt;
+      var map = window.tt.map({
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        container: "map",
+        center: this.center,
+        zoom: 13
+      });
+      this.map = map;
+      /* Map  Controls */
+
+      this.map.addControl(new tt.FullscreenControl());
+      this.map.addControl(new tt.NavigationControl());
+      var marker = new tt.Marker().setLngLat(this.center)
+      /* Coordinates here */
+      .addTo(this.map);
     }
   }
 });
@@ -2558,10 +2584,10 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("section", { staticClass: "map w-100", attrs: { id: "map" } }),
       _vm._v(" "),
       _vm.bottone_goUp_visible
-        ? _c("div", { staticClass: "bottone_goUp" }, [_vm._m(2)])
+        ? _c("div", { staticClass: "bottone_goUp" }, [_vm._m(1)])
         : _vm._e(),
       _vm._v(" "),
       _c("footer-component"),
@@ -2590,17 +2616,6 @@ var staticRenderFns = [
         ]),
       ]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "map" }, [
-      _c("img", {
-        staticClass: "w-100",
-        attrs: { src: "/img/map.png", alt: "" },
-      }),
-    ])
   },
   function () {
     var _vm = this

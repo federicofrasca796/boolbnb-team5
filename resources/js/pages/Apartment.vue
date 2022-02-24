@@ -103,8 +103,7 @@
     </section>
 
     <!-- Map section -->
-    <section class="map">
-      <img class="w-100" src="/img/map.png" alt="" />
+    <section class="map w-100" id="map">
     </section>
 
     <div class="bottone_goUp" v-if="bottone_goUp_visible">
@@ -123,10 +122,12 @@ export default {
   components: { FooterComponent },
   data() {
     return {
-      apartment: Object,
+      apartment: [],
       loading: true,
       api_error: false,
       bottone_goUp_visible: false,
+      center : [],
+      map: null,
     };
   },
   mounted() {
@@ -134,6 +135,8 @@ export default {
     //parte grafica header
     this.styleHeader();
     window.addEventListener("scroll", this.createButton);
+    
+    
   },
   methods: {
     //parte grafica header
@@ -163,15 +166,37 @@ export default {
       axios
         .get("/api/apartments/" + this.$route.params.slug)
         .then((r) => {
-          //   console.log(r.data);
-          this.apartment = r.data;
-          this.loading = false;
+			//   console.log(r.data);
+			this.apartment = r.data;
+			console.log(this.apartment.latitude);
+			this.loading = false;
+			this.center.push(this.apartment.longitude);
+			this.center.push(this.apartment.latitude);
+			this.initilizeMap();
         })
         .catch((e) => {
           //   console.error(e);
           this.api_error = true;
         });
     },
+
+    initilizeMap(){
+    /* Create The Map */
+	const tt = window.tt;
+    var map = window.tt.map({
+		key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+		container: "map",
+		center: this.center,
+		zoom: 13,
+    });
+	this.map = map;
+	/* Map  Controls */
+	this.map.addControl(new tt.FullscreenControl());
+	this.map.addControl(new tt.NavigationControl());
+	let marker = new tt.Marker()
+		.setLngLat(this.center) /* Coordinates here */
+		.addTo(this.map);
+    }
   },
 };
 </script>
