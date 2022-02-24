@@ -443,70 +443,80 @@ export default {
       this.mainExecute(result);
     },
 
-    /* Execute */
+	/* Execute */
 
-    mainExecute(result) {
-      let map = this.map;
+	mainExecute(result){
+		let map = this.map;
 
-      let mapCenter = [result.position.lng, result.position.lat];
-      this.map.setCenter(mapCenter);
-      if (this.layer != 0) {
-        this.hideLayer(this.layer);
-      }
-      if (this.markers.length != 0) {
-        for (let i = 0; i < this.markers.length; i++) {
-          this.markers[i].remove();
-        }
-        this.markers = [];
-      }
-      this.fitToViewport(result);
-      this.results = [];
-      let center = [result.position.lat, result.position.lng];
-      let sortion = [];
-      for (let k = 0; k < this.apartments.length; k++) {
-        let dist = this.calcCrow(
-          center[0],
-          center[1],
-          this.apartments[k]["latitude"],
-          this.apartments[k]["longitude"]
-        );
-        if (dist < this.range) {
-          this.createMarker(this.apartments[k]);
-          dist = Math.floor(dist * 10) / 10;
-          this.apartments[k]["distance"] = dist;
-          this.results.push(this.apartments[k]);
-          sortion.push(dist);
-        }
-      }
-      if (sortion.length > 0) {
-        sortion.sort(function (a, b) {
-          return a - b;
+		let mapCenter = [
+			result.position.lng,
+			result.position.lat,
+		]
+		this.map.setCenter(mapCenter);
+		if (this.layer != 0) {
+			this.hideLayer(this.layer);
+		}
+		if (this.markers.length != 0) {
+			for (let i = 0; i < this.markers.length; i++) {
+			this.markers[i].remove();
+			}
+			this.markers = [];
+		}
+		this.fitToViewport(result);
+		this.results = [];
+		let center = [
+			result.position.lat,
+			result.position.lng,
+		];
+		//Send coordinates and municipality to api. Get filtered results by distance from searched point
+		axios
+			.get(
+			"/api/apartments/address/" +
+				result.address.freeformAddress +
+				"/coords/" +
+				center.join("+")
+			)
+			.then((r) => {
+			this.apartments = r.data;
+			let sortion = [];
+			for (let k = 0; k < this.apartments.length; k++) {
+				let dist = this.calcCrow(center[0],center[1],this.apartments[k]["latitude"],this.apartments[k]["longitude"]);
+				if (dist < this.range) {
+					this.createMarker(this.apartments[k]);
+					dist = Math.floor(dist * 10) / 10;
+					this.apartments[k]["distance"] = dist;
+					this.results.push(this.apartments[k]);
+					sortion.push(dist);
+				}
+			}
+			if (sortion.length > 0) {
+				sortion.sort(function (a, b) {return a - b;});
+				let sorting = [];
+				for (let h = 0; h < sortion.length; h++) {
+					for (let index = 0; index < sortion.length; index++) {
+						if (sortion[h] == this.results[index]["distance"]) {
+							sorting.push(this.results[index]);
+						}
+					}
+				}
+				this.results = sorting;
+			}
+			if (this.layers.length == 0) {
+				this.createLayer(result, this.range);
+			} else {
+				for (let j = 0; j < this.layers.length; j++) {
+					let name = result.id + "-" + this.range;
+					if (this.layers[j] == name) {
+						this.showLayer(this.layers[j]);
+						break;
+					} else {
+						this.createLayer(result, this.range);
+					}
+				}
+			}
+			this.map.setMaxZoom(22);
         });
-        let sorting = [];
-        for (let h = 0; h < sortion.length; h++) {
-          for (let index = 0; index < sortion.length; index++) {
-            if (sortion[h] == this.results[index]["distance"]) {
-              sorting.push(this.results[index]);
-            }
-          }
-        }
-        this.results = sorting;
-      }
-      if (this.layers.length == 0) {
-        this.createLayer(result, this.range);
-      } else {
-        for (let j = 0; j < this.layers.length; j++) {
-          let name = result.id + "-" + this.range;
-          if (this.layers[j] == name) {
-            this.showLayer(this.layers[j]);
-            break;
-          } else {
-            this.createLayer(result, this.range);
-          }
-        }
-      }
-      this.map.setMaxZoom(22);
-    },
+	},
 
     /* Actions on searchbox Clearing */
     clear() {
@@ -524,10 +534,13 @@ export default {
         }
         this.markers = [];
       }
-      if (this.apartments != null) {
-        this.drawAll(this.apartments);
-        this.results = this.apartments;
-      }
+	  axios.get("/api/apartments/",)
+	  		.then((r)=>{
+		 	this.apartments = r.data.data;
+		  	this.drawAll(this.apartments);
+        	this.results = this.apartments;
+      	})
+        
     },
 
     /* Range Slider Controller */

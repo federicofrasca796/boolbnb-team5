@@ -33,7 +33,7 @@ class ApartmentController extends Controller
             'description' => 'Missing required parameter ADDRESS.'
         ], 422); */
 
-        return new ApartmentResource(Apartment::all());
+        return new ApartmentResource(Apartment::paginate(8));
     }
 
     /**
