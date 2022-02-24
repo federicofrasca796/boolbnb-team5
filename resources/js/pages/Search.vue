@@ -13,11 +13,15 @@
     >
       <div class="range-filter rounded-pill d-flex align-items-center">
         <label class="me-2" for="volume">Distance</label>
-          <input type="range" name="range" id="range" min="1" max="5" value="2" />
+        <input type="range" name="range" id="range" min="1" max="5" value="2" />
 
-           <span id="range_output"></span>
+        <span id="range_output"></span>
       </div>
-      <div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
+      <div
+        class="advanced-search px-1 py-1"
+        v-for="service in services"
+        :key="service.id"
+      >
         <input type="button" class="rounded-pill" :value="service.name" />
       </div>
     </div>
@@ -41,7 +45,7 @@
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
-                  :src="'storage/' + apartment.thumbnail"
+                  :src="'/storage/' + apartment.thumbnail"
                   class="w-100"
                   alt="..."
                 />
@@ -123,11 +127,9 @@ export default {
         language: "it-IT",
         limit: 5,
         countrySet: "IT",
-		entityTypeSet: 'Municipality'
+        entityTypeSet: "Municipality",
       },
     };
-
-	
 
     /* Map  Controls */
     map.addControl(new tt.FullscreenControl());
@@ -143,28 +145,31 @@ export default {
     /* Append the searchbox on the map */
     document.getElementById("searchBox").appendChild(searchBoxHTML);
 
-	let slider = document.getElementById("range");
-    document.getElementById("range_output").innerHTML = slider.value * 10 + " Km";
-    	slider.oninput = () => {
-      	this.sliderControl();
+    let slider = document.getElementById("range");
+    document.getElementById("range_output").innerHTML =
+      slider.value * 10 + " Km";
+    slider.oninput = () => {
+      this.sliderControl();
     };
 
     /* Check if there is data inherited from home component*/
-		ttSearchBox.setValue(this.value)
-		tt.services.fuzzySearch({
-			key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-			query: this.value,
-		}).then((result)=>{
-			axios.get('/api/apartments').then((response) => {
-				console.log(response);
-				this.apartments = response.data.data;
-				this.results = this.apartments;
-				console.log(result)
-				result = result.results[0]
-				this.mainExecute(result)
-				searchMarkersManager.draw([result]);
-			});		
-		});
+    ttSearchBox.setValue(this.value);
+    tt.services
+      .fuzzySearch({
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        query: this.value,
+      })
+      .then((result) => {
+        axios.get("/api/apartments").then((response) => {
+          console.log(response);
+          this.apartments = response.data.data;
+          this.results = this.apartments;
+          console.log(result);
+          result = result.results[0];
+          this.mainExecute(result);
+          searchMarkersManager.draw([result]);
+        });
+      });
 
     /* Actions to do when selecting a result */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
@@ -254,10 +259,31 @@ export default {
       this.marker.remove();
       this._map = null;
     };
+    this.styleHeader();
   },
 
   methods: {
+    styleHeader() {
+      let header = document.querySelector("header");
+      console.log(header);
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "black";
+      header.style.justifyContent = "flex-start";
+      let search = document.getElementById("searchBox");
+      if (window.screen.width >= 576) {
+        search.style.position = "absolute";
+        search.style.width = "50%";
+        search.style.top = "-59px";
+        search.style.left = "27%";
+      } else {
+        search.style.position = "relative";
+        search.style.width = "100%";
+        search.style.marginBottom = "20px";
+      }
+    },
+
     /* This is a test interacting with computed properties */
+
     addTest() {
       this.x += 1;
     },
@@ -278,16 +304,16 @@ export default {
 
     /* Create Marker with Popup */
     createMarker(object) {
-		let tt = window.tt;
-		let map = this.map;
-		/* create the popup for the marker*/
-		let popup = new tt.Popup().setHTML(
-			"<img src='/storage/" +
-			object.thumbnail +
-			"' class='w-100' alt='...'><hr><h4>" +
-			object.title +
-			"</h4>"
-		);
+      let tt = window.tt;
+      let map = this.map;
+      /* create the popup for the marker*/
+      let popup = new tt.Popup().setHTML(
+        "<img src='/storage/" +
+          object.thumbnail +
+          "' class='w-100' alt='...'><hr><h4>" +
+          object.title +
+          "</h4>"
+      );
 
       /* Create the Marker */
       let marker = new tt.Marker()
@@ -408,69 +434,73 @@ export default {
     /* Search System main Execution */
     execute(searching) {
       var result = searching.data.result;
-      this.mainExecute(result)
+      this.mainExecute(result);
     },
 
-	/* Execute */
+    /* Execute */
 
-	mainExecute(result){
-		let map = this.map;
-		if (this.layer != 0) {
-			this.hideLayer(this.layer);
-		}
-		if (this.markers.length != 0) {
-			for (let i = 0; i < this.markers.length; i++) {
-			this.markers[i].remove();
-			}
-			this.markers = [];
-		}
-		this.fitToViewport(result);
-		map.setMaxZoom(8.5);
-		setTimeout(() => {
-			map.setMaxZoom(22);
-		}, 500);
-		this.results = [];
-		let center = [
-			result.position.lat,
-			result.position.lng,
-		];
-		let sortion = [];
-		for (let k = 0; k < this.apartments.length; k++) {
-			let dist = this.calcCrow(center[0],center[1],this.apartments[k]["latitude"],this.apartments[k]["longitude"]);
-			if (dist < this.range) {
-				this.createMarker(this.apartments[k]);
-				dist = Math.floor(dist * 10) / 10;
-				this.apartments[k]["distance"] = dist;
-				this.results.push(this.apartments[k]);
-				sortion.push(dist);
-			}
-		}
-		if (sortion.length > 0) {
-			sortion.sort(function (a, b) {return a - b;});
-			let sorting = [];
-			for (let h = 0; h < sortion.length; h++) {
-				for (let index = 0; index < sortion.length; index++) {
-					if (sortion[h] == this.results[index]["distance"]) {
-						sorting.push(this.results[index]);
-					}
-				}
-			}
-			this.results = sorting;
-		}
-		if (this.layers.length == 0) {
-			this.createLayer(result, this.range);
-		} else {
-			for (let j = 0; j < this.layers.length; j++) {
-				let name = result.id + "-" + this.range;
-				if (this.layers[j] == name) {
-					this.showLayer(this.layers[j]);
-					break;
-				} else {
-					this.createLayer(result, this.range);
-				}
-			}
-		}
-	},
+    mainExecute(result) {
+      let map = this.map;
+      if (this.layer != 0) {
+        this.hideLayer(this.layer);
+      }
+      if (this.markers.length != 0) {
+        for (let i = 0; i < this.markers.length; i++) {
+          this.markers[i].remove();
+        }
+        this.markers = [];
+      }
+      this.fitToViewport(result);
+      map.setMaxZoom(8.5);
+      setTimeout(() => {
+        map.setMaxZoom(22);
+      }, 500);
+      this.results = [];
+      let center = [result.position.lat, result.position.lng];
+      let sortion = [];
+      for (let k = 0; k < this.apartments.length; k++) {
+        let dist = this.calcCrow(
+          center[0],
+          center[1],
+          this.apartments[k]["latitude"],
+          this.apartments[k]["longitude"]
+        );
+        if (dist < this.range) {
+          this.createMarker(this.apartments[k]);
+          dist = Math.floor(dist * 10) / 10;
+          this.apartments[k]["distance"] = dist;
+          this.results.push(this.apartments[k]);
+          sortion.push(dist);
+        }
+      }
+      if (sortion.length > 0) {
+        sortion.sort(function (a, b) {
+          return a - b;
+        });
+        let sorting = [];
+        for (let h = 0; h < sortion.length; h++) {
+          for (let index = 0; index < sortion.length; index++) {
+            if (sortion[h] == this.results[index]["distance"]) {
+              sorting.push(this.results[index]);
+            }
+          }
+        }
+        this.results = sorting;
+      }
+      if (this.layers.length == 0) {
+        this.createLayer(result, this.range);
+      } else {
+        for (let j = 0; j < this.layers.length; j++) {
+          let name = result.id + "-" + this.range;
+          if (this.layers[j] == name) {
+            this.showLayer(this.layers[j]);
+            break;
+          } else {
+            this.createLayer(result, this.range);
+          }
+        }
+      }
+    },
 
     /* Actions on searchbox Clearing */
     clear() {
@@ -527,7 +557,7 @@ export default {
   /* Manage data from home component */
   created() {
     this.value = this.$route.params.address;
-	console.log('value ' + this.value);
+    console.log("value " + this.value);
   },
 };
 </script>
