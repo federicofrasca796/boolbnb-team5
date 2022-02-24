@@ -447,8 +447,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Map',
+  name: "Map",
   data: function data() {
     return {
       apartments: null,
@@ -473,8 +493,8 @@ __webpack_require__.r(__webpack_exports__);
     /* Create The Map */
 
     var map = tt.map({
-      key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-      container: 'map',
+      key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+      container: "map",
       center: startCoords,
       zoom: 4
     });
@@ -482,10 +502,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var options = {
       searchOptions: {
-        key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-        language: 'en-GB',
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        language: "en-GB",
         limit: 5,
-        countrySet: 'IT'
+        countrySet: "IT"
       }
     };
     /* Map  Controls */
@@ -502,7 +522,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getServices();
     /* Append the searchbox on the map */
 
-    document.getElementById('searchBox').appendChild(searchBoxHTML);
+    document.getElementById("searchBox").appendChild(searchBoxHTML);
     /* Check if there is data inherited from home component*/
 
     searching = this.searching;
@@ -512,10 +532,10 @@ __webpack_require__.r(__webpack_exports__);
       ttSearchBox.setValue(this.value);
       apartments = this.apartments;
       this.results = this.apartments;
-      map.on('load', function () {
+      map.on("load", function () {
         var result = _this.searching.data.result;
 
-        if (result.type === 'category' || result.type === 'brand') {
+        if (result.type === "category" || result.type === "brand") {
           return;
         }
 
@@ -540,7 +560,7 @@ __webpack_require__.r(__webpack_exports__);
         center = [_this.searching.data.result.position.lat, _this.searching.data.result.position.lng];
 
         for (var k = 0; k < apartments.length; k++) {
-          var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
+          var dist = calcCrow(center[0], center[1], apartments[k]["latitude"], apartments[k]["longitude"]);
 
           if (dist < 20) {
             createMarker(apartments[k]);
@@ -563,7 +583,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     } else {
-      axios.get('api/apartments').then(function (response) {
+      axios.get("api/apartments").then(function (response) {
         _this.apartments = response.data.data;
         apartments = response.data.data;
         _this.results = _this.apartments;
@@ -573,7 +593,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Search Event Functions */
 
 
-    ttSearchBox.on('tomtom.searchbox.resultsfound', function (event) {
+    ttSearchBox.on("tomtom.searchbox.resultsfound", function (event) {
       var results = event.data.results.fuzzySearch.results;
 
       if (results.length === 0) {
@@ -582,10 +602,10 @@ __webpack_require__.r(__webpack_exports__);
     });
     /* Actions to do when selecting a result */
 
-    ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
+    ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
       var result = data.data.result;
 
-      if (result.type === 'category' || result.type === 'brand') {
+      if (result.type === "category" || result.type === "brand") {
         return;
       }
 
@@ -610,7 +630,7 @@ __webpack_require__.r(__webpack_exports__);
       center = [data.data.result.position.lat, data.data.result.position.lng];
 
       for (var k = 0; k < apartments.length; k++) {
-        var dist = calcCrow(center[0], center[1], apartments[k]['latitude'], apartments[k]['longitude']);
+        var dist = calcCrow(center[0], center[1], apartments[k]["latitude"], apartments[k]["longitude"]);
 
         if (dist < 20) {
           createMarker(apartments[k]);
@@ -634,14 +654,14 @@ __webpack_require__.r(__webpack_exports__);
     });
     /* Actions to do while results are cleared */
 
-    ttSearchBox.on('tomtom.searchbox.resultscleared', function () {
+    ttSearchBox.on("tomtom.searchbox.resultscleared", function () {
       if (layer != 0) {
         hideLayer(layer);
       }
 
       map.flyTo({
-        "center": startCoords,
-        "zoom": 4
+        center: startCoords,
+        zoom: 4
       });
 
       if (markers.length != 0) {
@@ -708,7 +728,7 @@ __webpack_require__.r(__webpack_exports__);
         var markerId = poi.id;
         var poiOpts = {
           name: poi.poi ? poi.poi.name : undefined,
-          address: poi.address ? poi.address.freeformAddress : '',
+          address: poi.address ? poi.address.freeformAddress : "",
           distance: poi.dist,
           classification: poi.poi ? poi.poi.classifications[0].code : undefined,
           position: poi.position,
@@ -737,7 +757,7 @@ __webpack_require__.r(__webpack_exports__);
       this.options = options || {};
       this.marker = new tt.Marker({
         element: this.createMarker(),
-        anchor: 'bottom'
+        anchor: "bottom"
       });
       var lon = this.poiData.position.lng || this.poiData.position.lon;
       this.marker.setLngLat([lon, this.poiData.position.lat]);
@@ -750,15 +770,15 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     SearchMarker.prototype.createMarker = function () {
-      var elem = document.createElement('div');
-      elem.className = 'tt-icon-marker-black tt-search-marker';
+      var elem = document.createElement("div");
+      elem.className = "tt-icon-marker-black tt-search-marker";
 
       if (this.options.markerClassName) {
-        elem.className += ' ' + this.options.markerClassName;
+        elem.className += " " + this.options.markerClassName;
       }
 
-      var innerElem = document.createElement('div');
-      innerElem.setAttribute('style', 'background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;');
+      var innerElem = document.createElement("div");
+      innerElem.setAttribute("style", "background: white; width: 10px; height: 10px; border-radius: 50%; border: 3px solid black;");
       elem.appendChild(innerElem);
       return elem;
     };
@@ -804,13 +824,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
     function hideLayer(layerId) {
-      map.setLayoutProperty(layerId, 'visibility', 'none');
+      map.setLayoutProperty(layerId, "visibility", "none");
     }
     /* Show layer on map */
 
 
     function showLayer(layerId) {
-      map.setLayoutProperty(layerId, 'visibility', 'visible');
+      map.setLayoutProperty(layerId, "visibility", "visible");
       layer = layerId;
     }
     /* Create layer on map */
@@ -827,20 +847,20 @@ __webpack_require__.r(__webpack_exports__);
 
       if (exists == 0) {
         map.addLayer({
-          'id': result.id,
-          'type': 'fill',
-          'source': {
-            'type': 'geojson',
-            'data': turf.circle([result.position.lng, result.position.lat], 20000, {
-              units: 'metres',
+          id: result.id,
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: turf.circle([result.position.lng, result.position.lat], 20000, {
+              units: "metres",
               properties: {
                 key: result.id
               }
             })
           },
-          'paint': {
-            'fill-color': 'blue',
-            'fill-opacity': 0.3
+          paint: {
+            "fill-color": "blue",
+            "fill-opacity": 0.3
           }
         });
         layers.push(result.id);
@@ -866,7 +886,7 @@ __webpack_require__.r(__webpack_exports__);
     getServices: function getServices() {
       var _this2 = this;
 
-      axios.get('api/services').then(function (response) {
+      axios.get("api/services").then(function (response) {
         _this2.services = response.data.data;
       });
     },
@@ -919,7 +939,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#mainDiv{\n\tpadding-top: 75px;\n}\n#map {\n  height: calc(100vh - 75px);\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.tt-search-marker>div{\n\tbackground: none !important;\n\tborder: none !important;\n\theight: 50px !important;\n\twidth: 50px !important;\n}\n\n", ""]);
+exports.push([module.i, "\n#mainDiv {\r\n  padding-top: 75px;\n}\n#map {\r\n  height: calc(100vh - 75px);\r\n  width: 100%;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 75px;\r\n  right: 0;\n}\n.tt-search-marker > div {\r\n  background: none !important;\r\n  border: none !important;\r\n  height: 50px !important;\r\n  width: 50px !important;\n}\r\n", ""]);
 
 // exports
 
@@ -2379,7 +2399,7 @@ var render = function () {
         "div",
         {
           staticClass:
-            "container_results_appartment d-flex flex-wrap flex-md-nowrap px-4 py-3 w-50",
+            "\n      container_results_appartment\n      d-flex\n      flex-wrap flex-md-nowrap\n      px-4\n      py-3\n      w-50\n    ",
         },
         [
           _c(
@@ -2413,7 +2433,7 @@ var render = function () {
                 return _c("div", { key: apartment.id }, [
                   _c(
                     "div",
-                    { staticClass: " single-apartment d-flex flex-wrap py-3" },
+                    { staticClass: "single-apartment d-flex flex-wrap py-3" },
                     [
                       _c(
                         "div",
@@ -2424,10 +2444,10 @@ var render = function () {
                         [
                           _c(
                             "a",
-                            { staticClass: " w-100", attrs: { href: "#" } },
+                            { staticClass: "w-100", attrs: { href: "#" } },
                             [
                               _c("img", {
-                                staticClass: "w-100 ",
+                                staticClass: "w-100",
                                 attrs: {
                                   src: "storage/" + apartment.thumbnail,
                                   alt: "...",
@@ -2442,7 +2462,7 @@ var render = function () {
                         "div",
                         {
                           staticClass:
-                            "info_apartment col-12 col-md-8 ps-4 d-flex align-items-center",
+                            "\n              info_apartment\n              col-12 col-md-8\n              ps-4\n              d-flex\n              align-items-center\n            ",
                         },
                         [
                           _c("div", [
@@ -2461,25 +2481,25 @@ var render = function () {
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t" +
+                                  " " +
                                     _vm._s(apartment.number_of_rooms) +
-                                    " rooms -\n\t\t\t\t\t\t\t\t\t"
+                                    " rooms - "
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t" +
+                                  " " +
                                     _vm._s(apartment.number_of_beds) +
-                                    " beds -\n\t\t\t\t\t\t\t\t\t"
+                                    " beds - "
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("span", [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t" +
+                                  " " +
                                     _vm._s(apartment.number_of_baths) +
-                                    " baths\n\t\t\t\t\t\t\t\t\t"
+                                    " baths "
                                 ),
                               ]),
                             ]),
@@ -18146,7 +18166,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
