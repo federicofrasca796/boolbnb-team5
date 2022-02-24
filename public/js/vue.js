@@ -995,11 +995,6 @@ __webpack_require__.r(__webpack_exports__);
       this.results = [];
       var center = [result.position.lat, result.position.lng];
       var sortion = [];
-      console.log(result.position); //Send coordinates and municipality to api. Get filtered results by distance from searched point
-
-      axios.get("api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
-        console.log(r);
-      });
 
       for (var k = 0; k < this.apartments.length; k++) {
         var dist = this.calcCrow(center[0], center[1], this.apartments[k]["latitude"], this.apartments[k]["longitude"]);
@@ -18801,7 +18796,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

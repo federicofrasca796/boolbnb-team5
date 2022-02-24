@@ -78,41 +78,28 @@ class ApartmentController extends Controller
     {
         $apartments = Apartment::with(['services'])->get();
         $center_arr = explode('+', $center);
-        ddd($center_arr);
         $lat1 = $center_arr[0];
         $lon1 = $center_arr[1];
         $return = [];
 
         /* Distance Calculator */
         foreach ($apartments as $apartment) {
-            $R = 6371; // km
-            $lat2 = $apartment->latitude;
-            $lon2 = $apartment->longitude;
-            $dLat = ($lat2 - $lat1) * pi() / 180;
-            $dLon = ($lon2 - $lon1) * pi() / 180;
-            $lat1 = ($lat1) * pi() / 180;
-            $lat2 = ($lat2) * pi() / 180;
-            $a = sin($dLat / 2) * sin($dLat / 2) + sin($dLon / 2) * sin($dLon / 2) * cos($lat1) * cos($lat2);
-            $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-            $distance = $R * $c;
-            array_push($return, $distance);
-            //Filter apartments by max range
-            /*
-            if ($distance <= 50) {
-                ddd($apartment);
-                array_push($return, $apartment);
-            }  else {
-                    // Catch error
-                    if (!request()->address) {
-                        return response([
-                            'status' => 'error',
-                            'description' => 'No apartments in range'
-                        ], 422);
-                    }
-                } */
+            $earthRadius = 6371;
+            $latFrom = deg2rad($apartment->latitude);
+            $lonFrom = deg2rad($apartment->longitude);
+            $latTo = deg2rad($lat1);
+            $lonTo = deg2rad($lon1);
+            $lonDelta = $lonTo - $lonFrom;
+            $a = pow(cos($latTo) * sin($lonDelta), 2) +
+                pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+            $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+            $angle = atan2(sqrt($a), $b);
+            $distance = $angle  * $earthRadius;
+            if($distance <= 50){
+                $apartment->distance = $distance;
+                array_push($return , $apartment);
+            }
         }
-        ddd($return);
-
         // Catch error
         if (!request()->address) {
             return response([
@@ -120,7 +107,7 @@ class ApartmentController extends Controller
                 'description' => 'Missing required parameter ADDRESS.'
             ], 422);
         }
-        /* return Apartment::where('address', 'like', '%' . $address . '%')->with(['services'])->paginate(8); */
+       return $return;
     }
 
     /**
