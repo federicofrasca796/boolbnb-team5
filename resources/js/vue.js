@@ -57,3 +57,6 @@ const app = new Vue({
     router,
     el: '#app',
 });
+
+/* footer */
+Vue.component('footer-component', require('./components/FooterComponent.vue').default);
