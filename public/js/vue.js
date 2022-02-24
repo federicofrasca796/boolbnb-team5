@@ -713,7 +713,8 @@ __webpack_require__.r(__webpack_exports__);
       markers: [],
       layers: [],
       layer: "",
-      firstSearch: []
+      firstSearch: [],
+      counter: 1
     };
   },
   mounted: function mounted() {
@@ -791,6 +792,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var result = data.data.result;
       searchMarkersManager.draw([result]);
+      _this.counter = 1;
     });
     /* Actions to do while results are cleared */
 
@@ -986,24 +988,6 @@ __webpack_require__.r(__webpack_exports__);
       var map = this.map;
       map.setLayoutProperty(layerId, "visibility", "none");
     },
-    // Converts numeric degrees to radians
-    toRad: function toRad(Value) {
-      return Value * Math.PI / 180;
-    },
-
-    /* Distance Calculator */
-    calcCrow: function calcCrow(lat1, lon1, lat2, lon2) {
-      var R = 6371; // km
-
-      var dLat = this.toRad(lat2 - lat1);
-      var dLon = this.toRad(lon2 - lon1);
-      var lat1 = this.toRad(lat1);
-      var lat2 = this.toRad(lat2);
-      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-      return d;
-    },
 
     /* Get Tomtom Bounds */
     getBounds: function getBounds(data) {
@@ -1052,6 +1036,8 @@ __webpack_require__.r(__webpack_exports__);
 
     /* Execute */
     mainExecute: function mainExecute(result) {
+      var _this3 = this;
+
       var map = this.map;
       var mapCenter = [result.position.lng, result.position.lat];
       this.map.setCenter(mapCenter);
@@ -1070,58 +1056,69 @@ __webpack_require__.r(__webpack_exports__);
 
       this.fitToViewport(result);
       this.results = [];
-      var center = [result.position.lat, result.position.lng];
-      var sortion = [];
+      var center = [result.position.lat, result.position.lng]; //Send coordinates and municipality to api. Get filtered results by distance from searched point
 
-      for (var k = 0; k < this.apartments.length; k++) {
-        var dist = this.calcCrow(center[0], center[1], this.apartments[k]["latitude"], this.apartments[k]["longitude"]);
+      axios.get("/api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
+        _this3.apartments = r.data;
+        console.log(_this3.apartments);
+        var sortion = [];
 
-        if (dist < this.range) {
-          this.createMarker(this.apartments[k]);
-          dist = Math.floor(dist * 10) / 10;
-          this.apartments[k]["distance"] = dist;
-          this.results.push(this.apartments[k]);
-          sortion.push(dist);
+        for (var k = 0; k < _this3.apartments.length; k++) {
+          var dist = _this3.apartments[k].distance;
+
+          if (dist < _this3.range) {
+            _this3.createMarker(_this3.apartments[k]);
+
+            dist = Math.floor(dist * 10) / 10;
+            _this3.apartments[k]["distance"] = dist;
+
+            _this3.results.push(_this3.apartments[k]);
+
+            sortion.push(dist);
+          }
         }
-      }
 
-      if (sortion.length > 0) {
-        sortion.sort(function (a, b) {
-          return a - b;
-        });
-        var sorting = [];
+        if (sortion.length > 0) {
+          sortion.sort(function (a, b) {
+            return a - b;
+          });
+          var sorting = [];
 
-        for (var h = 0; h < sortion.length; h++) {
-          for (var index = 0; index < sortion.length; index++) {
-            if (sortion[h] == this.results[index]["distance"]) {
-              sorting.push(this.results[index]);
+          for (var h = 0; h < sortion.length; h++) {
+            for (var index = 0; index < sortion.length; index++) {
+              if (sortion[h] == _this3.results[index]["distance"]) {
+                sorting.push(_this3.results[index]);
+              }
+            }
+          }
+
+          _this3.results = sorting;
+        }
+
+        if (_this3.layers.length == 0) {
+          _this3.createLayer(result, _this3.range);
+        } else {
+          for (var j = 0; j < _this3.layers.length; j++) {
+            var name = result.id + "-" + _this3.range;
+
+            if (_this3.layers[j] == name) {
+              _this3.showLayer(_this3.layers[j]);
+
+              break;
+            } else {
+              _this3.createLayer(result, _this3.range);
             }
           }
         }
 
-        this.results = sorting;
-      }
-
-      if (this.layers.length == 0) {
-        this.createLayer(result, this.range);
-      } else {
-        for (var j = 0; j < this.layers.length; j++) {
-          var name = result.id + "-" + this.range;
-
-          if (this.layers[j] == name) {
-            this.showLayer(this.layers[j]);
-            break;
-          } else {
-            this.createLayer(result, this.range);
-          }
-        }
-      }
-
-      this.map.setMaxZoom(22);
+        _this3.map.setMaxZoom(22);
+      });
     },
 
     /* Actions on searchbox Clearing */
     clear: function clear() {
+      var _this4 = this;
+
       var map = this.map;
 
       if (this.layer != 0) {
@@ -1141,10 +1138,14 @@ __webpack_require__.r(__webpack_exports__);
         this.markers = [];
       }
 
-      if (this.apartments != null) {
-        this.drawAll(this.apartments);
-        this.results = this.apartments;
-      }
+      axios.get("/api/apartments/").then(function (r) {
+        _this4.apartments = r.data.data;
+
+        _this4.drawAll(_this4.apartments);
+
+        _this4.results = _this4.apartments;
+        _this4.counter = 0;
+      });
     },
 
     /* Range Slider Controller */
@@ -1166,10 +1167,12 @@ __webpack_require__.r(__webpack_exports__);
 
       this.range = slider.value * 10;
 
-      if (this.searching != null) {
-        this.execute(this.searching);
-      } else {
-        this.mainExecute(this.firstSearch);
+      if (this.counter == 1) {
+        if (this.searching != null) {
+          this.execute(this.searching);
+        } else {
+          this.mainExecute(this.firstSearch);
+        }
       }
     }
   },
@@ -3098,11 +3101,11 @@ var render = function () {
                               ]),
                             ]),
                             _vm._v(" "),
-                            apartment.distance
+                            apartment.distance >= 0
                               ? _c("div", [
-                                  _c("h1", [_vm._v("Distance")]),
+                                  _c("h4", [_vm._v("Distance")]),
                                   _vm._v(" "),
-                                  _c("p", [
+                                  _c("span", [
                                     _vm._v(_vm._s(apartment.distance) + " Km"),
                                   ]),
                                 ])
@@ -18937,7 +18940,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

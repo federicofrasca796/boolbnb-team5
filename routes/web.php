@@ -39,6 +39,8 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
         'apartments' => 'slug',
     ]);
 
+    Route::post('apartments/store' , 'ApartmentController@store')->name('apartments.store');
+
     Route::put('apartments/{apartment}/make-visible', 'ApartmentController@makeVisible')->name('apartments.makeVisibile');
 
     /* Routes index and show messages */

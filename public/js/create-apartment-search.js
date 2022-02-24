@@ -124,7 +124,7 @@ ttSearchBox.on('tomtom.searchbox.resultselected', function (data) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/create-apartment-search.js */"./resources/js/create-apartment-search.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\create-apartment-search.js */"./resources/js/create-apartment-search.js");
 
 
 /***/ })

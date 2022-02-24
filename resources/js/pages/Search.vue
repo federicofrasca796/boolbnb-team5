@@ -70,9 +70,9 @@
                   <span> {{ apartment.number_of_beds }} beds - </span>
                   <span> {{ apartment.number_of_baths }} baths </span>
                 </p>
-                <div v-if="apartment.distance">
-                  <h1>Distance</h1>
-                  <p>{{ apartment.distance }} Km</p>
+                <div v-if="apartment.distance >= 0">
+                  <h4>Distance</h4>
+                  <span>{{ apartment.distance }} Km</span>
                 </div>
               </div>
             </div>
@@ -108,6 +108,7 @@ export default {
       layers: [],
       layer: "",
       firstSearch: [],
+      counter : 1,
     };
   },
 
@@ -181,6 +182,7 @@ export default {
       this.execute(data);
       var result = data.data.result;
       searchMarkersManager.draw([result]);
+      this.counter = 1;
     });
 
     /* Actions to do while results are cleared */
@@ -377,29 +379,6 @@ export default {
       map.setLayoutProperty(layerId, "visibility", "none");
     },
 
-    // Converts numeric degrees to radians
-    toRad(Value) {
-      return (Value * Math.PI) / 180;
-    },
-
-    /* Distance Calculator */
-    calcCrow(lat1, lon1, lat2, lon2) {
-      var R = 6371; // km
-      var dLat = this.toRad(lat2 - lat1);
-      var dLon = this.toRad(lon2 - lon1);
-      var lat1 = this.toRad(lat1);
-      var lat2 = this.toRad(lat2);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) *
-          Math.sin(dLon / 2) *
-          Math.cos(lat1) *
-          Math.cos(lat2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c;
-      return d;
-    },
-
     /* Get Tomtom Bounds */
     getBounds(data) {
       var btmRight;
@@ -478,9 +457,10 @@ export default {
 			)
 			.then((r) => {
 			this.apartments = r.data;
+      console.log(this.apartments)
 			let sortion = [];
 			for (let k = 0; k < this.apartments.length; k++) {
-				let dist = this.calcCrow(center[0],center[1],this.apartments[k]["latitude"],this.apartments[k]["longitude"]);
+				let dist = this.apartments[k].distance
 				if (dist < this.range) {
 					this.createMarker(this.apartments[k]);
 					dist = Math.floor(dist * 10) / 10;
@@ -539,6 +519,7 @@ export default {
 		 	this.apartments = r.data.data;
 		  	this.drawAll(this.apartments);
         	this.results = this.apartments;
+          this.counter = 0 ;
       	})
         
     },
@@ -561,10 +542,12 @@ export default {
       }
       this.range = slider.value * 10;
 
-      if (this.searching != null) {
-        this.execute(this.searching);
-      } else {
-        this.mainExecute(this.firstSearch);
+      if(this.counter == 1){
+          if (this.searching != null) {
+            this.execute(this.searching);
+        } else {
+            this.mainExecute(this.firstSearch);
+        }
       }
     },
   },
