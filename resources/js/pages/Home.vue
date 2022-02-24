@@ -92,7 +92,7 @@ export default {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: Object,
+      mySearchResult: [],
       inputValue: null,
       bottone_goUp_visible: false,
     };
@@ -100,12 +100,13 @@ export default {
   mounted() {
     this.fetchApartments();
 
-    //Searchbar
+    /* Search Options */
     var options = {
       searchOptions: {
         key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-        language: "en-GB",
+        language: "it-IT",
         limit: 5,
+        countrySet: "IT",
       },
     };
 
@@ -115,14 +116,13 @@ export default {
 
     /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      var self = this;
-      self.mySearchResult = data;
+      this.mySearchResult = data.data.result;
       this.changeBtn();
       setTimeout(() => {
         let value;
         value = ttSearchBox.getValue();
         this.inputValue = value;
-      }, 100);
+      }, 50);
     });
 
     /* funzioni per parte grafica Chandra */
@@ -154,10 +154,10 @@ export default {
 
     fetchApartments() {
       axios
-        .get("/api/apartments")
+        .get("/api/apartments/")
         .then((r) => {
-          // console.log(r);
           this.apartments = r.data.data;
+          console.log(this.apartments);
           this.loading = false;
         })
         .catch((e) => {
@@ -180,7 +180,7 @@ export default {
 
     emitSearchData() {
       this.$router.push({
-        name: "Search",
+        path: "/searchadv/" + this.inputValue,
         params: {
           data: this.mySearchResult,
           value: this.inputValue,

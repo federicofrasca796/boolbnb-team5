@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('apartments' , 'Api\ApartmentController@index')->name('api.apartments.index');
+Route::get('apartments', 'Api\ApartmentController@index')->name('api.apartments.index');
 Route::get('apartments/{apartment}', 'Api\ApartmentController@show')->name('api.apartments.show');
+Route::get('apartments/address/{address}', 'Api\ApartmentController@search')->name('api.apartments.search');
+Route::get('apartments/address/{address}/services/{services}', 'Api\ApartmentController@searchadv')->name('api.apartments.searchadv');
 
-Route::get('services' , 'Api\ServiceController@index')->name('api.services.index');
+Route::get('services', 'Api\ServiceController@index')->name('api.services.index');
