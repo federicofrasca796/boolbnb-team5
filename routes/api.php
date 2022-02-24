@@ -23,5 +23,3 @@ Route::get('apartments' , 'Api\ApartmentController@index')->name('api.apartments
 Route::get('apartments/{apartment}', 'Api\ApartmentController@show')->name('api.apartments.show');
 
 Route::get('services' , 'Api\ServiceController@index')->name('api.services.index');
-
-Route::apiResource('messages', 'Api\MessageController');
