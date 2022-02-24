@@ -102,6 +102,7 @@ export default {
       markers: [],
       layers: [],
       layer: "",
+      firstSearch: [],
     };
   },
 
@@ -161,6 +162,7 @@ export default {
 				this.results = this.apartments;
 				console.log(result)
 				result = result.results[0]
+        this.firstSearch = result;
 				this.mainExecute(result)
 				searchMarkersManager.draw([result]);
 			});		
@@ -216,7 +218,6 @@ export default {
       this._lastClickedMarker = null;
     };
 
-    /* Add Remove Markers From Map */
     function SearchMarker(poiData, options) {
       this.poiData = poiData;
       this.options = options || {};
@@ -511,10 +512,14 @@ export default {
         }
       }
       this.range = slider.value * 10;
+
       if (this.searching != null) {
         this.execute(this.searching);
       }
-    },
+      else{
+        this.mainExecute(this.firstSearch)
+      }
+	}  
   },
 
   computed: {
@@ -527,10 +532,11 @@ export default {
   /* Manage data from home component */
   created() {
     this.value = this.$route.params.address;
-	console.log('value ' + this.value);
+	  console.log('value ' + this.value);
   },
 };
 </script>
+
 
 <style lang="scss">
 @import "../../sass/variables";
