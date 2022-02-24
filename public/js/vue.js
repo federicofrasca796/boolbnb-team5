@@ -631,6 +631,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -643,6 +647,7 @@ __webpack_require__.r(__webpack_exports__);
       results: [],
       loading: true,
       searching: null,
+      searchPosition: [],
       startCoords: [12.49427, 41.89056],
       services: [],
       range: 20,
@@ -674,7 +679,7 @@ __webpack_require__.r(__webpack_exports__);
         language: "it-IT",
         limit: 5,
         countrySet: "IT",
-        entityTypeSet: 'Municipality'
+        entityTypeSet: "Municipality"
       }
     };
     /* Map  Controls */
@@ -706,11 +711,11 @@ __webpack_require__.r(__webpack_exports__);
       key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
       query: this.value
     }).then(function (result) {
-      axios.get('/api/apartments').then(function (response) {
-        console.log(response);
+      axios.get("/api/apartments").then(function (response) {
+        //   console.log(response);
         _this.apartments = response.data.data;
-        _this.results = _this.apartments;
-        console.log(result);
+        _this.results = _this.apartments; //   console.log(result);
+
         result = result.results[0];
         _this.firstSearch = result;
 
@@ -722,7 +727,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Actions to do when selecting a result */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      _this.searching = data;
+      _this.searching = data; //   console.log(this.searching);
 
       _this.execute(data);
 
@@ -815,6 +820,9 @@ __webpack_require__.r(__webpack_exports__);
     /* This is a test interacting with computed properties */
     addTest: function addTest() {
       this.x += 1;
+    },
+    log: function log() {
+      console.log(this.results);
     },
 
     /* Services Api */
@@ -986,6 +994,11 @@ __webpack_require__.r(__webpack_exports__);
       this.results = [];
       var center = [result.position.lat, result.position.lng];
       var sortion = [];
+      console.log(result.position); //Send coordinates and municipality to api. Get filtered results by distance from searched point
+
+      axios.get("api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
+        console.log(r);
+      });
 
       for (var k = 0; k < this.apartments.length; k++) {
         var dist = this.calcCrow(center[0], center[1], this.apartments[k]["latitude"], this.apartments[k]["longitude"]);
@@ -1094,8 +1107,7 @@ __webpack_require__.r(__webpack_exports__);
 
   /* Manage data from home component */
   created: function created() {
-    this.value = this.$route.params.address;
-    console.log('value ' + this.value);
+    this.value = this.$route.params.address; // console.log("value " + this.value);
   }
 });
 
@@ -18782,7 +18794,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
