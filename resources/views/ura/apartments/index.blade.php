@@ -37,8 +37,8 @@
 
                         </div>
                         @include('partials.ura.apartment.actions')
-                        <a href="{{ route('apartments.payment', $apartment->slug) }}" class="btn btn-light mx-1">
-                            Sponsorizza
+                        <a href="{{ route('ura.apartments.payment', $apartment->slug) }}" class="btn btn-light mx-1">
+                            Sponsors the apartment
                         </a>
                     </div>
                 </div>
