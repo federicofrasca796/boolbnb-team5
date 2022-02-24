@@ -9,6 +9,13 @@
 	<div class="m-auto w-50" id="form-sendMessage">
 		<form action="{{ route('message.send') }}" method="POST">
 			@csrf
+
+			<div class="mb-3 d-none">
+				@if (Auth::check())
+					<input type="text" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+				@endif
+			  <input type="text" name="apartment_id" id="apartment_id" class="form-control" placeholder="" value="{{ $apartment->id }}">
+			</div>
 			<div class="mb-3 d-flex flex-column align-items-center justify-content-center">
 					<label for="body" class="form-label">Name</label>
 				@if (Auth::check())

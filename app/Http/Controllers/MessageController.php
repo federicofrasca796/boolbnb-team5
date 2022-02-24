@@ -29,22 +29,21 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validated_Data = $request->validate([
             'name' => 'required|min:3|max:80',
             'mail' => 'required',
             'body' => 'required|min:30',
-            'apartment_id' => 'nullable|exists:apartments,id',
+            'apartment_id' => 'required|exists:apartments,id',
             'user_id' => 'nullable|exists:users,id',
         ]);
 
         $message = Message::create($validated_Data);
 
-        Message::create($validated_Data);
-
+        /* Add a render email */
         /* return (new InfoApartmentMail($message))->render(); */
 
         Mail::to('boolbnb@admin.com')->send(new InfoApartmentMail($message));
+
         return redirect()->back()->with(session()->flash('success', "Message send succesfully"));
 
     }
