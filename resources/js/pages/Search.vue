@@ -1,5 +1,26 @@
 <template>
-  <div class="container-fluid d-flex position-relative" id="mainDiv">
+  <div class="container-fluid d-flex position-relative flex-wrap" id="mainDiv">
+    <div id="searchBox" class="col-12"></div>
+    <div
+      class="
+        services
+        d-flex
+        flex-wrap
+        w-100
+        justify-content-start justify-content-md-center
+        align-items-baseline
+      "
+    >
+      <div class="range-filter rounded-pill d-flex align-items-center">
+        <label class="me-2" for="volume">Distance</label>
+          <input type="range" name="range" id="range" min="1" max="5" value="2" />
+
+           <span id="range_output"></span>
+      </div>
+      <div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
+        <input type="button" class="rounded-pill" :value="service.name" />
+      </div>
+    </div>
     <div
       class="
         container_results_appartment
@@ -7,25 +28,20 @@
         flex-wrap flex-md-nowrap
         px-4
         py-3
-        w-50
+        col-12 col-md-6
       "
     >
-      <div class="results col-12 col-md-6 w-100">
-        <div id="searchBox"></div>
-        <div class="services d-flex flex-wrap">
-          <div class="advanced-search px-1 py-1" v-for="service in services" :key="service.id">
-            <input type="button" class="rounded-pill" :value="service.name" />
-          </div>
-        </div>
-        <span>Searching range</span>
-        <input type="range" name="range" id="range" min="1" max="5" value="2" />
-        <span id="range_output"></span>
+      <div class="col-12 col-md-6 w-100">
+        <!-- <div id="searchBox"></div> -->
         <div v-for="apartment in getApartments" :key="apartment.id">
-          <div class="single-apartment d-flex flex-wrap py-3">
+          <router-link
+            :to="'/apartments/' + apartment.slug"
+            class="single-apartment d-flex flex-wrap py-3"
+          >
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
-                  :src="'/storage/' + apartment.thumbnail"
+                  :src="'storage/' + apartment.thumbnail"
                   class="w-100"
                   alt="..."
                 />
@@ -56,17 +72,22 @@
                 </div>
               </div>
             </div>
-          </div>
-          <hr />
+          </router-link>
         </div>
       </div>
     </div>
-    <div id="map" ref="mapRef" class="w-50"></div>
+    <div class="container_map w-50 px-4 py-3 d-none d-md-block">
+      <div id="map" ref="mapRef" class="col-12 col-md-6 w-100"></div>
+    </div>
+
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import FooterComponent from "../components/FooterComponent.vue";
 export default {
+  components: { FooterComponent },
   name: "Map",
   data() {
     return {
@@ -195,6 +216,7 @@ export default {
       this._lastClickedMarker = null;
     };
 
+    /* Add Remove Markers From Map */
     function SearchMarker(poiData, options) {
       this.poiData = poiData;
       this.options = options || {};
@@ -510,25 +532,91 @@ export default {
 };
 </script>
 
-<style>
-header {
-  background-color: white;
-}
-
-.container_results_appartment {
-  max-height: calc(100vh - 75px);
-  overflow: auto;
-}
-
+<style lang="scss">
+@import "../../sass/variables";
 #mainDiv {
-  padding-top: 75px;
+  padding-top: 10px;
+  height: calc(100vh - 75px);
+  .container_results_appartment {
+    overflow-y: scroll;
+    height: calc(100% - 150px);
+    .single-apartment {
+      text-decoration: none;
+      color: black;
+      .image-single {
+        img {
+          border-radius: 1.9rem;
+          height: 165px;
+        }
+      }
+      .info_apartment {
+        hr {
+          width: 50px;
+        }
+      }
+    }
+  }
+  .range-filter {
+    font-family: "Josefin Sans", sans-serif;
+    padding: 8px 16px;
+    border: 1px solid lightgrey;
+    background-color: transparent;
+    height: 39.31px;
+
+    &:hover {
+      border: 1px solid black;
+    }
+  }
+  .advanced-search {
+    input[type="button"] {
+      font-family: "Josefin Sans", sans-serif;
+      padding: 8px 16px;
+      border: 1px solid lightgrey;
+      background-color: transparent;
+      &:hover {
+        border: 1px solid black;
+      }
+    }
+  }
+
+  #searchBox {
+    .tt-search-box {
+      margin-top: 0px;
+    }
+    .tt-search-box-input-container {
+      border-radius: 0.9rem;
+      /* div {
+        position: relative;
+        margin-bottom: 9px;
+        svg {
+          position: absolute;
+          border-radius: 100%;
+          top: -10px;
+          right: -906px;
+          width: 30px;
+          height: 30px;
+          background-color: $raspberry;
+          color: white;
+        }
+      } */
+    }
+  }
+}
+.container_map {
+  height: calc(100% - 150px);
+  #map {
+    height: 100%;
+    width: 100%;
+    position: sticky;
+    top: 75px;
+    right: 0;
+  }
 }
 
-#map {
-  height: calc(100vh - 75px);
-  width: 100%;
-  position: sticky;
-  top: 75px;
-  right: 0;
+.tt-search-marker > div {
+  background: none !important;
+  border: none !important;
+  height: 50px !important;
+  width: 50px !important;
 }
 </style>
