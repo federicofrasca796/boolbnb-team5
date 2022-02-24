@@ -6,7 +6,7 @@
     <div id="thumbnail" class="col-12 h-100 p-2 {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
         <img src="{{ asset('storage/' . $apartment->thumbnail) }}" alt="{{ $apartment->slug }}" class="w-100 h-100">
         <div id="backward" class="d-flex justify-content-center position-absolute">
-            <a class="d-flex justify-content-center align-items-center btn btn-outline-dark btn-lg py-3" href="{{URL::previous()}}"><i class="fas fa-backward fa-lg fa-fw"></i></a> 
+            <a class="d-flex justify-content-center align-items-center btn btn-outline-dark btn-lg py-3" href="{{URL::previous()}}"><i class="fas fa-arrow-left fa-lg fa-fw"></i></a> 
         </div>
     </div>
 </div>
@@ -80,93 +80,6 @@
                     @empty
                         Non ci sono messaggi
                     @endforelse
-                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Info apartment</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('messages.store') }}" method="post">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Nome</label>
-                                            <input type="text" name="name" id="name"
-                                                class="form-control @error('name') is-invalid @enderror"
-                                                aria-describedby="nameHelper" placeholder="Scrivi qui il tuo nome" required
-                                                minlength="3" maxlength="80" value="{{ old('name') }}">
-                                            @error('name')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label for="mail" class="form-label">Indirizzo email</label>
-                                            @if (Auth::check())
-                                                <input type="mail" name="mail" id="mail"
-                                                    class="form-control @error('mail') is-invalid @enderror"
-                                                    aria-describedby="mailHelper" placeholder="name@example.com"
-                                                    value="{{ Auth::user()->email }}" required autocomplete="mail"
-                                                    autofocus>
-                                            @else
-                                                <input type="" name="mail" id="mail"
-                                                    class="form-control @error('mail') is-invalid @enderror"
-                                                    aria-describedby="mailHelper" placeholder="name@example.com"
-                                                    value="{{ old('mail') }}" required autocomplete="mail" autofocus>
-                                            @endif
-                                            @error('mail')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="body" class="form-label">Messaggio</label>
-                                    <textarea name="body" id="body" rows="3" class="form-control" required
-                                        minlength="30">{{ old('body') }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label hidden for="apartment_id">Appartamento</label>
-                                        <select hidden class="form-control" name="apartment_id" id="apartment_id">
-                                            <option selected value="{{ $apartment->id }}">
-                                                {{ $apartment->id }}
-                                            </option>
-                                        </select>
-                                        @error('apartment_id')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label hidden for="user_id">Owner apartment</label>
-                                        <select hidden class="form-control" name="user_id" id="user_id">
-                                            <option selected value="{{ $apartment->user_id }}">
-                                                {{ $apartment->user_id }}
-                                            </option>
-                                        </select>
-                                        @error('user_id')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Invia</button>
-                                    <a class="btn btn-warning" href="{{-- {{ route('guest.posts.index') }} --}}">Annulla</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
