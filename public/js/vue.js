@@ -737,6 +737,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1359,7 +1362,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .range-filter {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n  height: 39.31px;\n}\n#mainDiv .range-filter:hover {\n  border: 1px solid black;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}", ""]);
+exports.push([module.i, "#mainDiv {\n  padding-top: 10px;\n  height: calc(100vh - 75px);\n}\n#mainDiv .container_results_appartment {\n  overflow-y: scroll;\n  height: calc(100% - 150px);\n}\n#mainDiv .container_results_appartment .single-apartment {\n  text-decoration: none;\n  color: black;\n}\n#mainDiv .container_results_appartment .single-apartment .image-single img {\n  border-radius: 1.9rem;\n  height: 165px;\n}\n#mainDiv .container_results_appartment .single-apartment .info_apartment hr {\n  width: 50px;\n}\n#mainDiv .range-filter {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n  height: 39.31px;\n}\n#mainDiv .range-filter:hover {\n  border: 1px solid black;\n}\n#mainDiv .advanced-search input[type=button] {\n  font-family: \"Josefin Sans\", sans-serif;\n  padding: 8px 16px;\n  border: 1px solid lightgrey;\n  background-color: transparent;\n}\n#mainDiv .advanced-search input[type=button]:hover {\n  border: 1px solid black;\n}\n#mainDiv #searchBox .tt-search-box {\n  margin-top: 0px;\n}\n#mainDiv #searchBox .tt-search-box-input-container {\n  border-radius: 0.9rem;\n}\n.container_map {\n  height: calc(100% - 150px);\n}\n.container_map #map {\n  height: 100%;\n  width: 100%;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 75px;\n  right: 0;\n}\n.premium {\n  background-color: rgba(197, 105, 20, 0.3);\n  border-top-left-radius: 1.9rem;\n  border-bottom-left-radius: 1.9rem;\n}\n.star {\n  right: 1rem;\n  top: 0.5rem;\n  color: white;\n}", ""]);
 
 // exports
 
@@ -3147,10 +3150,17 @@ var render = function () {
                     _c(
                       "router-link",
                       {
-                        staticClass: "single-apartment d-flex flex-wrap py-3",
+                        staticClass:
+                          "single-apartment d-flex flex-wrap my-3 premium position-relative",
                         attrs: { to: "/apartments/" + premium.slug },
                       },
                       [
+                        _c(
+                          "div",
+                          { staticClass: "icon position-absolute star" },
+                          [_c("i", { staticClass: "far fa-star fa-2x" })]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "div",
                           {
@@ -3255,7 +3265,7 @@ var render = function () {
                     _c(
                       "router-link",
                       {
-                        staticClass: "single-apartment d-flex flex-wrap py-3",
+                        staticClass: "single-apartment d-flex flex-wrap my-3",
                         attrs: { to: "/apartments/" + apartment.slug },
                       },
                       [

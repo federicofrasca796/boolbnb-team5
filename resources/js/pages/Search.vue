@@ -44,8 +44,11 @@
         <div v-for="premium in getPremium" :key="premium.name">
           <router-link
             :to="'/apartments/' + premium.slug"
-            class="single-apartment d-flex flex-wrap py-3"
+            class="single-apartment d-flex flex-wrap my-3 premium position-relative"
           >
+            <div class="icon position-absolute star">
+              <i class="far fa-star fa-2x"></i>
+            </div>
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
                 <img
@@ -85,7 +88,7 @@
         <div v-for="apartment in getApartments" :key="apartment.id">
           <router-link
             :to="'/apartments/' + apartment.slug"
-            class="single-apartment d-flex flex-wrap py-3"
+            class="single-apartment d-flex flex-wrap my-3"
           >
             <div class="image-single h-100 overflow-hidden col-12 col-md-4">
               <a href="#" class="w-100">
@@ -739,6 +742,18 @@ export default {
     top: 75px;
     right: 0;
   }
+}
+
+.premium{
+  background-color: rgba($color: #c56914, $alpha: 0.3);
+  border-top-left-radius: 1.9rem;
+  border-bottom-left-radius: 1.9rem;
+}
+
+.star{
+  right: 1rem;
+  top: 0.5rem;
+  color: white;
 }
 
 </style>
