@@ -76,7 +76,13 @@
             <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
                 <div class="m-auto rounded-pill sticky-top">
                     @forelse ($apartment->message as $item)
-                        {{ $item->body }}
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">{{ $item->name }}</h4>
+                                <h5 class="card-text">{{ $item->mail }}</h5>
+                                <p class="card-text mb-0 w-75 m-auto">{{ $item->body }}</p>
+                            </div>
+                        </div>
                     @empty
                         Non ci sono messaggi
                     @endforelse
