@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\DB;
 
 class SponsorController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Sponsor  $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Sponsor $sponsor)
+    {
+        //
+    }
+
     public function sendPayment(Request $request)
     {
         $validatedData = $request->validate([
