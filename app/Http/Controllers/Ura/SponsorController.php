@@ -20,7 +20,8 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        //
+        $sponsorships = Sponsor::where('user_id', Auth::User()->id)->paginate(5);
+        return view('ura.sponsorships.index', compact('sponsorships'));
     }
 
     /**

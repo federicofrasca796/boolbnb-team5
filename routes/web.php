@@ -49,6 +49,9 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
     Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
         'messages' => 'slug',
     ]);
+    //Rotte base payments
+    Route::resource('sponsors', SponsorController::class)->only('index', 'show');
+
     //rotte payments
     Route::get('apartments/{apartment}/payment', 'ApartmentController@showPayment')->name('apartments.payment');
     Route::post('/apartments', 'SponsorController@sendPayment')->name('checkout');

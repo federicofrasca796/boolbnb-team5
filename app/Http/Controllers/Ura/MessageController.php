@@ -16,9 +16,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        /* $apartments = Auth::User()->apartment(); */
         $messages = Message::where('user_id', Auth::User()->id)->paginate(5);
-       /*  ddd($messages); */
         return view('ura.messages.index', compact('messages'));
     }
 
