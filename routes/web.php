@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 //Guest routes (deprecated with vue routes)
 // Route::get('/', 'ApartmentController@index')->name('guest.index');
 // Route::get('/apartments/{apartment}', 'ApartmentController@show')->name('guest.show');
 
-Route::get('/advanced-search',  'SearchController@index')->name('guest.advanced-search');
+Route::get('/advanced-search', 'SearchController@index')->name('guest.advanced-search');
 
 Auth::routes();
 
@@ -42,12 +41,17 @@ Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(
         'apartments' => 'slug',
     ]);
 
+    Route::post('apartments/store' , 'ApartmentController@store')->name('apartments.store');
+
     Route::put('apartments/{apartment}/make-visible', 'ApartmentController@makeVisible')->name('apartments.makeVisibile');
 
     /* Routes index and show messages */
     Route::resource('messages', 'MessageController')->only('index', 'show')->scoped([
         'messages' => 'slug',
     ]);
+    //rotte payments
+    Route::get('apartments/{apartment}/payment', 'ApartmentController@showPayment')->name('apartments.payment');
+    Route::post('/apartments', 'SponsorController@sendPayment')->name('checkout');
 });
 
 Route::get('/{any}', function () {

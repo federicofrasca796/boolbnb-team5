@@ -17,7 +17,7 @@ const routes = [{
         component: Home,
     },
     {
-        path: '/searchadv',
+        path: '/searchadv/:address',
         name: 'Search',
         component: Search,
     },
@@ -57,3 +57,6 @@ const app = new Vue({
     router,
     el: '#app',
 });
+
+/* footer */
+Vue.component('footer-component', require('./components/FooterComponent.vue').default);

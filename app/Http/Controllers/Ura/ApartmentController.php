@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Ura;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
+use App\Models\Sponsor;
+use Braintree\Gateway;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -173,5 +175,28 @@ class ApartmentController extends Controller
             $apartment->update($validator);
             return redirect()->back()->with(session()->flash('success', "Apartment '$apartment->title' edited succesfully"));
         }
+    }
+    public function showPayment(Apartment $apartment)
+    {
+        if (Auth::id() === $apartment->user_id) {
+            $sponsors = Sponsor::all();
+            //$apartments = Apartment::all();
+
+            $gateway = new Gateway([
+                'environment' => config('services.braintree.environment'),
+                'merchantId' => config('services.braintree.merchantId'),
+                'publicKey' => config('services.braintree.publicKey'),
+                'privateKey' => config('services.braintree.privateKey'),
+            ]);
+
+            $token = $gateway->ClientToken()->generate();
+
+            return view('ura.sponsors.show', [
+                'token' => $token,
+            ], compact('apartment', 'sponsors'));
+        } else {
+            abort(403);
+        }
+
     }
 }

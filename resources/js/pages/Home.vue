@@ -1,5 +1,5 @@
 <template>
-  <div id="home_main">
+  <div id="home_main" class="position-absolute top-0">
     <!-- Jumbo -->
     <section
       id="jumbo"
@@ -20,19 +20,61 @@
             <div id="mySearchbar" class="form-control"></div>
 
             <!-- Route to advanced search page -->
-            <div class="h-100 bg-white p-2">
+            <div class="container_search h-100 bg-white p-2">
               <div id="link_router" class="d-none">
-                <button @click="emitSearchData()" class="btn btn-danger text-white px-5 rounded-0 h-100"> SEARCH</button>
+                <button
+                  @click="emitSearchData()"
+                  class="btn btn-raspberry text-white px-1 px-md-5 h-100"
+                >
+                  SEARCH
+                </button>
               </div>
-              <div
+              <button
                 id="link_fake"
-                class="btn btn-secondary text-white px-5 rounded-0 h-100"
+                class="btn btn-secondary text-white px-1 px-md-5 h-100"
               >
                 SEARCH
-              </div>
+              </button>
             </div>
           </div>
         </form>
+      </div>
+    </section>
+
+    <!-- Sponsored Apartments -->
+    <section>
+      <div class="sponsor_title my-5 text-center">
+        <h1 v-show="visible">Apartments in evidence</h1>
+      </div>
+
+      <!-- Apartments cards -->
+      <div class="container-apartments row m-auto row-cols-1 row-cols-md-4 g-4">
+        <template v-if="api_error">Apartments can't be reached</template>
+
+        <!-- While loading API.. -->
+        <template v-else-if="loading"> ⏳ Loading.. </template>
+
+        <!-- API loaded -->
+        <template v-else>
+          <div
+            class="col"
+            v-for="apartment in apartments_sponsored"
+            :key="apartment.id"
+          >
+            <div class="card overflow-hidden">
+              <router-link :to="'/apartments/' + apartment.slug">
+                <img
+                  :src="'storage/' + apartment.thumbnail"
+                  class="w-100"
+                  :alt="apartment.slug"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ apartment.title }}</h5>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </template>
       </div>
     </section>
 
@@ -67,29 +109,44 @@
         </template>
       </div>
     </section>
+
+    <div class="bottone_goUp" v-if="bottone_goUp_visible">
+      <a href="#app">
+        <i class="fa-solid fa-chevron-up"></i>
+      </a>
+    </div>
+
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import FooterComponent from "../components/FooterComponent.vue";
 export default {
+  components: { FooterComponent },
   data() {
     return {
       apartments: Array,
       loading: true,
       api_error: false,
-      mySearchResult: Object,
-      inputValue : null 
+      mySearchResult: [],
+      apartments_sponsored: Array,
+      visible: false,
+      inputValue: null,
+      bottone_goUp_visible: false,
     };
   },
   mounted() {
     this.fetchApartments();
+    this.getSponsored();
 
-    //Searchbar
+    /* Search Options */
     var options = {
       searchOptions: {
         key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-        language: "en-GB",
+        language: "it-IT",
         limit: 5,
+        countrySet: "IT",
       },
     };
 
@@ -99,22 +156,42 @@ export default {
 
     /* Results Log on select */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
-      var self = this;
-      self.mySearchResult = data;
+      this.mySearchResult = data.data.result;
       this.changeBtn();
-      setTimeout(()=>{
+      setTimeout(() => {
         let value;
         value = ttSearchBox.getValue();
-        this.inputValue = value
-      },100)
+        this.inputValue = value;
+      }, 50);
     });
+
+    this.styleHeader();
+    window.addEventListener("scroll", this.createButton);
   },
   methods: {
+    createButton() {
+      if (window.scrollY > 75) {
+        this.bottone_goUp_visible = true;
+      } else {
+        this.bottone_goUp_visible = false;
+      }
+    },
+    styleHeader() {
+      let header = document.querySelector("header");
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "white";
+
+      if (window.screen.width >= 576) {
+        header.style.justifyContent = "center";
+      } else {
+        header.style.justifyContent = "flex-start";
+      }
+    },
+
     fetchApartments() {
       axios
-        .get("/api/apartments")
+        .get("/api/apartments/")
         .then((r) => {
-          // console.log(r);
           this.apartments = r.data.data;
           this.loading = false;
         })
@@ -136,12 +213,104 @@ export default {
       real.classList.remove("d-none");
     },
 
-    emitSearchData(){
-      this.$router.push({name:"Search" , params:{data: this.mySearchResult , value: this.inputValue , apartments: this.apartments}})
-    }
+    getSponsored() {
+      axios
+        .get("/api/sponsored")
+        .then((r) => {
+          if (r.data.data == "") {
+            this.visible = false;
+          } else {
+            this.apartments_sponsored = r.data.data;
+            this.loading = false;
+            this.visible = true;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          this.api_error = true;
+        });
+    },
+    emitSearchData() {
+      this.$router.push({
+        path: "/searchadv/" + this.inputValue,
+        params: {
+          data: this.mySearchResult,
+          value: this.inputValue,
+          apartments: this.apartments,
+        },
+      });
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../sass/variables";
+#home_main {
+  z-index: -99;
+}
+#jumbo {
+  height: 75vh;
+  background-size: cover;
+  background-position: center;
+
+  & > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+  }
+
+  .search-destination {
+    width: 75%;
+    .input-group {
+      height: 70px;
+      .container-button-search {
+        padding: 0.5rem;
+        button {
+          padding: 0px 3rem;
+        }
+      }
+    }
+  }
+  #mySearchbar {
+    .tt-search-box-input-container {
+      border: none;
+      height: 100%;
+    }
+    svg {
+      display: none;
+    }
+  }
+  .container_search {
+    border-top-right-radius: 0.9rem;
+    border-bottom-right-radius: 0.9rem;
+    #link_router {
+      border-top-right-radius: 0.9rem;
+      border-bottom-right-radius: 0.9rem;
+      height: 100%;
+    }
+    button {
+      border-top-right-radius: 0.9rem;
+      border-bottom-right-radius: 0.9rem;
+    }
+    .btn-raspberry {
+      background: $raspberry;
+    }
+  }
+}
+.bottone_goUp {
+  width: 50px;
+  height: 40px;
+  background-color: $raspberry;
+  position: fixed;
+  bottom: 0;
+  right: 45px;
+  text-align: center;
+  line-height: 40px;
+  i {
+    font-size: 20px;
+    color: white;
+  }
+}
 </style>

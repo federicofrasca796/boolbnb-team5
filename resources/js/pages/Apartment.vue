@@ -1,14 +1,12 @@
 <template>
   <div id="apartment_main">
     <!-- Apartment gallery -->
-    <section class="container_img w-100 px-3 d-flex flex-wrap">
-      <div class="col-12 h-100 p-2">
-        <img
+    <section class="container_img w-100 d-flex flex-wrap col-12">
+      <img
           :src="'/storage/' + apartment.thumbnail"
           class="w-100 h-100"
           :alt="apartment.slug"
         />
-      </div>
     </section>
 
     <!-- Home description and contacts section -->
@@ -91,7 +89,7 @@
     </section>
 
     <!-- Services section-->
-    <section class="container-extra-service mb-5 m-auto">
+    <section class="container-extra-service mb-5 m-auto" v-if="this.hasServices == 1">
       <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
 
       <div class="col-12 col-md-8 d-flex flex-wrap">
@@ -107,44 +105,126 @@
     </section>
 
     <!-- Map section -->
-    <section class="map">
-      <img class="w-100" src="/img/map.png" alt="" />
+    <section class="map w-100" id="map">
     </section>
+
+    <div class="bottone_goUp" v-if="bottone_goUp_visible">
+      <a href="#app">
+        <i class="fa-solid fa-chevron-up"></i>
+      </a>
+    </div>
+
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import FooterComponent from "../components/FooterComponent.vue";
 export default {
+  components: { FooterComponent },
   data() {
     return {
-      apartment: Object,
+      apartment: [],
       loading: true,
       api_error: false,
+      bottone_goUp_visible: false,
+      center : [],
+      map: null,
+	  hasServices: 0,
     };
   },
   mounted() {
     this.fetchApartment();
+    //parte grafica header
+    this.styleHeader();
+    window.addEventListener("scroll", this.createButton);
+    
+    
   },
   methods: {
+    //parte grafica header
+    createButton() {
+      if (window.scrollY > 75) {
+        //console.log("string");
+        this.bottone_goUp_visible = true;
+      } else {
+        this.bottone_goUp_visible = false;
+      }
+    },
+    styleHeader() {
+      let header = document.querySelector("header");
+      let h1 = document.querySelector("header>h1");
+      h1.style.color = "black";
+      console.log(h1);
+      console.log(header);
+
+      if (window.screen.width >= 576) {
+        header.style.justifyContent = "center";
+      } else {
+        header.style.justifyContent = "flex-start";
+      }
+    },
+
     fetchApartment() {
       axios
         .get("/api/apartments/" + this.$route.params.slug)
         .then((r) => {
-          //   console.log(r.data);
-          this.apartment = r.data;
-          this.loading = false;
+			//   console.log(r.data);
+			this.apartment = r.data;
+			if(this.apartment.services.length != 0){
+				this.hasServices = 1;
+			}
+			this.loading = false;
+			this.center.push(this.apartment.longitude);
+			this.center.push(this.apartment.latitude);
+			this.initilizeMap();
         })
         .catch((e) => {
           //   console.error(e);
           this.api_error = true;
         });
     },
+
+    initilizeMap(){
+    /* Create The Map */
+	const tt = window.tt;
+    var map = window.tt.map({
+		key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+		container: "map",
+		center: this.center,
+		zoom: 13,
+    });
+	this.map = map;
+	/* Map  Controls */
+	this.map.addControl(new tt.FullscreenControl());
+	this.map.addControl(new tt.NavigationControl());
+	let marker = new tt.Marker()
+		.setLngLat(this.center) /* Coordinates here */
+		.addTo(this.map);
+    }
   },
 };
 </script>
 
-<style>
+
+
+<style lang="scss">
+@import "../../sass/variables";
 .container_owner {
   z-index: 8;
+}
+.bottone_goUp {
+  width: 50px;
+  height: 40px;
+  background-color: $raspberry;
+  position: fixed;
+  bottom: 0;
+  right: 45px;
+  text-align: center;
+  line-height: 40px;
+  i {
+    font-size: 20px;
+    color: white;
+  }
 }
 </style>

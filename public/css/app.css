@@ -11267,7 +11267,15 @@ header button:hover {
   background: white;
 }
 header #navbarDropdown:first-of-type {
-  color: white !important;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: black;
+  padding: 0.5rem 16px;
+}
+header #navbarDropdown:first-of-type:visited {
+  color: black;
+}
+header #navbarDropdown:first-of-type:hover {
+  background: white;
 }
 header .modal .modal-dialog-aside {
   width: 483px;
@@ -11297,6 +11305,20 @@ header .form-group input::-webkit-input-placeholder {
 }
 header .modal button[type=submit] {
   background-color: #e41c5bff;
+}
+header .button_register_container {
+  text-decoration: none;
+  font-family: "Josefin Sans", sans-serif;
+}
+header .button_register_container:visited {
+  color: white;
+}
+header .button_register_container .button_register {
+  background-color: #2477e3ff;
+  border-radius: 0.9rem;
+  width: 200px;
+  height: 40px;
+  line-height: 43px;
 }
 
 .modal-backdrop {

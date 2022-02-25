@@ -48,10 +48,9 @@ class MessageController extends Controller
             'user_id' => 'nullable|exists:users,id',
         ]);
         $message = Message::create($validated_Data);
-
         //return (new InfoApartmentMail($message))->render();
 
-        Mail::to('boolbnb@admin.com')->send(new InfoApartmentMail($message));
+        Mail::to('admin@admin.com')->send(new InfoApartmentMail($message));
         return redirect()->back()->with(session()->flash('success', "Message send succesfully"));
 
     }
