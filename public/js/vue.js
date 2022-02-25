@@ -771,8 +771,10 @@ __webpack_require__.r(__webpack_exports__);
       query: this.value
     }).then(function (result) {
       axios.get("/api/apartments").then(function (response) {
+        //   console.log(response);
         _this.apartments = response.data.data;
-        _this.results = _this.apartments;
+        _this.results = _this.apartments; //   console.log(result);
+
         result = result.results[0];
         _this.firstSearch = result;
 
@@ -784,7 +786,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Actions to do when selecting a result */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      _this.searching = data;
+      _this.searching = data; //   console.log(this.searching);
 
       _this.execute(data);
 
@@ -896,10 +898,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    /* This is a test interacting with computed properties
-     addTest() {
+    /* This is a test interacting with computed properties */
+    addTest: function addTest() {
       this.x += 1;
-    }, */
+    },
+    log: function log() {
+      console.log(this.results);
+    },
 
     /* Services Api */
     getServices: function getServices() {
@@ -909,25 +914,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.services = response.data.data;
       });
     },
-
-    /* Filter by services Api */
-
-    /* filterByServices(coords, services) {
-      console.log(
-        `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
-      );
-      axios
-        .get(
-          `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
-        )
-        .then((r) => {
-          console.log(r.data);
-          this.apartments = r.data;
-        })
-        .catch((e) => {
-          console.error("oh no..", e);
-        });
-    }, */
 
     /* Draw markers on map */
     drawAll: function drawAll(data) {
@@ -1069,7 +1055,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.fitToViewport(result);
       this.results = [];
-      var center = [result.position.lat, result.position.lng]; //Send coordinates and address to api. Get filtered results by distance from searched point
+      var center = [result.position.lat, result.position.lng]; //Send coordinates and municipality to api. Get filtered results by distance from searched point
 
       axios.get("/api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
         _this3.apartments = r.data;
@@ -1279,56 +1265,6 @@ __webpack_require__.r(__webpack_exports__);
         console.error("oh no..", e);
       });
       console.log("You are filtering by service");
-      /* axios
-        .get(
-          "/api/apartments/address/" +
-            result.address.freeformAddress +
-            "/coords/" +
-            center.join("+")
-        )
-        .then((r) => {
-          this.apartments = r.data;
-          console.log(this.apartments);
-          let sortion = [];
-          for (let k = 0; k < this.apartments.length; k++) {
-            let dist = this.apartments[k].distance;
-            if (dist < this.range) {
-              this.createMarker(this.apartments[k]);
-              dist = Math.floor(dist * 10) / 10;
-              this.apartments[k]["distance"] = dist;
-              this.results.push(this.apartments[k]);
-              sortion.push(dist);
-            }
-          }
-          if (sortion.length > 0) {
-            sortion.sort(function (a, b) {
-              return a - b;
-            });
-            let sorting = [];
-            for (let h = 0; h < sortion.length; h++) {
-              for (let index = 0; index < sortion.length; index++) {
-                if (sortion[h] == this.results[index]["distance"]) {
-                  sorting.push(this.results[index]);
-                }
-              }
-            }
-            this.results = sorting;
-          }
-          if (this.layers.length == 0) {
-            this.createLayer(result, this.range);
-          } else {
-            for (let j = 0; j < this.layers.length; j++) {
-              let name = result.id + "-" + this.range;
-              if (this.layers[j] == name) {
-                this.showLayer(this.layers[j]);
-                break;
-              } else {
-                this.createLayer(result, this.range);
-              }
-            }
-          }
-          this.map.setMaxZoom(22);
-        }); */
     }
   },
   computed: {
@@ -1340,7 +1276,7 @@ __webpack_require__.r(__webpack_exports__);
 
   /* Manage data from home component */
   created: function created() {
-    this.value = this.$route.params.address;
+    this.value = this.$route.params.address; // console.log("value " + this.value);
   }
 });
 
@@ -3262,13 +3198,19 @@ var render = function () {
                             ]),
                             _vm._v(" "),
                             apartment.distance >= 0
-                              ? _c("div", [
-                                  _c("h4", [_vm._v("Distance")]),
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _vm._v(_vm._s(apartment.distance) + " Km"),
-                                  ]),
-                                ])
+                              ? _c(
+                                  "div",
+                                  { staticClass: "d-flex align-items-center" },
+                                  [
+                                    _c("h4", [_vm._v("Distance")]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "mx-2" }, [
+                                      _vm._v(
+                                        _vm._s(apartment.distance) + " Km"
+                                      ),
+                                    ]),
+                                  ]
+                                )
                               : _vm._e(),
                           ]),
                         ]
@@ -19100,7 +19042,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
