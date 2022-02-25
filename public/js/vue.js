@@ -229,24 +229,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -348,6 +330,146 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1336,7 +1458,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}", ""]);
+exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.loader {\n  margin: 0 0 2em;\n  height: 100px;\n  width: 20%;\n  text-align: center;\n  padding: 1em;\n  margin: 0 auto 1em;\n  display: inline-block;\n  vertical-align: top;\n}\nsvg path,\nsvg rect {\n  fill: #e41c5bff;\n}", ""]);
 
 // exports
 
@@ -2665,7 +2787,7 @@ var render = function () {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,\n        optio praesentium libero quis ratione facilis molestias quod odit\n        reiciendis hic sed magnam deserunt. Facere, fugit dolorem. Quidem nisi\n        totam voluptates. Consectetur eligendi corrupti, ratione illum\n        delectus vitae veritatis cupiditate? Recusandae beatae blanditiis\n        aliquid, repellat illum impedit inventore, odio ipsa repellendus\n        cumque amet incidunt! Fugiat, doloremque optio. Porro libero sit\n        vitae. Quaerat deleniti laborum tempore aperiam nostrum eum cumque,\n        fugit earum. Voluptatum cupiditate consequuntur inventore rem, dolor,\n        ut cumque magnam magni atque quisquam similique esse? Voluptatum nemo\n        consectetur numquam beatae praesentium. Nostrum iste accusamus iure\n        assumenda laudantium quasi odit consequatur veritatis! Necessitatibus\n        aspernatur molestiae error voluptatibus molestias incidunt saepe a\n        corrupti nesciunt. Non, maxime. Nesciunt minus sed sunt. Error, amet\n        cupiditate? Minus explicabo alias ullam distinctio illo iusto, iste\n        voluptatibus nesciunt modi eos veritatis voluptatem asperiores\n        blanditiis et optio magni excepturi dolor ex ea dolorem nostrum\n        quisquam eum quas? Veniam, magnam. Dolore dolorem repellat quo quam\n        possimus, tempora neque quod delectus esse alias et aspernatur\n        reprehenderit ex fuga similique est ut. Velit mollitia illum minus\n        laborum porro ex sunt atque praesentium.\n      "
+                "\n        " + _vm._s(_vm.apartment.description) + "\n      "
               ),
             ]),
           ]),
@@ -2942,7 +3064,144 @@ var render = function () {
             _vm.api_error
               ? [_vm._v("Apartments can't be reached")]
               : _vm.loading
-              ? [_vm._v(" ⏳ Loading.. ")]
+              ? [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "loader loader--style6",
+                      attrs: { title: "5" },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticStyle: { "enable-background": "new 0 0 50 50" },
+                          attrs: {
+                            version: "1.1",
+                            id: "Layer_1",
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            x: "0px",
+                            y: "0px",
+                            width: "24px",
+                            height: "30px",
+                            viewBox: "0 0 24 30",
+                            "xml:space": "preserve",
+                          },
+                        },
+                        [
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "0",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "10",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0.15s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0.15s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "20",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0.3s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0.3s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]
               : _vm._l(_vm.apartments_sponsored, function (apartment) {
                   return _c("div", { key: apartment.id, staticClass: "col" }, [
                     _c(
@@ -2991,7 +3250,144 @@ var render = function () {
             _vm.api_error
               ? [_vm._v("Apartments can't be reached")]
               : _vm.loading
-              ? [_vm._v(" ⏳ Loading.. ")]
+              ? [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "loader loader--style6",
+                      attrs: { title: "5" },
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticStyle: { "enable-background": "new 0 0 50 50" },
+                          attrs: {
+                            version: "1.1",
+                            id: "Layer_1",
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            x: "0px",
+                            y: "0px",
+                            width: "24px",
+                            height: "30px",
+                            viewBox: "0 0 24 30",
+                            "xml:space": "preserve",
+                          },
+                        },
+                        [
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "0",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "10",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0.15s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0.15s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "rect",
+                            {
+                              attrs: {
+                                x: "20",
+                                y: "13",
+                                width: "4",
+                                height: "5",
+                                fill: "#333",
+                              },
+                            },
+                            [
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "height",
+                                  attributeType: "XML",
+                                  values: "5;21;5",
+                                  begin: "0.3s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("animate", {
+                                attrs: {
+                                  attributeName: "y",
+                                  attributeType: "XML",
+                                  values: "13; 5; 13",
+                                  begin: "0.3s",
+                                  dur: "0.6s",
+                                  repeatCount: "indefinite",
+                                },
+                              }),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]
               : _vm._l(_vm.apartments, function (apartment) {
                   return _c("div", { key: apartment.id, staticClass: "col" }, [
                     _c(
@@ -19061,7 +19457,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

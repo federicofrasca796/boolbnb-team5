@@ -3,10 +3,10 @@
     <!-- Apartment gallery -->
     <section class="container_img w-100 d-flex flex-wrap col-12">
       <img
-          :src="'/storage/' + apartment.thumbnail"
-          class="w-100 h-100"
-          :alt="apartment.slug"
-        />
+        :src="'/storage/' + apartment.thumbnail"
+        class="w-100 h-100"
+        :alt="apartment.slug"
+      />
     </section>
 
     <!-- Home description and contacts section -->
@@ -18,27 +18,7 @@
 
         <h4>About this home</h4>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-          optio praesentium libero quis ratione facilis molestias quod odit
-          reiciendis hic sed magnam deserunt. Facere, fugit dolorem. Quidem nisi
-          totam voluptates. Consectetur eligendi corrupti, ratione illum
-          delectus vitae veritatis cupiditate? Recusandae beatae blanditiis
-          aliquid, repellat illum impedit inventore, odio ipsa repellendus
-          cumque amet incidunt! Fugiat, doloremque optio. Porro libero sit
-          vitae. Quaerat deleniti laborum tempore aperiam nostrum eum cumque,
-          fugit earum. Voluptatum cupiditate consequuntur inventore rem, dolor,
-          ut cumque magnam magni atque quisquam similique esse? Voluptatum nemo
-          consectetur numquam beatae praesentium. Nostrum iste accusamus iure
-          assumenda laudantium quasi odit consequatur veritatis! Necessitatibus
-          aspernatur molestiae error voluptatibus molestias incidunt saepe a
-          corrupti nesciunt. Non, maxime. Nesciunt minus sed sunt. Error, amet
-          cupiditate? Minus explicabo alias ullam distinctio illo iusto, iste
-          voluptatibus nesciunt modi eos veritatis voluptatem asperiores
-          blanditiis et optio magni excepturi dolor ex ea dolorem nostrum
-          quisquam eum quas? Veniam, magnam. Dolore dolorem repellat quo quam
-          possimus, tempora neque quod delectus esse alias et aspernatur
-          reprehenderit ex fuga similique est ut. Velit mollitia illum minus
-          laborum porro ex sunt atque praesentium.
+          {{ apartment.description }}
         </p>
       </div>
 
@@ -89,7 +69,10 @@
     </section>
 
     <!-- Services section-->
-    <section class="container-extra-service mb-5 m-auto" v-if="this.hasServices == 1">
+    <section
+      class="container-extra-service mb-5 m-auto"
+      v-if="this.hasServices == 1"
+    >
       <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
 
       <div class="col-12 col-md-8 d-flex flex-wrap">
@@ -105,8 +88,7 @@
     </section>
 
     <!-- Map section -->
-    <section class="map w-100" id="map">
-    </section>
+    <section class="map w-100" id="map"></section>
 
     <div class="bottone_goUp" v-if="bottone_goUp_visible">
       <a href="#app">
@@ -128,9 +110,9 @@ export default {
       loading: true,
       api_error: false,
       bottone_goUp_visible: false,
-      center : [],
+      center: [],
       map: null,
-	  hasServices: 0,
+      hasServices: 0,
     };
   },
   mounted() {
@@ -138,8 +120,6 @@ export default {
     //parte grafica header
     this.styleHeader();
     window.addEventListener("scroll", this.createButton);
-    
-    
   },
   methods: {
     //parte grafica header
@@ -169,15 +149,15 @@ export default {
       axios
         .get("/api/apartments/" + this.$route.params.slug)
         .then((r) => {
-			//   console.log(r.data);
-			this.apartment = r.data;
-			if(this.apartment.services.length != 0){
-				this.hasServices = 1;
-			}
-			this.loading = false;
-			this.center.push(this.apartment.longitude);
-			this.center.push(this.apartment.latitude);
-			this.initilizeMap();
+          //   console.log(r.data);
+          this.apartment = r.data;
+          if (this.apartment.services.length != 0) {
+            this.hasServices = 1;
+          }
+          this.loading = false;
+          this.center.push(this.apartment.longitude);
+          this.center.push(this.apartment.latitude);
+          this.initilizeMap();
         })
         .catch((e) => {
           //   console.error(e);
@@ -185,23 +165,23 @@ export default {
         });
     },
 
-    initilizeMap(){
-    /* Create The Map */
-	const tt = window.tt;
-    var map = window.tt.map({
-		key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-		container: "map",
-		center: this.center,
-		zoom: 13,
-    });
-	this.map = map;
-	/* Map  Controls */
-	this.map.addControl(new tt.FullscreenControl());
-	this.map.addControl(new tt.NavigationControl());
-	let marker = new tt.Marker()
-		.setLngLat(this.center) /* Coordinates here */
-		.addTo(this.map);
-    }
+    initilizeMap() {
+      /* Create The Map */
+      const tt = window.tt;
+      var map = window.tt.map({
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        container: "map",
+        center: this.center,
+        zoom: 13,
+      });
+      this.map = map;
+      /* Map  Controls */
+      this.map.addControl(new tt.FullscreenControl());
+      this.map.addControl(new tt.NavigationControl());
+      let marker = new tt.Marker()
+        .setLngLat(this.center) /* Coordinates here */
+        .addTo(this.map);
+    },
   },
 };
 </script>
