@@ -697,6 +697,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -718,7 +758,9 @@ __webpack_require__.r(__webpack_exports__);
       layers: [],
       layer: "",
       firstSearch: [],
-      counter: 1
+      counter: 1,
+      searchServices: [],
+      premiumApartments: []
     };
   },
   mounted: function mounted() {
@@ -1061,61 +1103,15 @@ __webpack_require__.r(__webpack_exports__);
       this.results = [];
       var center = [result.position.lat, result.position.lng]; //Send coordinates and municipality to api. Get filtered results by distance from searched point
 
-      axios.get("/api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
-        _this3.apartments = r.data;
-        console.log(_this3.apartments);
-        var sortion = [];
-
-        for (var k = 0; k < _this3.apartments.length; k++) {
-          var dist = _this3.apartments[k].distance;
-
-          if (dist < _this3.range) {
-            _this3.createMarker(_this3.apartments[k]);
-
-            dist = Math.floor(dist * 10) / 10;
-            _this3.apartments[k]["distance"] = dist;
-
-            _this3.results.push(_this3.apartments[k]);
-
-            sortion.push(dist);
-          }
-        }
-
-        if (sortion.length > 0) {
-          sortion.sort(function (a, b) {
-            return a - b;
-          });
-          var sorting = [];
-
-          for (var h = 0; h < sortion.length; h++) {
-            for (var index = 0; index < sortion.length; index++) {
-              if (sortion[h] == _this3.results[index]["distance"]) {
-                sorting.push(_this3.results[index]);
-              }
-            }
-          }
-
-          _this3.results = sorting;
-        }
-
-        if (_this3.layers.length == 0) {
-          _this3.createLayer(result, _this3.range);
-        } else {
-          for (var j = 0; j < _this3.layers.length; j++) {
-            var name = result.id + "-" + _this3.range;
-
-            if (_this3.layers[j] == name) {
-              _this3.showLayer(_this3.layers[j]);
-
-              break;
-            } else {
-              _this3.createLayer(result, _this3.range);
-            }
-          }
-        }
-
-        _this3.map.setMaxZoom(22);
-      });
+      if (this.searchServices.length > 0) {
+        axios.get("/api/apartments/address/".concat(this.$route.params.address, "/coords/").concat(center.join("+"), "/services/").concat(this.searchServices)).then(function (r) {
+          _this3.apiExecute(r, result);
+        });
+      } else {
+        axios.get("/api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
+          _this3.apiExecute(r, result);
+        });
+      }
     },
 
     /* Actions on searchbox Clearing */
@@ -1179,102 +1175,110 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    /*Filtering by services*/
-    executeServiceFilter: function executeServiceFilter(services) {
-      if (this.searching == null) {
-        var result = this.firstSearch;
-      }
+    /* Api data Execution */
+    apiExecute: function apiExecute(r, result) {
+      this.apartments = r.data;
+      var sortion = [];
+      this.premiumApartments = [];
 
-      this.mainExecuteService(result, services);
-    },
-    mainExecuteService: function mainExecuteService(result, services) {
-      var _this5 = this;
+      for (var k = 0; k < this.apartments.length; k++) {
+        var dist = this.apartments[k].distance;
 
-      var map = this.map;
-      var mapCenter = [result.position.lng, result.position.lat];
-      this.map.setCenter(mapCenter);
-
-      if (this.layer != 0) {
-        this.hideLayer(this.layer);
-      }
-
-      if (this.markers.length != 0) {
-        for (var i = 0; i < this.markers.length; i++) {
-          this.markers[i].remove();
+        if (dist < this.range) {
+          this.createMarker(this.apartments[k]);
+          dist = Math.floor(dist * 10) / 10;
+          this.apartments[k]["distance"] = dist;
+          this.results.push(this.apartments[k]);
+          sortion.push(dist);
         }
-
-        this.markers = [];
       }
 
-      this.fitToViewport(result);
-      this.results = [];
-      var center = [result.position.lat, result.position.lng]; //Get filtered results by distance from searched point and selected service
-      //   this.filterByServices(center.join("+"), services);
+      if (sortion.length > 0) {
+        sortion.sort(function (a, b) {
+          return a - b;
+        });
+        var sorting = [];
 
-      axios.get("/api/apartments/address/".concat(this.$route.params.address, "/coords/").concat(center.join("+"), "/services/").concat(services)).then(function (r) {
-        console.log(r.data);
-        _this5.apartments = r.data;
-        var sortion = [];
-
-        for (var k = 0; k < _this5.apartments.length; k++) {
-          var dist = _this5.apartments[k].distance;
-
-          if (dist < _this5.range) {
-            _this5.createMarker(_this5.apartments[k]);
-
-            dist = Math.floor(dist * 10) / 10;
-            _this5.apartments[k]["distance"] = dist;
-
-            _this5.results.push(_this5.apartments[k]);
-
-            sortion.push(dist);
-          }
-        }
-
-        if (sortion.length > 0) {
-          sortion.sort(function (a, b) {
-            return a - b;
-          });
-          var sorting = [];
-
-          for (var h = 0; h < sortion.length; h++) {
-            for (var index = 0; index < sortion.length; index++) {
-              if (sortion[h] == _this5.results[index]["distance"]) {
-                sorting.push(_this5.results[index]);
-              }
+        for (var h = 0; h < sortion.length; h++) {
+          for (var index = 0; index < sortion.length; index++) {
+            if (sortion[h] == this.results[index]["distance"]) {
+              sorting.push(this.results[index]);
             }
           }
-
-          _this5.results = sorting;
         }
 
-        if (_this5.layers.length == 0) {
-          _this5.createLayer(result, _this5.range);
+        this.results = sorting;
+      }
+
+      var current = [];
+
+      for (var i = 0; i < this.results.length; i++) {
+        if (this.results[i].sponsors.length) {
+          this.premiumApartments.push(this.results[i]);
         } else {
-          for (var j = 0; j < _this5.layers.length; j++) {
-            var name = result.id + "-" + _this5.range;
+          current.push(this.results[i]);
+        }
+      }
 
-            if (_this5.layers[j] == name) {
-              _this5.showLayer(_this5.layers[j]);
+      this.results = current;
 
-              break;
-            } else {
-              _this5.createLayer(result, _this5.range);
-            }
+      if (this.layers.length == 0) {
+        this.createLayer(result, this.range);
+      } else {
+        for (var j = 0; j < this.layers.length; j++) {
+          var name = result.id + "-" + this.range;
+
+          if (this.layers[j] == name) {
+            this.showLayer(this.layers[j]);
+            break;
+          } else {
+            this.createLayer(result, this.range);
           }
         }
+      }
 
-        _this5.map.setMaxZoom(22);
-      })["catch"](function (e) {
-        console.error("oh no..", e);
-      });
-      console.log("You are filtering by service");
+      this.map.setMaxZoom(22);
+      console.log(this.premiumApartments);
+    },
+
+    /* Service filter Api */
+    executeServiceFilter: function executeServiceFilter(slug, serviceId) {
+      var buttons = document.getElementsByClassName('serviceButton');
+      buttons[serviceId - 1].classList.add('text-white');
+      buttons[serviceId - 1].classList.add('bg-dark');
+      var count = 0;
+
+      for (var i = 0; i < this.searchServices.length; i++) {
+        if (slug == this.searchServices[i]) {
+          this.searchServices = this.searchServices.filter(function (item) {
+            buttons[serviceId - 1].classList.remove('bg-dark');
+            buttons[serviceId - 1].classList.remove('text-white');
+            return item !== slug;
+          });
+          count = 1;
+        }
+      }
+
+      if (count == 0) {
+        this.searchServices.push(slug);
+      }
+
+      console.log(this.searchServices);
+
+      if (this.searching != null) {
+        this.execute(this.searching);
+      } else {
+        this.mainExecute(this.firstSearch);
+      }
     }
   },
   computed: {
     /* Compute the apartments */
     getApartments: function getApartments() {
       return this.results;
+    },
+    getPremium: function getPremium() {
+      return this.premiumApartments;
     }
   },
 
@@ -3109,11 +3113,11 @@ var render = function () {
               { key: service.id, staticClass: "advanced-search px-1 py-1" },
               [
                 _c("input", {
-                  staticClass: "rounded-pill",
+                  staticClass: "rounded-pill serviceButton",
                   attrs: { type: "button", value: service.name },
                   on: {
                     click: function ($event) {
-                      return _vm.executeServiceFilter(service.slug)
+                      return _vm.executeServiceFilter(service.slug, service.id)
                     },
                   },
                 }),
@@ -3134,112 +3138,224 @@ var render = function () {
           _c(
             "div",
             { staticClass: "col-12 col-md-6 w-100" },
-            _vm._l(_vm.getApartments, function (apartment) {
-              return _c(
-                "div",
-                { key: apartment.id },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "single-apartment d-flex flex-wrap py-3",
-                      attrs: { to: "/apartments/" + apartment.slug },
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "image-single h-100 overflow-hidden col-12 col-md-4",
-                        },
-                        [
-                          _c(
-                            "a",
-                            { staticClass: "w-100", attrs: { href: "#" } },
-                            [
-                              _c("img", {
-                                staticClass: "w-100",
-                                attrs: {
-                                  src: "/storage/" + apartment.thumbnail,
-                                  alt: "...",
-                                },
-                              }),
-                            ]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "\n              info_apartment\n              col-12 col-md-8\n              ps-4\n              d-flex\n              align-items-center\n            ",
-                        },
-                        [
-                          _c("div", [
-                            _c("p", [_vm._v(_vm._s(apartment.address))]),
-                            _vm._v(" "),
-                            _c("h5", [_vm._v(_vm._s(apartment.title))]),
-                            _vm._v(" "),
-                            _c("hr"),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "m-0" }, [
-                              _c("span", [
-                                _vm._v(
-                                  _vm._s(apartment.square_metres) + " m²-"
-                                ),
+            [
+              _vm._l(_vm.getPremium, function (premium) {
+                return _c(
+                  "div",
+                  { key: premium.name },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "single-apartment d-flex flex-wrap py-3",
+                        attrs: { to: "/apartments/" + premium.slug },
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "image-single h-100 overflow-hidden col-12 col-md-4",
+                          },
+                          [
+                            _c(
+                              "a",
+                              { staticClass: "w-100", attrs: { href: "#" } },
+                              [
+                                _c("img", {
+                                  staticClass: "w-100",
+                                  attrs: {
+                                    src: "/storage/" + premium.thumbnail,
+                                    alt: "...",
+                                  },
+                                }),
+                              ]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "\n              info_apartment\n              col-12 col-md-8\n              ps-4\n              d-flex\n              align-items-center\n            ",
+                          },
+                          [
+                            _c("div", [
+                              _c("p", [_vm._v(_vm._s(premium.address))]),
+                              _vm._v(" "),
+                              _c("h5", [_vm._v(_vm._s(premium.title))]),
+                              _vm._v(" "),
+                              _c("hr"),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "m-0" }, [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(premium.square_metres) + " m²-"
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(premium.number_of_rooms) +
+                                      " rooms - "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(premium.number_of_beds) +
+                                      " beds - "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(premium.number_of_baths) +
+                                      " baths "
+                                  ),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _c("span", [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(apartment.number_of_rooms) +
-                                    " rooms - "
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("span", [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(apartment.number_of_beds) +
-                                    " beds - "
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("span", [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(apartment.number_of_baths) +
-                                    " baths "
-                                ),
-                              ]),
+                              premium.distance >= 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-flex align-items-center",
+                                    },
+                                    [
+                                      _c("h4", [_vm._v("Distance")]),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "mx-2" }, [
+                                        _vm._v(
+                                          _vm._s(premium.distance) + " Km"
+                                        ),
+                                      ]),
+                                    ]
+                                  )
+                                : _vm._e(),
                             ]),
-                            _vm._v(" "),
-                            apartment.distance >= 0
-                              ? _c(
-                                  "div",
-                                  { staticClass: "d-flex align-items-center" },
-                                  [
-                                    _c("h4", [_vm._v("Distance")]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "mx-2" }, [
-                                      _vm._v(
-                                        _vm._s(apartment.distance) + " Km"
-                                      ),
-                                    ]),
-                                  ]
-                                )
-                              : _vm._e(),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
-                ],
-                1
-              )
-            }),
-            0
+                          ]
+                        ),
+                      ]
+                    ),
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.getApartments, function (apartment) {
+                return _c(
+                  "div",
+                  { key: apartment.id },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "single-apartment d-flex flex-wrap py-3",
+                        attrs: { to: "/apartments/" + apartment.slug },
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "image-single h-100 overflow-hidden col-12 col-md-4",
+                          },
+                          [
+                            _c(
+                              "a",
+                              { staticClass: "w-100", attrs: { href: "#" } },
+                              [
+                                _c("img", {
+                                  staticClass: "w-100",
+                                  attrs: {
+                                    src: "/storage/" + apartment.thumbnail,
+                                    alt: "...",
+                                  },
+                                }),
+                              ]
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "\n              info_apartment\n              col-12 col-md-8\n              ps-4\n              d-flex\n              align-items-center\n            ",
+                          },
+                          [
+                            _c("div", [
+                              _c("p", [_vm._v(_vm._s(apartment.address))]),
+                              _vm._v(" "),
+                              _c("h5", [_vm._v(_vm._s(apartment.title))]),
+                              _vm._v(" "),
+                              _c("hr"),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "m-0" }, [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(apartment.square_metres) + " m²-"
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(apartment.number_of_rooms) +
+                                      " rooms - "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(apartment.number_of_beds) +
+                                      " beds - "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(apartment.number_of_baths) +
+                                      " baths "
+                                  ),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              apartment.distance >= 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-flex align-items-center",
+                                    },
+                                    [
+                                      _c("h4", [_vm._v("Distance")]),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "mx-2" }, [
+                                        _vm._v(
+                                          _vm._s(apartment.distance) + " Km"
+                                        ),
+                                      ]),
+                                    ]
+                                  )
+                                : _vm._e(),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ],
+                  1
+                )
+              }),
+            ],
+            2
           ),
         ]
       ),
@@ -19061,7 +19177,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

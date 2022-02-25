@@ -24,9 +24,9 @@
       >
         <input
           type="button"
-          class="rounded-pill"
+          class="rounded-pill serviceButton"
           :value="service.name"
-          @click="executeServiceFilter(service.slug)"
+          @click="executeServiceFilter(service.slug , service.id)"
         />
       </div>
     </div>
@@ -41,7 +41,47 @@
       "
     >
       <div class="col-12 col-md-6 w-100">
-        <!-- <div id="searchBox"></div> -->
+        <div v-for="premium in getPremium" :key="premium.name">
+          <router-link
+            :to="'/apartments/' + premium.slug"
+            class="single-apartment d-flex flex-wrap py-3"
+          >
+            <div class="image-single h-100 overflow-hidden col-12 col-md-4">
+              <a href="#" class="w-100">
+                <img
+                  :src="'/storage/' + premium.thumbnail"
+                  class="w-100"
+                  alt="..."
+                />
+              </a>
+            </div>
+            <div
+              class="
+                info_apartment
+                col-12 col-md-8
+                ps-4
+                d-flex
+                align-items-center
+              "
+            >
+              <div>
+                <p>{{ premium.address }}</p>
+                <h5>{{ premium.title }}</h5>
+                <hr />
+                <p class="m-0">
+                  <span>{{ premium.square_metres }} m&sup2;-</span>
+                  <span> {{ premium.number_of_rooms }} rooms - </span>
+                  <span> {{ premium.number_of_beds }} beds - </span>
+                  <span> {{ premium.number_of_baths }} baths </span>
+                </p>
+                <div v-if="premium.distance >= 0" class="d-flex align-items-center">
+                  <h4>Distance</h4>
+                  <span class="mx-2">{{ premium.distance }} Km</span>
+                </div>
+              </div>
+            </div>
+          </router-link>
+        </div>
         <div v-for="apartment in getApartments" :key="apartment.id">
           <router-link
             :to="'/apartments/' + apartment.slug"
@@ -114,6 +154,8 @@ export default {
       layer: "",
       firstSearch: [],
       counter : 1,
+      searchServices: [],
+      premiumApartments: [],
     };
   },
 
@@ -452,54 +494,29 @@ export default {
 			result.position.lng,
 		];
 		//Send coordinates and municipality to api. Get filtered results by distance from searched point
-		axios
-			.get(
+		if(this.searchServices.length > 0){
+      axios
+      .get(
+          `/api/apartments/address/${
+            this.$route.params.address
+          }/coords/${center.join("+")}/services/${this.searchServices}`
+        )
+        .then((r) => {
+          this.apiExecute(r , result)
+        });
+    }
+    else{
+			axios.get(
 			"/api/apartments/address/" +
 				result.address.freeformAddress +
 				"/coords/" +
 				center.join("+")
 			)
-			.then((r) => {
-			this.apartments = r.data;
-      console.log(this.apartments);
-			let sortion = [];
-			for (let k = 0; k < this.apartments.length; k++) {
-				let dist = this.apartments[k].distance;
-				if (dist < this.range) {
-					this.createMarker(this.apartments[k]);
-					dist = Math.floor(dist * 10) / 10;
-					this.apartments[k]["distance"] = dist;
-					this.results.push(this.apartments[k]);
-					sortion.push(dist);
-				}
-			}
-			if (sortion.length > 0) {
-				sortion.sort(function (a, b) {return a - b;});
-				let sorting = [];
-				for (let h = 0; h < sortion.length; h++) {
-					for (let index = 0; index < sortion.length; index++) {
-						if (sortion[h] == this.results[index]["distance"]) {
-							sorting.push(this.results[index]);
-						}
-					}
-				}
-				this.results = sorting;
-			}
-			if (this.layers.length == 0) {
-				this.createLayer(result, this.range);
-			} else {
-				for (let j = 0; j < this.layers.length; j++) {
-					let name = result.id + "-" + this.range;
-					if (this.layers[j] == name) {
-						this.showLayer(this.layers[j]);
-						break;
-					} else {
-						this.createLayer(result, this.range);
-					}
-				}
-			}
-			this.map.setMaxZoom(22);
+      .then((r) => {
+        this.apiExecute(r , result)
         });
+    }
+			
 	},
 
     /* Actions on searchbox Clearing */
@@ -554,88 +571,86 @@ export default {
         }
       }
     },
-    /*Filtering by services*/
-    executeServiceFilter(services) {
-      if (this.searching == null) {
-        var result = this.firstSearch;
-      }
-      this.mainExecuteService(result, services);
-    },
-    mainExecuteService(result, services) {
-      let map = this.map;
-
-      let mapCenter = [result.position.lng, result.position.lat];
-      this.map.setCenter(mapCenter);
-      if (this.layer != 0) {
-        this.hideLayer(this.layer);
-      }
-      if (this.markers.length != 0) {
-        for (let i = 0; i < this.markers.length; i++) {
-          this.markers[i].remove();
+    /* Api data Execution */
+    apiExecute(r , result){
+      this.apartments = r.data;
+			let sortion = [];
+      this.premiumApartments = [];
+			for (let k = 0; k < this.apartments.length; k++) {
+				let dist = this.apartments[k].distance;
+				if (dist < this.range) {
+					this.createMarker(this.apartments[k]);
+					dist = Math.floor(dist * 10) / 10;
+					this.apartments[k]["distance"] = dist;
+					this.results.push(this.apartments[k]);
+					sortion.push(dist);
+				}
+			}
+			if (sortion.length > 0) {
+				sortion.sort(function (a, b) {return a - b;});
+				let sorting = [];
+				for (let h = 0; h < sortion.length; h++) {
+					for (let index = 0; index < sortion.length; index++) {
+						if (sortion[h] == this.results[index]["distance"]) {
+							sorting.push(this.results[index]);
+						}
+					}
+				}
+				this.results = sorting;
+			}
+      let current = [];
+      for(let i = 0; i<this.results.length;i++){
+        if(this.results[i].sponsors.length){
+          this.premiumApartments.push(this.results[i])
         }
-        this.markers = [];
+        else{
+          current.push(this.results[i])
+        }
       }
-      this.fitToViewport(result);
-      this.results = [];
-      let center = [result.position.lat, result.position.lng];
+      this.results = current;
+			if (this.layers.length == 0) {
+				this.createLayer(result, this.range);
+			} else {
+				for (let j = 0; j < this.layers.length; j++) {
+					let name = result.id + "-" + this.range;
+					if (this.layers[j] == name) {
+						this.showLayer(this.layers[j]);
+						break;
+					} else {
+						this.createLayer(result, this.range);
+					}
+				}
+			}
+			this.map.setMaxZoom(22);
+      console.log(this.premiumApartments)
 
-      //Get filtered results by distance from searched point and selected service
-      //   this.filterByServices(center.join("+"), services);
-      axios
-        .get(
-          `/api/apartments/address/${
-            this.$route.params.address
-          }/coords/${center.join("+")}/services/${services}`
-        )
-        .then((r) => {
-          console.log(r.data);
-          this.apartments = r.data;
-
-          let sortion = [];
-          for (let k = 0; k < this.apartments.length; k++) {
-            let dist = this.apartments[k].distance;
-            if (dist < this.range) {
-              this.createMarker(this.apartments[k]);
-              dist = Math.floor(dist * 10) / 10;
-              this.apartments[k]["distance"] = dist;
-              this.results.push(this.apartments[k]);
-              sortion.push(dist);
-            }
-          }
-          if (sortion.length > 0) {
-            sortion.sort(function (a, b) {
-              return a - b;
-            });
-            let sorting = [];
-            for (let h = 0; h < sortion.length; h++) {
-              for (let index = 0; index < sortion.length; index++) {
-                if (sortion[h] == this.results[index]["distance"]) {
-                  sorting.push(this.results[index]);
-                }
-              }
-            }
-            this.results = sorting;
-          }
-          if (this.layers.length == 0) {
-            this.createLayer(result, this.range);
-          } else {
-            for (let j = 0; j < this.layers.length; j++) {
-              let name = result.id + "-" + this.range;
-              if (this.layers[j] == name) {
-                this.showLayer(this.layers[j]);
-                break;
-              } else {
-                this.createLayer(result, this.range);
-              }
-            }
-          }
-          this.map.setMaxZoom(22);
-        })
-        .catch((e) => {
-          console.error("oh no..", e);
-        });
-
-      console.log("You are filtering by service");
+    },
+    /* Service filter Api */
+    executeServiceFilter(slug,serviceId){
+      let buttons = document.getElementsByClassName('serviceButton')
+      buttons[serviceId - 1].classList.add('text-white');
+      buttons[serviceId - 1].classList.add('bg-dark');
+      let count = 0;
+      for(let i = 0;i<this.searchServices.length;i++){
+        if(slug == this.searchServices[i]){
+          this.searchServices = this.searchServices.filter(function(item) {
+              buttons[serviceId - 1].classList.remove('bg-dark');
+              buttons[serviceId - 1].classList.remove('text-white');
+              return item !==slug
+          })
+          count = 1;
+        }
+      }
+      if(count == 0){
+        this.searchServices.push(slug)
+      }
+      console.log(this.searchServices);
+      if(this.searching != null){
+        this.execute(this.searching)
+      }
+      else{
+        this.mainExecute(this.firstSearch)
+      }
     },
   },
 
@@ -644,6 +659,10 @@ export default {
     getApartments() {
       return this.results;
     },
+
+    getPremium() {
+      return this.premiumApartments;
+    }
   },
 
   /* Manage data from home component */
@@ -721,4 +740,5 @@ export default {
     right: 0;
   }
 }
+
 </style>
