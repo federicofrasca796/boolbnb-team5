@@ -48,13 +48,16 @@
       <div
         class="col-12 col-md-4 d-flex justify-content-center align-items-center"
       >
-       <div class="card w-50 m-auto rounded-pill sticky-top">
+        <div class="card container_owner w-50 m-auto rounded-pill sticky-top">
           <div class="card-body text-center text-center">
-            <a class="text-dark text-decoration-none" :href="'http://127.0.0.1:8000/message/'+ apartment.slug">Contact the owner</a>
+            <a
+              class="text-dark text-decoration-none"
+              :href="'http://127.0.0.1:8000/message/' + apartment.slug"
+              >Contact the owner</a
+            >
           </div>
         </div>
       </div>
-      
     </section>
 
     <!-- Details section -->
@@ -141,4 +144,7 @@ export default {
 </script>
 
 <style>
+.container_owner {
+  z-index: 8;
+}
 </style>
