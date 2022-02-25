@@ -26,7 +26,7 @@
           type="button"
           class="rounded-pill"
           :value="service.name"
-          @click="filterByServices(service.slug)"
+          @click="executeServiceFilter(service.slug)"
         />
       </div>
     </div>
@@ -169,10 +169,8 @@ export default {
       })
       .then((result) => {
         axios.get("/api/apartments").then((response) => {
-          //   console.log(response);
           this.apartments = response.data.data;
           this.results = this.apartments;
-          //   console.log(result);
           result = result.results[0];
           this.firstSearch = result;
           this.mainExecute(result);
@@ -303,20 +301,20 @@ export default {
     },
 
     /* Filter by services Api */
-    filterByServices(services) {
-      console.log(services);
+    filterByServices(coords, services) {
+      console.log(
+        `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
+      );
       axios
         .get(
-          "/api/apartments/address/" +
-            this.$route.address +
-            "/services/" +
-            services
+          `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
         )
         .then((r) => {
-          console.log(r);
+          console.log(r.data);
+          this.apartments = r.data;
         })
         .catch((e) => {
-          console.error(e);
+          console.error("oh no..", e);
         });
     },
 
@@ -440,7 +438,6 @@ export default {
     },
 
     /* Execute */
-
     mainExecute(result) {
       let map = this.map;
 
@@ -458,7 +455,8 @@ export default {
       this.fitToViewport(result);
       this.results = [];
       let center = [result.position.lat, result.position.lng];
-      //Send coordinates and municipality to api. Get filtered results by distance from searched point
+
+      //Send coordinates and address to api. Get filtered results by distance from searched point
       axios
         .get(
           "/api/apartments/address/" +
@@ -468,7 +466,7 @@ export default {
         )
         .then((r) => {
           this.apartments = r.data;
-          console.log(this.apartments);
+          //   console.log(this.apartments);
           let sortion = [];
           for (let k = 0; k < this.apartments.length; k++) {
             let dist = this.apartments[k].distance;
@@ -560,6 +558,127 @@ export default {
           this.mainExecute(this.firstSearch);
         }
       }
+    },
+
+    /*Filtering by services*/
+    executeServiceFilter(services) {
+      if (this.searching == null) {
+        var result = this.firstSearch;
+      }
+      this.mainExecuteService(result, services);
+    },
+    mainExecuteService(result, services) {
+      let map = this.map;
+
+      let mapCenter = [result.position.lng, result.position.lat];
+      this.map.setCenter(mapCenter);
+      if (this.layer != 0) {
+        this.hideLayer(this.layer);
+      }
+      if (this.markers.length != 0) {
+        for (let i = 0; i < this.markers.length; i++) {
+          this.markers[i].remove();
+        }
+        this.markers = [];
+      }
+      this.fitToViewport(result);
+      this.results = [];
+      let center = [result.position.lat, result.position.lng];
+
+      //Get filtered results by distance from searched point and selected service
+      this.filterByServices(center.join("+"), services);
+
+      let sortion = [];
+      for (let k = 0; k < this.apartments.length; k++) {
+        let dist = this.apartments[k].distance;
+        if (dist < this.range) {
+          this.createMarker(this.apartments[k]);
+          dist = Math.floor(dist * 10) / 10;
+          this.apartments[k]["distance"] = dist;
+          this.results.push(this.apartments[k]);
+          sortion.push(dist);
+        }
+      }
+      if (sortion.length > 0) {
+        sortion.sort(function (a, b) {
+          return a - b;
+        });
+        let sorting = [];
+        for (let h = 0; h < sortion.length; h++) {
+          for (let index = 0; index < sortion.length; index++) {
+            if (sortion[h] == this.results[index]["distance"]) {
+              sorting.push(this.results[index]);
+            }
+          }
+        }
+        this.results = sorting;
+      }
+      if (this.layers.length == 0) {
+        this.createLayer(result, this.range);
+      } else {
+        for (let j = 0; j < this.layers.length; j++) {
+          let name = result.id + "-" + this.range;
+          if (this.layers[j] == name) {
+            this.showLayer(this.layers[j]);
+            break;
+          } else {
+            this.createLayer(result, this.range);
+          }
+        }
+      }
+      this.map.setMaxZoom(22);
+      console.log("You are filtering by service");
+
+      /* axios
+        .get(
+          "/api/apartments/address/" +
+            result.address.freeformAddress +
+            "/coords/" +
+            center.join("+")
+        )
+        .then((r) => {
+          this.apartments = r.data;
+          console.log(this.apartments);
+          let sortion = [];
+          for (let k = 0; k < this.apartments.length; k++) {
+            let dist = this.apartments[k].distance;
+            if (dist < this.range) {
+              this.createMarker(this.apartments[k]);
+              dist = Math.floor(dist * 10) / 10;
+              this.apartments[k]["distance"] = dist;
+              this.results.push(this.apartments[k]);
+              sortion.push(dist);
+            }
+          }
+          if (sortion.length > 0) {
+            sortion.sort(function (a, b) {
+              return a - b;
+            });
+            let sorting = [];
+            for (let h = 0; h < sortion.length; h++) {
+              for (let index = 0; index < sortion.length; index++) {
+                if (sortion[h] == this.results[index]["distance"]) {
+                  sorting.push(this.results[index]);
+                }
+              }
+            }
+            this.results = sorting;
+          }
+          if (this.layers.length == 0) {
+            this.createLayer(result, this.range);
+          } else {
+            for (let j = 0; j < this.layers.length; j++) {
+              let name = result.id + "-" + this.range;
+              if (this.layers[j] == name) {
+                this.showLayer(this.layers[j]);
+                break;
+              } else {
+                this.createLayer(result, this.range);
+              }
+            }
+          }
+          this.map.setMaxZoom(22);
+        }); */
     },
   },
 
