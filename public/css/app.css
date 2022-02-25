@@ -11522,6 +11522,21 @@ header .search-destination .input-group .container-button-search button {
   height: 100%;
 }
 
+.container_message {
+  width: 85%;
+  height: calc(100vh - 75px);
+}
+.container_message .card {
+  width: 65%;
+}
+.container_message input::-webkit-input-placeholder {
+  color: lightgrey;
+}
+.container_message button[type=submit] {
+  background-color: #e41c5bff;
+  font-family: "Josefin Sans", sans-serif;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

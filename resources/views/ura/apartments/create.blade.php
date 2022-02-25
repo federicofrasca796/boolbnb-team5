@@ -153,21 +153,18 @@
                         @enderror
                     </div>
                     
-
                     {{-- Services input --}}
                     <div class="mb-3">
-                          <label class="form-label">Services*</label>
-                          <select multiple class="form-select @error('services') is_invalid @enderror" name="services[]" id="service_id" required>
-                            <option disabled>Select all services</option>
-                            @foreach ($services as $item)
-                               <option value="{{ $item->id }}">{{ $item->name }}</option>  
-                            @endforeach
-                           
-                          </select>
-                          @error('services')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <small>Services*</small>
+
+                        @foreach ($services as $service)    
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="services[]" id="services" value="{{ $service->id }}">
+                                <label for="form-check-label">{{ $service->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    
 
                     {{-- Submit form --}}
                     <div class="d-flex justify-content-end">

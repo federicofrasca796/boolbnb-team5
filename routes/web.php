@@ -27,7 +27,9 @@ Route::get('login', 'Middleware\LoginController@login')->name('login');
 route::get('requireLogin', 'Middleware\LoginController@login')->name('requireLogin');
 
 //rotte messages
-Route::post('messages', 'MessageController@store')->name('messages.store');
+
+Route::get('/message/{apartment}', 'MessageController@create')->name('{apartment}.message');
+Route::post('/send', 'MessageController@store')->name('message.send');
 
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 

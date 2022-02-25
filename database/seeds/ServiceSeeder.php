@@ -22,4 +22,5 @@ class ServiceSeeder extends Seeder
             $newService->save();
         }
     }
+    
 }

@@ -1,10 +1,9 @@
-<header class="w-100 d-flex py-3 px-4">
-    <router-link to='/'>
-        <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
-    </router-link>
-    <h1 class="ms-3 d-none d-md-block ">BoolBnB</h1>
-
-
+<header class="{{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'guest.advanced-search' || Route::currentRouteName() === '{apartment}.message' ?  '' : 'position-fixed'}}
+                w-100 d-flex justify-content-start py-3 px-4
+                {{Route::currentRouteName() !== 'guest.advanced-search' ? 'justify-content-sm-center' : ''}}">
+    <img id="logo" class="h-100" src="{{asset('img/logo.png')}}" alt="logo_BoolBnb">
+    <h1 class="ms-3 {{ Route::currentRouteName() === 'guest.show' || Route::currentRouteName() === 'register' || Route::currentRouteName() === 'guest.advanced-search'? 'text-black' : 'text-white'}}
+                {{Route::currentRouteName() === 'guest.advanced-search' ? 'd-none d-sm-block' : ''}}">BoolBnB</h1>
 
     @if(Route::currentRouteName() === 'guest.advanced-search')
     @include('partials.searchbar')
