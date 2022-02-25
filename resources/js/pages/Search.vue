@@ -301,7 +301,7 @@ export default {
     },
 
     /* Filter by services Api */
-    filterByServices(coords, services) {
+    /* filterByServices(coords, services) {
       console.log(
         `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
       );
@@ -316,7 +316,7 @@ export default {
         .catch((e) => {
           console.error("oh no..", e);
         });
-    },
+    }, */
 
     /* Draw markers on map */
     drawAll(data) {
@@ -466,7 +466,7 @@ export default {
         )
         .then((r) => {
           this.apartments = r.data;
-          //   console.log(this.apartments);
+          console.log(this.apartments);
           let sortion = [];
           for (let k = 0; k < this.apartments.length; k++) {
             let dist = this.apartments[k].distance;
@@ -586,47 +586,61 @@ export default {
       let center = [result.position.lat, result.position.lng];
 
       //Get filtered results by distance from searched point and selected service
-      this.filterByServices(center.join("+"), services);
+      //   this.filterByServices(center.join("+"), services);
+      axios
+        .get(
+          `/api/apartments/address/${
+            this.$route.params.address
+          }/coords/${center.join("+")}/services/${services}`
+        )
+        .then((r) => {
+          console.log(r.data);
+          this.apartments = r.data;
 
-      let sortion = [];
-      for (let k = 0; k < this.apartments.length; k++) {
-        let dist = this.apartments[k].distance;
-        if (dist < this.range) {
-          this.createMarker(this.apartments[k]);
-          dist = Math.floor(dist * 10) / 10;
-          this.apartments[k]["distance"] = dist;
-          this.results.push(this.apartments[k]);
-          sortion.push(dist);
-        }
-      }
-      if (sortion.length > 0) {
-        sortion.sort(function (a, b) {
-          return a - b;
-        });
-        let sorting = [];
-        for (let h = 0; h < sortion.length; h++) {
-          for (let index = 0; index < sortion.length; index++) {
-            if (sortion[h] == this.results[index]["distance"]) {
-              sorting.push(this.results[index]);
+          let sortion = [];
+          for (let k = 0; k < this.apartments.length; k++) {
+            let dist = this.apartments[k].distance;
+            if (dist < this.range) {
+              this.createMarker(this.apartments[k]);
+              dist = Math.floor(dist * 10) / 10;
+              this.apartments[k]["distance"] = dist;
+              this.results.push(this.apartments[k]);
+              sortion.push(dist);
             }
           }
-        }
-        this.results = sorting;
-      }
-      if (this.layers.length == 0) {
-        this.createLayer(result, this.range);
-      } else {
-        for (let j = 0; j < this.layers.length; j++) {
-          let name = result.id + "-" + this.range;
-          if (this.layers[j] == name) {
-            this.showLayer(this.layers[j]);
-            break;
-          } else {
-            this.createLayer(result, this.range);
+          if (sortion.length > 0) {
+            sortion.sort(function (a, b) {
+              return a - b;
+            });
+            let sorting = [];
+            for (let h = 0; h < sortion.length; h++) {
+              for (let index = 0; index < sortion.length; index++) {
+                if (sortion[h] == this.results[index]["distance"]) {
+                  sorting.push(this.results[index]);
+                }
+              }
+            }
+            this.results = sorting;
           }
-        }
-      }
-      this.map.setMaxZoom(22);
+          if (this.layers.length == 0) {
+            this.createLayer(result, this.range);
+          } else {
+            for (let j = 0; j < this.layers.length; j++) {
+              let name = result.id + "-" + this.range;
+              if (this.layers[j] == name) {
+                this.showLayer(this.layers[j]);
+                break;
+              } else {
+                this.createLayer(result, this.range);
+              }
+            }
+          }
+          this.map.setMaxZoom(22);
+        })
+        .catch((e) => {
+          console.error("oh no..", e);
+        });
+
       console.log("You are filtering by service");
 
       /* axios

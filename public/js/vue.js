@@ -911,17 +911,23 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /* Filter by services Api */
-    filterByServices: function filterByServices(coords, services) {
-      var _this3 = this;
 
-      console.log("/api/apartments/address/".concat(this.$route.params.address, "/coords/").concat(coords, "/services/").concat(services));
-      axios.get("/api/apartments/address/".concat(this.$route.params.address, "/coords/").concat(coords, "/services/").concat(services)).then(function (r) {
-        console.log(r.data);
-        _this3.apartments = r.data;
-      })["catch"](function (e) {
-        console.error("oh no..", e);
-      });
-    },
+    /* filterByServices(coords, services) {
+      console.log(
+        `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
+      );
+      axios
+        .get(
+          `/api/apartments/address/${this.$route.params.address}/coords/${coords}/services/${services}`
+        )
+        .then((r) => {
+          console.log(r.data);
+          this.apartments = r.data;
+        })
+        .catch((e) => {
+          console.error("oh no..", e);
+        });
+    }, */
 
     /* Draw markers on map */
     drawAll: function drawAll(data) {
@@ -1043,7 +1049,7 @@ __webpack_require__.r(__webpack_exports__);
 
     /* Execute */
     mainExecute: function mainExecute(result) {
-      var _this4 = this;
+      var _this3 = this;
 
       var map = this.map;
       var mapCenter = [result.position.lng, result.position.lat];
@@ -1066,20 +1072,20 @@ __webpack_require__.r(__webpack_exports__);
       var center = [result.position.lat, result.position.lng]; //Send coordinates and address to api. Get filtered results by distance from searched point
 
       axios.get("/api/apartments/address/" + result.address.freeformAddress + "/coords/" + center.join("+")).then(function (r) {
-        _this4.apartments = r.data; //   console.log(this.apartments);
-
+        _this3.apartments = r.data;
+        console.log(_this3.apartments);
         var sortion = [];
 
-        for (var k = 0; k < _this4.apartments.length; k++) {
-          var dist = _this4.apartments[k].distance;
+        for (var k = 0; k < _this3.apartments.length; k++) {
+          var dist = _this3.apartments[k].distance;
 
-          if (dist < _this4.range) {
-            _this4.createMarker(_this4.apartments[k]);
+          if (dist < _this3.range) {
+            _this3.createMarker(_this3.apartments[k]);
 
             dist = Math.floor(dist * 10) / 10;
-            _this4.apartments[k]["distance"] = dist;
+            _this3.apartments[k]["distance"] = dist;
 
-            _this4.results.push(_this4.apartments[k]);
+            _this3.results.push(_this3.apartments[k]);
 
             sortion.push(dist);
           }
@@ -1093,38 +1099,38 @@ __webpack_require__.r(__webpack_exports__);
 
           for (var h = 0; h < sortion.length; h++) {
             for (var index = 0; index < sortion.length; index++) {
-              if (sortion[h] == _this4.results[index]["distance"]) {
-                sorting.push(_this4.results[index]);
+              if (sortion[h] == _this3.results[index]["distance"]) {
+                sorting.push(_this3.results[index]);
               }
             }
           }
 
-          _this4.results = sorting;
+          _this3.results = sorting;
         }
 
-        if (_this4.layers.length == 0) {
-          _this4.createLayer(result, _this4.range);
+        if (_this3.layers.length == 0) {
+          _this3.createLayer(result, _this3.range);
         } else {
-          for (var j = 0; j < _this4.layers.length; j++) {
-            var name = result.id + "-" + _this4.range;
+          for (var j = 0; j < _this3.layers.length; j++) {
+            var name = result.id + "-" + _this3.range;
 
-            if (_this4.layers[j] == name) {
-              _this4.showLayer(_this4.layers[j]);
+            if (_this3.layers[j] == name) {
+              _this3.showLayer(_this3.layers[j]);
 
               break;
             } else {
-              _this4.createLayer(result, _this4.range);
+              _this3.createLayer(result, _this3.range);
             }
           }
         }
 
-        _this4.map.setMaxZoom(22);
+        _this3.map.setMaxZoom(22);
       });
     },
 
     /* Actions on searchbox Clearing */
     clear: function clear() {
-      var _this5 = this;
+      var _this4 = this;
 
       var map = this.map;
 
@@ -1146,12 +1152,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.get("/api/apartments/").then(function (r) {
-        _this5.apartments = r.data.data;
+        _this4.apartments = r.data.data;
 
-        _this5.drawAll(_this5.apartments);
+        _this4.drawAll(_this4.apartments);
 
-        _this5.results = _this5.apartments;
-        _this5.counter = 0;
+        _this4.results = _this4.apartments;
+        _this4.counter = 0;
       });
     },
 
@@ -1192,6 +1198,8 @@ __webpack_require__.r(__webpack_exports__);
       this.mainExecuteService(result, services);
     },
     mainExecuteService: function mainExecuteService(result, services) {
+      var _this5 = this;
+
       var map = this.map;
       var mapCenter = [result.position.lng, result.position.lat];
       this.map.setCenter(mapCenter);
@@ -1211,55 +1219,65 @@ __webpack_require__.r(__webpack_exports__);
       this.fitToViewport(result);
       this.results = [];
       var center = [result.position.lat, result.position.lng]; //Get filtered results by distance from searched point and selected service
+      //   this.filterByServices(center.join("+"), services);
 
-      this.filterByServices(center.join("+"), services);
-      var sortion = [];
+      axios.get("/api/apartments/address/".concat(this.$route.params.address, "/coords/").concat(center.join("+"), "/services/").concat(services)).then(function (r) {
+        console.log(r.data);
+        _this5.apartments = r.data;
+        var sortion = [];
 
-      for (var k = 0; k < this.apartments.length; k++) {
-        var dist = this.apartments[k].distance;
+        for (var k = 0; k < _this5.apartments.length; k++) {
+          var dist = _this5.apartments[k].distance;
 
-        if (dist < this.range) {
-          this.createMarker(this.apartments[k]);
-          dist = Math.floor(dist * 10) / 10;
-          this.apartments[k]["distance"] = dist;
-          this.results.push(this.apartments[k]);
-          sortion.push(dist);
+          if (dist < _this5.range) {
+            _this5.createMarker(_this5.apartments[k]);
+
+            dist = Math.floor(dist * 10) / 10;
+            _this5.apartments[k]["distance"] = dist;
+
+            _this5.results.push(_this5.apartments[k]);
+
+            sortion.push(dist);
+          }
         }
-      }
 
-      if (sortion.length > 0) {
-        sortion.sort(function (a, b) {
-          return a - b;
-        });
-        var sorting = [];
+        if (sortion.length > 0) {
+          sortion.sort(function (a, b) {
+            return a - b;
+          });
+          var sorting = [];
 
-        for (var h = 0; h < sortion.length; h++) {
-          for (var index = 0; index < sortion.length; index++) {
-            if (sortion[h] == this.results[index]["distance"]) {
-              sorting.push(this.results[index]);
+          for (var h = 0; h < sortion.length; h++) {
+            for (var index = 0; index < sortion.length; index++) {
+              if (sortion[h] == _this5.results[index]["distance"]) {
+                sorting.push(_this5.results[index]);
+              }
+            }
+          }
+
+          _this5.results = sorting;
+        }
+
+        if (_this5.layers.length == 0) {
+          _this5.createLayer(result, _this5.range);
+        } else {
+          for (var j = 0; j < _this5.layers.length; j++) {
+            var name = result.id + "-" + _this5.range;
+
+            if (_this5.layers[j] == name) {
+              _this5.showLayer(_this5.layers[j]);
+
+              break;
+            } else {
+              _this5.createLayer(result, _this5.range);
             }
           }
         }
 
-        this.results = sorting;
-      }
-
-      if (this.layers.length == 0) {
-        this.createLayer(result, this.range);
-      } else {
-        for (var j = 0; j < this.layers.length; j++) {
-          var name = result.id + "-" + this.range;
-
-          if (this.layers[j] == name) {
-            this.showLayer(this.layers[j]);
-            break;
-          } else {
-            this.createLayer(result, this.range);
-          }
-        }
-      }
-
-      this.map.setMaxZoom(22);
+        _this5.map.setMaxZoom(22);
+      })["catch"](function (e) {
+        console.error("oh no..", e);
+      });
       console.log("You are filtering by service");
       /* axios
         .get(
