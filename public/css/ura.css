@@ -16,20 +16,87 @@
 .container-dashboard #ura-cards {
   width: 85%;
 }
-.container-dashboard #ura-cards .card-body .btn {
+.container-dashboard #ura-cards .card {
+  border-radius: 1rem;
+}
+.container-dashboard #ura-cards .card .card-body .btn {
   color: white;
   text-transform: uppercase;
 }
-.container-dashboard #ura-cards .card-body .btn-apartment {
+.container-dashboard #ura-cards .card .card-body .btn-apartment {
   background-color: #001632ff;
 }
-.container-dashboard #ura-cards .card-body .btn-inbox {
+.container-dashboard #ura-cards .card .card-body .btn-inbox {
   background-color: #e41c5bff;
 }
-.container-dashboard #ura-cards .card-body .btn-sponsor {
+.container-dashboard #ura-cards .card .card-body .btn-sponsor {
   background-color: #2477e3ff;
 }
 
+.ura_index_header {
+  background-image: linear-gradient(to right, #001632ff, #e41c5bff, #2477e3ff);
+}
+
+.container_ura_index .modal {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.container_ura_index .modal .modal-header {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.container_ura_index .modal button[type=submit] {
+  background-color: #e41c5bff;
+  font-family: "Josefin Sans", sans-serif;
+  color: white;
+}
+.container_ura_index .card {
+  border-radius: 1rem;
+  font-family: "Urbanist", sans-serif;
+}
+.container_ura_index .card h3, .container_ura_index .card .h3, .container_ura_index .card h6, .container_ura_index .card .h6 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.container_ura_index .card h6, .container_ura_index .card .h6 {
+  font-size: 1rem;
+}
+.container_ura_index .card img {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.container_ura_index .card .tools {
+  background-color: #2477e3ff;
+  /* visibility: hidden; */
+}
+.container_ura_index .card .tools .modal {
+  visibility: visible;
+}
+.container_ura_index .card:hover .tools {
+  visibility: visible;
+}
+
+@media screen and (min-width: 426px) {
+  .tools {
+    width: 10%;
+    flex-direction: column;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  .tools {
+    width: 100%;
+    flex-direction: row;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
+
+  .card img {
+    border-radius: 0.9rem;
+    -webkit-border-radius: 0.9rem;
+    -moz-border-radius: 0.9rem;
+    -ms-border-radius: 0.9rem;
+    -o-border-radius: 0.9rem;
+  }
+}
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -11284,8 +11351,12 @@ body {
   font-family: "Josefin Sans", sans-serif;
 }
 
-.blur .col-md-4 img {
-  filter: grayscale(100%) blur(2px);
-  -webkit-filter: grayscale(100%) blur(2px);
+.blur .col-md-3 img {
+  filter: grayscale(100%) blur(1px);
+  -webkit-filter: grayscale(100%) blur(1px);
   -moz-filter: grayscale(100%) blur(2px);
+}
+
+.w-85 {
+  width: 85%;
 }

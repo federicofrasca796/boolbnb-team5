@@ -4,6 +4,7 @@
 @import "variables";
 @import 'ura.header';
 @import 'ura.dashboard';
+@import 'ura.index';
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 * {
@@ -17,11 +18,15 @@ body {
 }
 
 .blur {
-    .col-md-4 {
+    .col-md-3 {
         img {
-            filter: grayscale(100%) blur(2px);
-            -webkit-filter: grayscale(100%) blur(2px);
+            filter: grayscale(100%) blur(1px);
+            -webkit-filter: grayscale(100%) blur(1px);
             -moz-filter: grayscale(100%) blur(2px);
-        }
+}
     }
+}
+
+.w-85 {
+    width: 85%;
 }
