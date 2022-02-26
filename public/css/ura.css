@@ -64,7 +64,7 @@
 }
 .container_ura_index .card .tools {
   background-color: #2477e3ff;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 .container_ura_index .card .tools .modal {
   visibility: visible;
@@ -95,6 +95,33 @@
     -moz-border-radius: 0.9rem;
     -ms-border-radius: 0.9rem;
     -o-border-radius: 0.9rem;
+  }
+}
+.ura_message_header {
+  background-image: linear-gradient(to right, #001632ff, #e41c5bff, #2477e3ff);
+}
+
+.container_ura_index .table a {
+  text-decoration: none;
+  color: black;
+}
+.container_ura_index .table a:visited {
+  color: black;
+}
+.container_ura_index .table .bg-lightgrey {
+  background-color: lightgrey;
+}
+
+@media (min-width: 768px) {
+  .container_ura_index {
+    flex: 0 0 auto;
+    width: 85%;
+  }
+}
+@media (max-width: 767px) {
+  .container_ura_index {
+    flex: 0 0 auto;
+    width: 100%;
   }
 }
 /*!
