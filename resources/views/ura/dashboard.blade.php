@@ -56,7 +56,7 @@
                     <h5 class="mb-0">Sponsorships</h5>
                 </div>
                 <div class="card-body d-flex align-items-end">
-                    <a href="{{ route('ura.apartments.index') }}" class="btn btn-sponsor">
+                    <a href="{{ route('ura.sponsors.index') }}" class="btn btn-sponsor">
                         Check your sponsorships
                     </a>
                 </div>
