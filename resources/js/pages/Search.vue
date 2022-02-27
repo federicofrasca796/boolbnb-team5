@@ -214,10 +214,8 @@ export default {
       })
       .then((result) => {
         axios.get("/api/apartments").then((response) => {
-          //   console.log(response);
           this.apartments = response.data.data;
           this.results = this.apartments;
-          //   console.log(result);
           result = result.results[0];
           this.firstSearch = result;
           this.mainExecute(result);
@@ -228,7 +226,6 @@ export default {
     /* Actions to do when selecting a result */
     ttSearchBox.on("tomtom.searchbox.resultselected", (data) => {
       this.searching = data;
-      //   console.log(this.searching);
       this.execute(data);
       var result = data.data.result;
       searchMarkersManager.draw([result]);
@@ -318,6 +315,7 @@ export default {
   },
 
   methods: {
+    /* Header style method */
     styleHeader() {
       let header = document.querySelector("header");
       let h1 = document.querySelector("header>h1");
@@ -334,15 +332,6 @@ export default {
         search.style.width = "100%";
         search.style.marginBottom = "20px";
       }
-    },
-
-    /* This is a test interacting with computed properties */
-
-    addTest() {
-      this.x += 1;
-    },
-    log() {
-      console.log(this.results);
     },
 
     /* Services Api */
@@ -371,7 +360,6 @@ export default {
           object.title +
           "</h4>"
       );
-
       /* Create the Marker */
       let marker = new tt.Marker()
         .setLngLat([object.longitude, object.latitude]) /* Coordinates here */
@@ -471,56 +459,50 @@ export default {
       this.mainExecute(result);
     },
 
-	/* Execute */
-
-	mainExecute(result){
-		let map = this.map;
-
-		let mapCenter = [
-			result.position.lng,
-			result.position.lat,
-		]
-		this.map.setCenter(mapCenter);
-		if (this.layer != 0) {
-			this.hideLayer(this.layer);
-		}
-		if (this.markers.length != 0) {
-			for (let i = 0; i < this.markers.length; i++) {
-			this.markers[i].remove();
-			}
-			this.markers = [];
-		}
-		this.fitToViewport(result);
-		this.results = [];
-		let center = [
-			result.position.lat,
-			result.position.lng,
-		];
-		//Send coordinates and municipality to api. Get filtered results by distance from searched point
-		if(this.searchServices.length > 0){
-      axios
-      .get(
-          `/api/apartments/address/${
-            this.$route.params.address
-          }/coords/${center.join("+")}/services/${this.searchServices}`
+    /* Execute the search script*/
+    mainExecute(result){
+      let mapCenter = [
+        result.position.lng,
+        result.position.lat,
+      ]
+      this.map.setCenter(mapCenter);
+      if (this.layer != 0) {
+        this.hideLayer(this.layer);
+      }
+      if (this.markers.length != 0) {
+        for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].remove();
+        }
+        this.markers = [];
+      }
+      this.fitToViewport(result);
+      this.results = [];
+      let center = [
+        result.position.lat,
+        result.position.lng,
+      ];
+      //Send coordinates and municipality to api. Get filtered results by distance from searched point
+      if(this.searchServices.length > 0){
+        axios
+          .get(
+            `/api/apartments/address/${this.$route.params.address}/coords/${center.join("+")}/services/${this.searchServices}`
+          )
+          .then((r) => {
+            this.apiExecute(r , result)
+          });
+      }
+      else{
+        axios.get(
+          "/api/apartments/address/" +
+          result.address.freeformAddress +
+          "/coords/" +
+          center.join("+")
         )
         .then((r) => {
           this.apiExecute(r , result)
         });
-    }
-    else{
-			axios.get(
-			"/api/apartments/address/" +
-				result.address.freeformAddress +
-				"/coords/" +
-				center.join("+")
-			)
-      .then((r) => {
-        this.apiExecute(r , result)
-        });
-    }
-			
-	},
+      }			
+    },
 
     /* Actions on searchbox Clearing */
     clear() {
@@ -538,14 +520,13 @@ export default {
         }
         this.markers = [];
       }
-	  axios.get("/api/apartments/")
+	    axios.get("/api/apartments/")
 	  		.then((r)=>{
-		 	this.apartments = r.data.data;
+		 	  this.apartments = r.data.data;
 		  	this.drawAll(this.apartments);
-        	this.results = this.apartments;
-          this.counter = 0 ;
-      	})
-        
+        this.results = this.apartments;
+        this.counter = 0 ;
+      })      
     },
 
     /* Range Slider Controller */
@@ -565,7 +546,6 @@ export default {
         }
       }
       this.range = slider.value * 10;
-
       if(this.counter == 1){
           if (this.searching != null) {
             this.execute(this.searching);
@@ -574,6 +554,7 @@ export default {
         }
       }
     },
+
     /* Api data Execution */
     apiExecute(r , result){
       this.apartments = r.data;
@@ -625,9 +606,8 @@ export default {
 				}
 			}
 			this.map.setMaxZoom(22);
-      console.log(this.premiumApartments)
-
     },
+
     /* Service filter Api */
     executeServiceFilter(slug,serviceId){
       let buttons = document.getElementsByClassName('serviceButton')
@@ -647,7 +627,6 @@ export default {
       if(count == 0){
         this.searchServices.push(slug)
       }
-      console.log(this.searchServices);
       if(this.searching != null){
         this.execute(this.searching)
       }
@@ -663,6 +642,7 @@ export default {
       return this.results;
     },
 
+    /* Compute the Premium Apartments */
     getPremium() {
       return this.premiumApartments;
     }
@@ -671,7 +651,6 @@ export default {
   /* Manage data from home component */
   created() {
     this.value = this.$route.params.address;
-    // console.log("value " + this.value);
   },
 };
 </script>

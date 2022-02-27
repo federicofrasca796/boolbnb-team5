@@ -820,10 +820,8 @@ __webpack_require__.r(__webpack_exports__);
       query: this.value
     }).then(function (result) {
       axios.get("/api/apartments").then(function (response) {
-        //   console.log(response);
         _this.apartments = response.data.data;
-        _this.results = _this.apartments; //   console.log(result);
-
+        _this.results = _this.apartments;
         result = result.results[0];
         _this.firstSearch = result;
 
@@ -835,7 +833,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Actions to do when selecting a result */
 
     ttSearchBox.on("tomtom.searchbox.resultselected", function (data) {
-      _this.searching = data; //   console.log(this.searching);
+      _this.searching = data;
 
       _this.execute(data);
 
@@ -928,6 +926,7 @@ __webpack_require__.r(__webpack_exports__);
     this.styleHeader();
   },
   methods: {
+    /* Header style method */
     styleHeader: function styleHeader() {
       var header = document.querySelector("header");
       var h1 = document.querySelector("header>h1");
@@ -945,14 +944,6 @@ __webpack_require__.r(__webpack_exports__);
         search.style.width = "100%";
         search.style.marginBottom = "20px";
       }
-    },
-
-    /* This is a test interacting with computed properties */
-    addTest: function addTest() {
-      this.x += 1;
-    },
-    log: function log() {
-      console.log(this.results);
     },
 
     /* Services Api */
@@ -1082,11 +1073,10 @@ __webpack_require__.r(__webpack_exports__);
       this.mainExecute(result);
     },
 
-    /* Execute */
+    /* Execute the search script*/
     mainExecute: function mainExecute(result) {
       var _this3 = this;
 
-      var map = this.map;
       var mapCenter = [result.position.lng, result.position.lat];
       this.map.setCenter(mapCenter);
 
@@ -1241,7 +1231,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.map.setMaxZoom(22);
-      console.log(this.premiumApartments);
     },
 
     /* Service filter Api */
@@ -1266,8 +1255,6 @@ __webpack_require__.r(__webpack_exports__);
         this.searchServices.push(slug);
       }
 
-      console.log(this.searchServices);
-
       if (this.searching != null) {
         this.execute(this.searching);
       } else {
@@ -1280,6 +1267,8 @@ __webpack_require__.r(__webpack_exports__);
     getApartments: function getApartments() {
       return this.results;
     },
+
+    /* Compute the Premium Apartments */
     getPremium: function getPremium() {
       return this.premiumApartments;
     }
@@ -1287,7 +1276,7 @@ __webpack_require__.r(__webpack_exports__);
 
   /* Manage data from home component */
   created: function created() {
-    this.value = this.$route.params.address; // console.log("value " + this.value);
+    this.value = this.$route.params.address;
   }
 });
 
