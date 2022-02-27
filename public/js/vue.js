@@ -247,6 +247,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1322,7 +1324,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container_owner {\n  z-index: 8;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}", ""]);
+exports.push([module.i, ".container_owner {\n  z-index: 8;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.container_owner {\n  font-family: \"Josefin Sans\", sans-serif;\n  text-transform: uppercase;\n  background-color: #e41c5bff;\n}\n.container_owner a {\n  color: white;\n}\n.container_owner a:visited {\n  color: white;\n}", ""]);
 
 // exports
 
@@ -2696,7 +2698,7 @@ var render = function () {
                       _c(
                         "a",
                         {
-                          staticClass: "text-dark text-decoration-none",
+                          staticClass: "text-decoration-none contact-button",
                           attrs: {
                             href:
                               "http://127.0.0.1:8000/message/" +
@@ -2714,7 +2716,7 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
-      _c("section", { staticClass: "container_details m-auto" }, [
+      _c("section", { staticClass: "container_details m-auto mb-5" }, [
         _c("hr", { staticClass: "col-12 col-md-8" }),
         _vm._v(" "),
         _c("h1", { staticClass: "text-center text-md-start mt-4" }, [
@@ -2785,7 +2787,7 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
+                { staticClass: "col-12 col-md-8 d-flex flex-wrap mb-4" },
                 _vm._l(_vm.apartment.services, function (service) {
                   return _c(
                     "div",
