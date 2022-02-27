@@ -9,6 +9,7 @@
     border-radius: 2rem!important;
     font-family: $font-family-primary;
     height: 100%;
+    
 
     a{
         text-decoration: none;
@@ -18,7 +19,7 @@
             color: black;
         }
     }
-    img {
+    img:not(.sponsor-image) {
         height: 80%;
     }
 

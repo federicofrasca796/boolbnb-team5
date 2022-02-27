@@ -21,9 +21,9 @@ class SponsorController extends Controller
     public function index()
     {
         $apartment_sponsored = Apartment::with(['sponsors'])->where('user_id', Auth::User()->id);
-        ddd($apartment_sponsored);
+        dd($apartment_sponsored);
         /* $sponsorships = Sponsor::where('user_id', Auth::User()->id)->paginate(5); */
-        return view('ura.sponsorships.index', compact('sponsorships'));
+        return view('ura.sponsors.index', compact('apartment_sponsored'));
     }
 
     /**

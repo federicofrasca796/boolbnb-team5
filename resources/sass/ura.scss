@@ -19,11 +19,11 @@ body {
 }
 
 .blur {
-    img {
-        filter: grayscale(100%) blur(2px);
-        -webkit-filter: grayscale(100%) blur(2px);
-        -moz-filter: grayscale(100%) blur(2px);
-    }
+    img:not(.sponsor) {
+        filter: grayscale(100%) blur(1px);
+        -webkit-filter: grayscale(100%) blur(1px);
+        -moz-filter: grayscale(100%) blur(1px);
+}
 }
 
 .container_img {
@@ -95,4 +95,9 @@ body {
 
 #backward {
     visibility: hidden;
+}
+
+
+.w-85{
+    width: 85%;
 }

@@ -1,7 +1,7 @@
-<a href="{{ route('ura.apartments.edit', $apartment->slug) }}" class="btn btn-light my-3 mx-5 px-4 py-3">
+<a href="{{ route('ura.apartments.edit', $apartment->slug) }}" class="btn btn-light my-2 mx-md-5 mx-1 px-4 py-3">
     <i class="fs-4 fa-solid fa-pencil text-secondary "></i>
 </a>
-<button type="button" class="btn btn-light my-3 mx-5 px-4 py-3" data-bs-toggle="modal" data-bs-target="#delete{{ $apartment->slug }}">
+<button type="button" class="btn btn-light my-2 mx-md-5 mx-1  px-4 py-3" data-bs-toggle="modal" data-bs-target="#delete{{ $apartment->slug }}">
     <i class=" fs-4 fas fa-trash-alt text-danger"></i>
 </button>
 <div class="modal fade" id="delete{{ $apartment->slug }}" tabindex="-1" aria-labelledby="modal-{{ $apartment->slug }}Label" aria-hidden="true">
@@ -28,6 +28,9 @@
         </div>
     </div>
 </div>
+<a href="{{ route('ura.apartments.payment', $apartment->slug) }}" class="btn btn-light mx-md-5 mx-1  my-2 px-4 py-3">
+                    <i class="fa-solid fa-crown fs-5 yellow-500"></i>        
+</a>
 
 
 

@@ -21,11 +21,11 @@
     @forelse ($apartments as $apartment)
     <div class="card mb-3 w-100 flex-column flex-md-row">
 
-        <div class="row d-flex {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
+        <div class="w-100 d-flex flex-column flex-md-row {{ $apartment->is_aviable === 0 ? 'blur' : '' }}">
             {{-- Apartment thumb --}}
-            <div class="col-md-3 position-relative">
+            <div class="container_image col-12 col-md-3 mb-2 position-relative">
                 <a class="" href="{{'/apartments/' . $apartment->slug}}">
-                    <img src="{{ asset('storage/' . $apartment->thumbnail) }}" class="img-fluid" alt="{{ $apartment->slug }}">
+                    <img src="{{ asset('storage/' . $apartment->thumbnail) }}" class="h-100 w-100" alt="{{ $apartment->slug }}">
                 </a>
                 @if ($apartment->is_aviable === 0 )
                 <!-- modal visibility button trigger -->
@@ -57,16 +57,15 @@
                             </div>
 
                         </div>
-                        @include('partials.ura.apartment.actions')
-                        <a href="{{ route('ura.apartments.payment', $apartment->slug) }}" class="btn btn-light mx-1">
-                            Sponsors the apartment
-                        </a>
                     </div>
                 </div>
                 @endif
+                @if($apartment->sponsors()->count() > 0)
+                <img class="position-absolute sponsor-image" src="{{asset('img/sposor.png')}}" alt="">
+                @endif
             </div>
             {{-- Apartment Body --}}
-            <div class="col-md-7">
+            <div class="col-12 col-md-7">
                 <div class="card-body d-flex flex-column h-100 justify-content-between">
                     <div class="card-content">
                         <h3>{{ $apartment->title }}</h3>
@@ -92,12 +91,15 @@
                 </div>
 
             </div>
-        </div>
-        <div class="tools end-0 d-flex justify-content-center align-items-center">
+        <div class="tools col-12 col-md-2 end-0 d-flex justify-content-center align-items-center">
 
             @include('partials.ura.apartment.actions')
 
         </div>
+        
+        
+        </div>
+        
     </div>
     @empty
     {{-- If apartment records are empty.. --}}

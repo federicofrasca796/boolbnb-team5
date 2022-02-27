@@ -17,6 +17,11 @@
     .card {
         border-radius: 1rem;
         font-family: $font-family-secondary;
+        .sponsor-image{
+            width: 100px;
+            left: -20px;
+            top: -15px;
+        }
         
         h3,h6 {
             font-family: $font-family-primary;
@@ -47,6 +52,12 @@
 
 
 @media screen and (min-width: 426px) {
+    .card{
+        height: 250px;
+        .container_image{
+            height: 100%;
+        }
+    }
     .tools {
       width: 10%;
       flex-direction: column;
@@ -62,11 +73,24 @@
       border-bottom-right-radius: 1rem;
       border-bottom-left-radius: 1rem;
     }
-    .card img{
-        border-radius: 0.9rem;
-        -webkit-border-radius: 0.9rem;
-        -moz-border-radius: 0.9rem;
-        -ms-border-radius: 0.9rem;
-        -o-border-radius: 0.9rem;
+    .card{
+        
+        .container_image{
+            height: 210px;
+                img{
+                        border-radius: 0.9rem;
+                        -webkit-border-radius: 0.9rem;
+                        -moz-border-radius: 0.9rem;
+                        -ms-border-radius: 0.9rem;
+                        -o-border-radius: 0.9rem;
+
+                    }  
+        }
+        
+    } 
 }
+
+
+.fa-crown{
+    color: gold;
 }
