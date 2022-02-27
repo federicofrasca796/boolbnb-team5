@@ -27,6 +27,7 @@
                 <a class="" href="{{'/apartments/' . $apartment->slug}}">
                     <img src="{{ asset('storage/' . $apartment->thumbnail) }}" class="img-fluid" alt="{{ $apartment->slug }}">
                 </a>
+                {{--<i class="fa-solid fa-star position-absolute"></i>--}}
                 @if ($apartment->is_aviable === 0 )
                 <!-- modal visibility button trigger -->
                 <a type="button" class="position-absolute top-50 start-50 translate-middle px-4 py-3 text-muted" data-bs-toggle="modal" data-bs-target="#makeVisibile{{ $apartment->slug }}">
