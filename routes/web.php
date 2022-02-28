@@ -36,18 +36,19 @@ Route::post('/send', 'MessageController@store')->name('message.send');
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 
     Route::get('dashboard', function () {
-        $apartment_sponsored = Apartment::with('sponsors')->where('user_id', Auth::user()->id)->get();
-        $messages = Message::with(['apartment'])->whereHas('apartment', function($query){
+        $apartment_sponsored =
+            Apartment::has('sponsors')->with(['sponsors'])->where('user_id', Auth::user()->id)->get();;
+        $messages = Message::with(['apartment'])->whereHas('apartment', function ($query) {
             $query->where('user_id', Auth::User()->id);
         })->paginate(5);
-        return view('ura.dashboard', compact('messages','apartment_sponsored'));
+        return view('ura.dashboard', compact('messages', 'apartment_sponsored'));
     })->name('dashboard');
 
     Route::resource('apartments', 'ApartmentController')->scoped([
         'apartments' => 'slug',
     ]);
 
-    Route::post('apartments/store' , 'ApartmentController@store')->name('apartments.store');
+    Route::post('apartments/store', 'ApartmentController@store')->name('apartments.store');
 
     Route::put('apartments/{apartment}/make-visible', 'ApartmentController@makeVisible')->name('apartments.makeVisibile');
 

@@ -21,9 +21,19 @@ class SponsorController extends Controller
     public function index()
     {
 
-        $apartment_sponsored = Apartment::has('sponsors')->with('sponsors')->where('user_id', Auth::user()->id)->get();
-        ddd(Apartment::all()->sponsors());
-        return view('ura.sponsors.index', compact('apartment_sponsored'));
+        $apartment_sponsored = Apartment::has('sponsors')->with(['sponsors'])->where('user_id', Auth::user()->id)->get();
+
+        /* foreach ($apartment_sponsored as $apt) {
+
+            ddd($apt->sponsors->first()->pivot->expires_on);
+        } */
+
+        /* $apartment = Apartment::find(20);
+        foreach ($apartment->sponsors as $sponsor) {
+            ddd($sponsor->pivot->expires_on);
+        } */
+        $now = Carbon::now('Europe/Rome');
+        return view('ura.sponsors.index', compact('apartment_sponsored', 'now'));
     }
 
     /**
@@ -88,9 +98,10 @@ class SponsorController extends Controller
             if ($result->success) {
                 //ddd($result->transaction);
                 $transaction = $result->transaction;
-                $sponsor->apartments()->attach([
-                    $apartment_id => ['expires_on' => $expires_on],
-                ]
+                $sponsor->apartments()->attach(
+                    [
+                        $apartment_id => ['expires_on' => $expires_on],
+                    ]
                 );
 
                 return redirect()->route('ura.apartments.index')->with(session()->flash('success', 'Transaction successful. The ID is: ' . $transaction->id . '.' . " Apartment '$apartment->title' sponsored succesfully"));
@@ -103,13 +114,9 @@ class SponsorController extends Controller
 
                 return back()->withErrors('An error occurred with the message: ' . $result->message);
             }
-
         } else if ($apartment_sponsored->apartment_id === $apartment_id) {
             $sponsor_end = Carbon::parse($apartment_sponsored->expires_on)->format('d/m/Y H:i');
             return redirect()->route('ura.apartments.index')->withErrors("Apartment '$apartment->title' is sponsored until  $sponsor_end");
-
         }
-
     }
-
 }
