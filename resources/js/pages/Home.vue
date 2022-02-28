@@ -140,11 +140,11 @@
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
                   :src="'storage/' + apartment.thumbnail"
-                  class="w-100"
+                  class="w-100 object_fit"
                   :alt="apartment.slug"
                 />
-                <div class="card-body">
-                  <h5 class="card-title">{{ apartment.title }}</h5>
+                <div class="card-body p-1 p-xl-2">
+                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">{{ apartment.title }}</h5>
                 </div>
               </router-link>
             </div>
@@ -242,11 +242,11 @@
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
                   :src="'storage/' + apartment.thumbnail"
-                  class="w-100"
+                  class="w-100 object_fit"
                   :alt="apartment.slug"
                 />
-                <div class="card-body">
-                  <h5 class="card-title">{{ apartment.title }}</h5>
+                <div class="card-body p-1 p-xl-2">
+                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">{{ apartment.title }}</h5>
                 </div>
               </router-link>
             </div>
@@ -482,6 +482,9 @@ export default {
 .tt-search-box svg path,
 .tt-search-box svg rect {
   fill: $raspberry;
+}
+.object_fit {
+    object-fit: cover;
 }
 
 </style>
