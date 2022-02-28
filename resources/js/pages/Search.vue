@@ -26,7 +26,7 @@
           type="button"
           class="rounded-pill serviceButton"
           :value="service.name"
-          @click="executeServiceFilter(service.slug , service.id)"
+          @click="executeServiceFilter(service.slug, service.id)"
         />
       </div>
     </div>
@@ -44,7 +44,14 @@
         <div v-for="premium in getPremium" :key="premium.name">
           <router-link
             :to="'/apartments/' + premium.slug"
-            class="single-apartment d-flex flex-wrap my-3 premium position-relative"
+            class="
+              single-apartment
+              d-flex
+              flex-wrap
+              my-3
+              premium
+              position-relative
+            "
           >
             <div class="icon position-absolute star">
               <i class="far fa-star fa-2x"></i>
@@ -77,7 +84,10 @@
                   <span> {{ premium.number_of_beds }} beds - </span>
                   <span> {{ premium.number_of_baths }} baths </span>
                 </p>
-                <div v-if="premium.distance >= 0" class="d-flex align-items-center">
+                <div
+                  v-if="premium.distance >= 0"
+                  class="d-flex align-items-center"
+                >
                   <h4>Distance</h4>
                   <span class="mx-2">{{ premium.distance }} Km</span>
                 </div>
@@ -118,7 +128,10 @@
                   <span> {{ apartment.number_of_beds }} beds - </span>
                   <span> {{ apartment.number_of_baths }} baths </span>
                 </p>
-                <div v-if="apartment.distance >= 0" class="d-flex align-items-center">
+                <div
+                  v-if="apartment.distance >= 0"
+                  class="d-flex align-items-center"
+                >
                   <h4>Distance</h4>
                   <span class="mx-2">{{ apartment.distance }} Km</span>
                 </div>
@@ -156,7 +169,7 @@ export default {
       layers: [],
       layer: "",
       firstSearch: [],
-      counter : 1,
+      counter: 1,
       searchServices: [],
       premiumApartments: [],
     };
@@ -460,48 +473,44 @@ export default {
     },
 
     /* Execute the search script*/
-    mainExecute(result){
-      let mapCenter = [
-        result.position.lng,
-        result.position.lat,
-      ]
+    mainExecute(result) {
+      let mapCenter = [result.position.lng, result.position.lat];
       this.map.setCenter(mapCenter);
       if (this.layer != 0) {
         this.hideLayer(this.layer);
       }
       if (this.markers.length != 0) {
         for (let i = 0; i < this.markers.length; i++) {
-        this.markers[i].remove();
+          this.markers[i].remove();
         }
         this.markers = [];
       }
       this.fitToViewport(result);
       this.results = [];
-      let center = [
-        result.position.lat,
-        result.position.lng,
-      ];
+      let center = [result.position.lat, result.position.lng];
       //Send coordinates and municipality to api. Get filtered results by distance from searched point
-      if(this.searchServices.length > 0){
+      if (this.searchServices.length > 0) {
         axios
           .get(
-            `/api/apartments/address/${this.$route.params.address}/coords/${center.join("+")}/services/${this.searchServices}`
+            `/api/apartments/address/${
+              this.$route.params.address
+            }/coords/${center.join("+")}/services/${this.searchServices}`
           )
           .then((r) => {
-            this.apiExecute(r , result)
+            this.apiExecute(r, result);
+          });
+      } else {
+        axios
+          .get(
+            "/api/apartments/address/" +
+              result.address.freeformAddress +
+              "/coords/" +
+              center.join("+")
+          )
+          .then((r) => {
+            this.apiExecute(r, result);
           });
       }
-      else{
-        axios.get(
-          "/api/apartments/address/" +
-          result.address.freeformAddress +
-          "/coords/" +
-          center.join("+")
-        )
-        .then((r) => {
-          this.apiExecute(r , result)
-        });
-      }			
     },
 
     /* Actions on searchbox Clearing */
@@ -509,6 +518,14 @@ export default {
       let map = this.map;
       if (this.layer != 0) {
         this.hideLayer(this.layer);
+      }
+      this.searchServices = [];
+      let buttons = document.getElementsByClassName("serviceButton");
+      for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].classList.contains("bg-dark")) {
+          buttons[i].classList.remove("bg-dark");
+          buttons[i], classList.remove("text-white");
+        }
       }
       map.flyTo({
         center: this.startCoords,
@@ -520,13 +537,12 @@ export default {
         }
         this.markers = [];
       }
-	    axios.get("/api/apartments/")
-	  		.then((r)=>{
-		 	  this.apartments = r.data.data;
-		  	this.drawAll(this.apartments);
+      axios.get("/api/apartments/").then((r) => {
+        this.apartments = r.data.data;
+        this.drawAll(this.apartments);
         this.results = this.apartments;
-        this.counter = 0 ;
-      })      
+        this.counter = 0;
+      });
     },
 
     /* Range Slider Controller */
@@ -546,92 +562,92 @@ export default {
         }
       }
       this.range = slider.value * 10;
-      if(this.counter == 1){
-          if (this.searching != null) {
-            this.execute(this.searching);
+      if (this.counter == 1) {
+        if (this.searching != null) {
+          this.execute(this.searching);
         } else {
-            this.mainExecute(this.firstSearch);
+          this.mainExecute(this.firstSearch);
         }
       }
     },
 
     /* Api data Execution */
-    apiExecute(r , result){
+    apiExecute(r, result) {
       this.apartments = r.data;
-			let sortion = [];
+      let sortion = [];
       this.premiumApartments = [];
-			for (let k = 0; k < this.apartments.length; k++) {
-				let dist = this.apartments[k].distance;
-				if (dist < this.range) {
-					this.createMarker(this.apartments[k]);
-					dist = Math.floor(dist * 10) / 10;
-					this.apartments[k]["distance"] = dist;
-					this.results.push(this.apartments[k]);
-					sortion.push(dist);
-				}
-			}
-			if (sortion.length > 0) {
-				sortion.sort(function (a, b) {return a - b;});
-				let sorting = [];
-				for (let h = 0; h < sortion.length; h++) {
-					for (let index = 0; index < sortion.length; index++) {
-						if (sortion[h] == this.results[index]["distance"]) {
-							sorting.push(this.results[index]);
-						}
-					}
-				}
-				this.results = sorting;
-			}
-      let current = [];
-      for(let i = 0; i<this.results.length;i++){
-        if(this.results[i].sponsors.length){
-          this.premiumApartments.push(this.results[i])
+      for (let k = 0; k < this.apartments.length; k++) {
+        let dist = this.apartments[k].distance;
+        if (dist < this.range) {
+          this.createMarker(this.apartments[k]);
+          dist = Math.floor(dist * 10) / 10;
+          this.apartments[k]["distance"] = dist;
+          this.results.push(this.apartments[k]);
+          sortion.push(dist);
         }
-        else{
-          current.push(this.results[i])
+      }
+      if (sortion.length > 0) {
+        sortion.sort(function (a, b) {
+          return a - b;
+        });
+        let sorting = [];
+        for (let h = 0; h < sortion.length; h++) {
+          for (let index = 0; index < sortion.length; index++) {
+            if (sortion[h] == this.results[index]["distance"]) {
+              sorting.push(this.results[index]);
+            }
+          }
+        }
+        this.results = sorting;
+      }
+      let current = [];
+      for (let i = 0; i < this.results.length; i++) {
+        if (this.results[i].sponsors.length) {
+          this.premiumApartments.push(this.results[i]);
+        } else {
+          current.push(this.results[i]);
         }
       }
       this.results = current;
-			if (this.layers.length == 0) {
-				this.createLayer(result, this.range);
-			} else {
-				for (let j = 0; j < this.layers.length; j++) {
-					let name = result.id + "-" + this.range;
-					if (this.layers[j] == name) {
-						this.showLayer(this.layers[j]);
-						break;
-					} else {
-						this.createLayer(result, this.range);
-					}
-				}
-			}
-			this.map.setMaxZoom(22);
+      if (this.layers.length == 0) {
+        this.createLayer(result, this.range);
+      } else {
+        for (let j = 0; j < this.layers.length; j++) {
+          let name = result.id + "-" + this.range;
+          if (this.layers[j] == name) {
+            this.showLayer(this.layers[j]);
+            break;
+          } else {
+            this.createLayer(result, this.range);
+          }
+        }
+      }
+      this.map.setMaxZoom(22);
     },
 
     /* Service filter Api */
-    executeServiceFilter(slug,serviceId){
-      let buttons = document.getElementsByClassName('serviceButton')
-      buttons[serviceId - 1].classList.add('text-white');
-      buttons[serviceId - 1].classList.add('bg-dark');
+    executeServiceFilter(slug, serviceId) {
+      let buttons = document.getElementsByClassName("serviceButton");
+      buttons[serviceId - 1].classList.add("text-white");
+      buttons[serviceId - 1].classList.add("bg-dark");
       let count = 0;
-      for(let i = 0;i<this.searchServices.length;i++){
-        if(slug == this.searchServices[i]){
-          this.searchServices = this.searchServices.filter(function(item) {
-              buttons[serviceId - 1].classList.remove('bg-dark');
-              buttons[serviceId - 1].classList.remove('text-white');
-              return item !==slug
-          })
+      for (let i = 0; i < this.searchServices.length; i++) {
+        if (slug == this.searchServices[i]) {
+          this.searchServices = this.searchServices.filter(function (item) {
+            buttons[serviceId - 1].classList.remove("bg-dark");
+            buttons[serviceId - 1].classList.remove("text-white");
+            return item !== slug;
+          });
           count = 1;
         }
       }
-      if(count == 0){
-        this.searchServices.push(slug)
+      if (count == 0) {
+        this.searchServices.push(slug);
       }
-      if(this.searching != null){
-        this.execute(this.searching)
-      }
-      else{
-        this.mainExecute(this.firstSearch)
+      if (this.searching != null) {
+        this.execute(this.searching);
+      } else {
+        this.mainExecute(this.firstSearch);
       }
     },
   },
@@ -645,7 +661,7 @@ export default {
     /* Compute the Premium Apartments */
     getPremium() {
       return this.premiumApartments;
-    }
+    },
   },
 
   /* Manage data from home component */
@@ -723,16 +739,15 @@ export default {
   }
 }
 
-.premium{
+.premium {
   background-color: rgba($color: #c56914, $alpha: 0.3);
   border-top-left-radius: 1.9rem;
   border-bottom-left-radius: 1.9rem;
 }
 
-.star{
+.star {
   right: 1rem;
   top: 0.5rem;
   color: white;
 }
-
 </style>

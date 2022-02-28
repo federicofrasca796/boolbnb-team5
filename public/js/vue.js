@@ -229,6 +229,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -330,6 +332,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -867,6 +873,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1244,14 +1263,24 @@ __webpack_require__.r(__webpack_exports__);
         this.hideLayer(this.layer);
       }
 
+      this.searchServices = [];
+      var buttons = document.getElementsByClassName("serviceButton");
+
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].classList.contains("bg-dark")) {
+          buttons[i].classList.remove("bg-dark");
+          buttons[i], classList.remove("text-white");
+        }
+      }
+
       map.flyTo({
         center: this.startCoords,
         zoom: 4
       });
 
       if (this.markers.length != 0) {
-        for (var i = 0; i < this.markers.length; i++) {
-          this.markers[i].remove();
+        for (var _i = 0; _i < this.markers.length; _i++) {
+          this.markers[_i].remove();
         }
 
         this.markers = [];
@@ -1362,16 +1391,16 @@ __webpack_require__.r(__webpack_exports__);
 
     /* Service filter Api */
     executeServiceFilter: function executeServiceFilter(slug, serviceId) {
-      var buttons = document.getElementsByClassName('serviceButton');
-      buttons[serviceId - 1].classList.add('text-white');
-      buttons[serviceId - 1].classList.add('bg-dark');
+      var buttons = document.getElementsByClassName("serviceButton");
+      buttons[serviceId - 1].classList.add("text-white");
+      buttons[serviceId - 1].classList.add("bg-dark");
       var count = 0;
 
       for (var i = 0; i < this.searchServices.length; i++) {
         if (slug == this.searchServices[i]) {
           this.searchServices = this.searchServices.filter(function (item) {
-            buttons[serviceId - 1].classList.remove('bg-dark');
-            buttons[serviceId - 1].classList.remove('text-white');
+            buttons[serviceId - 1].classList.remove("bg-dark");
+            buttons[serviceId - 1].classList.remove("text-white");
             return item !== slug;
           });
           count = 1;
@@ -1459,7 +1488,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.sponsor-image {\n  width: 100px;\n  left: -20px;\n  top: -15px;\n}\n.container-apartments img {\n  border-top-left-radius: 2rem;\n  border-top-right-radius: 2rem;\n}\n.loader {\n  margin: 0 0 2em;\n  height: 100px;\n  width: 20%;\n  text-align: center;\n  padding: 1em;\n  margin: 0 auto 1em;\n  display: inline-block;\n  vertical-align: top;\n}\n.tt-search-box svg path,\n.tt-search-box svg rect {\n  fill: #e41c5bff;\n}", ""]);
+exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar {\n  padding: 0 !important;\n}\n#jumbo #mySearchbar .tt-search-box {\n  margin: 0;\n  height: 100%;\n}\n#jumbo #mySearchbar .tt-search-box-input {\n  font-size: 20px;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.sponsor-image {\n  width: 100px;\n  left: -20px;\n  top: -15px;\n}\n.container-apartments img {\n  border-top-left-radius: 2rem;\n  border-top-right-radius: 2rem;\n}\n.loader {\n  margin: 0 0 2em;\n  height: 100px;\n  width: 20%;\n  text-align: center;\n  padding: 1em;\n  margin: 0 auto 1em;\n  display: inline-block;\n  vertical-align: top;\n}\n.tt-search-box svg path,\n.tt-search-box svg rect {\n  fill: #e41c5bff;\n}\n.object_fit {\n  -o-object-fit: cover;\n     object-fit: cover;\n}", ""]);
 
 // exports
 
@@ -2784,13 +2813,19 @@ var render = function () {
             _vm._v(" "),
             _c("h1", [_vm._v(_vm._s(_vm.apartment.title))]),
             _vm._v(" "),
-            _c("h4", [_vm._v("About this home")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "\n        " + _vm._s(_vm.apartment.description) + "\n      "
-              ),
-            ]),
+            _vm.apartment.description
+              ? _c("div", [
+                  _c("h4", [_vm._v("About this home")]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.apartment.description) +
+                        "\n        "
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
           _c(
@@ -3222,17 +3257,28 @@ var render = function () {
                           { attrs: { to: "/apartments/" + apartment.slug } },
                           [
                             _c("img", {
-                              staticClass: "w-100",
+                              staticClass: "w-100 object_fit",
                               attrs: {
                                 src: "storage/" + apartment.thumbnail,
                                 alt: apartment.slug,
                               },
                             }),
                             _vm._v(" "),
-                            _c("div", { staticClass: "card-body" }, [
-                              _c("h5", { staticClass: "card-title" }, [
-                                _vm._v(_vm._s(apartment.title)),
-                              ]),
+                            _c("div", { staticClass: "card-body p-1 p-xl-2" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass:
+                                    "card-title mb-5 mb-md-5 mb-xxl-3",
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(apartment.title) +
+                                      "\n                "
+                                  ),
+                                ]
+                              ),
                             ]),
                           ]
                         ),
@@ -3408,17 +3454,28 @@ var render = function () {
                           { attrs: { to: "/apartments/" + apartment.slug } },
                           [
                             _c("img", {
-                              staticClass: "w-100",
+                              staticClass: "w-100 object_fit",
                               attrs: {
                                 src: "storage/" + apartment.thumbnail,
                                 alt: apartment.slug,
                               },
                             }),
                             _vm._v(" "),
-                            _c("div", { staticClass: "card-body" }, [
-                              _c("h5", { staticClass: "card-title" }, [
-                                _vm._v(_vm._s(apartment.title)),
-                              ]),
+                            _c("div", { staticClass: "card-body p-1 p-xl-2" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass:
+                                    "card-title mb-5 mb-md-5 mb-xxl-3",
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(apartment.title) +
+                                      "\n                "
+                                  ),
+                                ]
+                              ),
                             ]),
                           ]
                         ),
@@ -3549,7 +3606,7 @@ var render = function () {
                       "router-link",
                       {
                         staticClass:
-                          "single-apartment d-flex flex-wrap my-3 premium position-relative",
+                          "\n            single-apartment\n            d-flex\n            flex-wrap\n            my-3\n            premium\n            position-relative\n          ",
                         attrs: { to: "/apartments/" + premium.slug },
                       },
                       [

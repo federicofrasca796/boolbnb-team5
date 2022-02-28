@@ -144,7 +144,9 @@
                   :alt="apartment.slug"
                 />
                 <div class="card-body p-1 p-xl-2">
-                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">{{ apartment.title }}</h5>
+                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">
+                    {{ apartment.title }}
+                  </h5>
                 </div>
               </router-link>
             </div>
@@ -246,7 +248,9 @@
                   :alt="apartment.slug"
                 />
                 <div class="card-body p-1 p-xl-2">
-                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">{{ apartment.title }}</h5>
+                  <h5 class="card-title mb-5 mb-md-5 mb-xxl-3">
+                    {{ apartment.title }}
+                  </h5>
                 </div>
               </router-link>
             </div>
@@ -419,6 +423,14 @@ export default {
     }
   }
   #mySearchbar {
+    padding: 0 !important;
+    .tt-search-box {
+      margin: 0;
+      height: 100%;
+    }
+    .tt-search-box-input {
+      font-size: 20px;
+    }
     .tt-search-box-input-container {
       border: none;
       height: 100%;
@@ -484,7 +496,6 @@ export default {
   fill: $raspberry;
 }
 .object_fit {
-    object-fit: cover;
+  object-fit: cover;
 }
-
 </style>

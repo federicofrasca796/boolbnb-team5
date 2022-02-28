@@ -53,6 +53,17 @@
                         @enderror
                     </div>
 
+                    {{-- Description input --}}
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                            id="description" rows="3"
+                            placeholder="Type your description here">{{ $apartment->description }}</textarea>
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Address input --}}
                     <div class="mb-3 row">
                         <div class=" col-6" id="address">
@@ -179,9 +190,11 @@
                     <div class="mb-3">
                         <small>Services*</small>
 
-                        @foreach ($services as $service)    
+                        @foreach ($services as $service)
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="services[]" id="services" value="{{ $service->id }}" {{ $apartment->services->contains($service) ? 'checked' : '' }}>
+                                <input type="checkbox" class="form-check-input" name="services[]" id="services"
+                                    value="{{ $service->id }}"
+                                    {{ $apartment->services->contains($service) ? 'checked' : '' }}>
                                 <label for="form-check-label">{{ $service->name }}</label>
                             </div>
                         @endforeach
@@ -209,10 +222,12 @@
         <script>
             var options = {
                 searchOptions: {
-                    key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-                    language: 'it-IT',
-                    limit: 5
-                }
+                    key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+                    language: "it-IT",
+                    limit: 5,
+                    countrySet: "IT",
+                    entityTypeSet: "Municipality",
+                },
             };
             var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
             var searchBoxHTML = ttSearchBox.getSearchBoxHTML();

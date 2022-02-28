@@ -22,7 +22,7 @@
                         <label for="thumbnail" class="form-label">Thumbnail*</label>
                         <input required type="file" name="thumbnail" id="thumbnail"
                             class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Add image here"
-                            accept="jpeg,jpg,png,gif,bmp,svg,webp" >
+                            accept="jpeg,jpg,png,gif,bmp,svg,webp">
                         <small id="thumbnailHelper" class="text-muted">Add your apartment image, max 1024kB. Accept
                             jpeg,jpg,png,gif,bmp,svg,webp</small>
                         @error('thumbnail')
@@ -33,10 +33,22 @@
                     {{-- Title input --}}
                     <div class="mb-3">
                         <label for="title" class="form-label">Title*</label>
-                        <input required type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                            placeholder="Type title here" value="{{ old('title') }}" maxlength="150" >
+                        <input required type="text" name="title" id="title"
+                            class="form-control @error('title') is-invalid @enderror" placeholder="Type title here"
+                            value="{{ old('title') }}" maxlength="150">
                         <small id="titleHelper" class="text-muted">Add your title, max 150 characters</small>
                         @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Description input --}}
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                            id="description" rows="3"
+                            placeholder="Type your description here">{{ old('description') }}</textarea>
+                        @error('description')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -55,7 +67,7 @@
                             <label for="latitude" class="form-label text-muted">Latitude</label>
                             <input required type="text" name="latitude" id="latitude"
                                 class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude') }}"
-                                 readonly>
+                                readonly>
                             @error('latitude')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -65,7 +77,7 @@
                             <label for="longitude" class="form-label text-muted">Longitude</label>
                             <input required type="text" name="longitude" id="longitude"
                                 class="form-control @error('longitude') is-invalid @enderror"
-                                value="{{ old('longitude') }}"  readonly>
+                                value="{{ old('longitude') }}" readonly>
                             @error('longitude')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -77,8 +89,8 @@
                         <label for="square_metres" class="form-label">Floor area (mq)*</label>
                         <input required type="number" name="square_metres" id="square_metres"
                             class="form-control @error('square_metres') is-invalid @enderror"
-                            placeholder="Type floor area in square meters" value="{{ old('square_metres') }}" 
-                            min="1" max="65535">
+                            placeholder="Type floor area in square meters" value="{{ old('square_metres') }}" min="1"
+                            max="65535">
                         <small id="square_metresHelper" class="text-muted">Add the number of square metres.</small>
                         @error('square_metres')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -88,8 +100,8 @@
                     {{-- Rooms input --}}
                     <div class="mb-3">
                         <label for="number_of_rooms" class="form-label">Rooms*</label>
-                        <select required class="form-control @error('number_of_rooms') is-invalid @enderror" name="number_of_rooms"
-                            id="number_of_rooms" >
+                        <select required class="form-control @error('number_of_rooms') is-invalid @enderror"
+                            name="number_of_rooms" id="number_of_rooms">
                             <option value="">Select rooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -107,8 +119,8 @@
                     {{-- Beds input --}}
                     <div class="mb-3">
                         <label for="number_of_beds" class="form-label">Number of bedrooms*</label>
-                        <select required class="form-control @error('number_of_beds') is-invalid @enderror" name="number_of_beds"
-                            id="number_of_beds" >
+                        <select required class="form-control @error('number_of_beds') is-invalid @enderror"
+                            name="number_of_beds" id="number_of_beds">
                             <option value="">Select beds</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}" {{ old('number_of_beds') == $i ? 'selected' : '' }}>
@@ -125,8 +137,8 @@
                     {{-- Bathrooms input --}}
                     <div class="mb-3">
                         <label for="number_of_baths" class="form-label">Bathrooms*</label>
-                        <select required class="form-control @error('number_of_baths') is-invalid @enderror" name="number_of_baths"
-                            id="number_of_baths" >
+                        <select required class="form-control @error('number_of_baths') is-invalid @enderror"
+                            name="number_of_baths" id="number_of_baths">
                             <option value="">Select bathrooms</option>
                             @for ($i = 1; $i < 10; $i++)
                                 <option value="{{ $i }}"
@@ -152,19 +164,20 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
+
                     {{-- Services input --}}
                     <div class="mb-3">
                         <small>Services*</small>
 
-                        @foreach ($services as $service)    
+                        @foreach ($services as $service)
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="services[]" id="services" value="{{ $service->id }}">
+                                <input type="checkbox" class="form-check-input" name="services[]" id="services"
+                                    value="{{ $service->id }}">
                                 <label for="form-check-label">{{ $service->name }}</label>
                             </div>
                         @endforeach
                     </div>
-                    
+
 
                     {{-- Submit form --}}
                     <div class="d-flex justify-content-end">
@@ -184,10 +197,12 @@
         <script>
             var options = {
                 searchOptions: {
-                    key: 'jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj',
-                    language: 'it-IT',
-                    limit: 5
-                }
+                    key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+                    language: "it-IT",
+                    limit: 5,
+                    countrySet: "IT",
+                    entityTypeSet: "Municipality",
+                },
             };
             var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
             var searchBoxHTML = ttSearchBox.getSearchBoxHTML();
@@ -213,7 +228,6 @@
                 var value = {!! json_encode(old('address')) !!}.toString()
                 ttSearchBox.setValue(value)
             }
-            
         </script>
     </div>
 @endsection

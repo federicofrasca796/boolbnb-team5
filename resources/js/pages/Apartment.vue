@@ -16,10 +16,12 @@
         <p>{{ apartment.address }}</p>
         <h1>{{ apartment.title }}</h1>
 
-        <h4>About this home</h4>
-        <p>
-          {{ apartment.description }}
-        </p>
+        <div v-if="apartment.description">
+          <h4>About this home</h4>
+          <p>
+            {{ apartment.description }}
+          </p>
+        </div>
       </div>
 
       <!-- Contact owner  -->

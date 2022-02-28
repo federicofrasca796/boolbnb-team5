@@ -79,7 +79,7 @@ class ApartmentController extends Controller
         // ddd($address, $coords);
 
         //Set variables
-        $apartments = Apartment::with(['services' , 'sponsors'])->get();
+        $apartments = Apartment::with(['services', 'sponsors'])->get();
         $coords_arr = explode('+', $coords);
         $lat1 = $coords_arr[0];
         $lon1 = $coords_arr[1];
@@ -120,7 +120,7 @@ class ApartmentController extends Controller
         $services = explode('+', $services);
 
         //filter db query
-        $filtered = Apartment::with(['services'])
+        $filtered = Apartment::with(['services', 'sponsors'])
             ->whereHas('services', function ($query) use ($services) {
                 $query->whereIn('slug', $services);
             }, '=', count($services))->get();
