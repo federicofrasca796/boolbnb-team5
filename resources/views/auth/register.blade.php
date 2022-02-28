@@ -19,7 +19,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus maxlength="25" minlength="3" placeholder="Type your name">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus maxlength="25" minlength="3" placeholder="Type your name">
                                 <!-- <small class="text-muted">Add your name min: 3 | max: 25 characters</small> -->
 
                                 @error('name')
@@ -38,7 +38,7 @@
                                 <div class="col-md-6">
                                     <input id="surname" type="text"
                                         class="form-control @error('surname') is-invalid @enderror" name="surname"
-                                        value="{{ old('surname') }}" required autocomplete="surname" autofocus
+                                        value="{{ old('surname') }}" autocomplete="surname" autofocus
                                         maxlength="25" minlength="3" placeholder="Type your surname">
                                     <!-- <small class="text-muted">Add your surname min: 3 | max: 25 characters</small> -->
 
