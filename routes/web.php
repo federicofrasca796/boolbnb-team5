@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Apartment;
+use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +36,11 @@ Route::post('/send', 'MessageController@store')->name('message.send');
 Route::middleware('auth')->namespace('Ura')->prefix('ura')->name('ura.')->group(function () {
 
     Route::get('dashboard', function () {
-        return view('ura.dashboard');
+        $apartment_sponsored = Apartment::with('sponsors')->where('user_id', Auth::user()->id)->get();
+        $messages = Message::with(['apartment'])->whereHas('apartment', function($query){
+            $query->where('user_id', Auth::User()->id);
+        })->paginate(5);
+        return view('ura.dashboard', compact('messages','apartment_sponsored'));
     })->name('dashboard');
 
     Route::resource('apartments', 'ApartmentController')->scoped([

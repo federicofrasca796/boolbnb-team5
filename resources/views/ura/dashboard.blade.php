@@ -42,6 +42,8 @@
             <div class="card p-3 h-100">
                 <div class="card-title px-3">
                     <h5 class="mb-0">Inbox</h5>
+                    <br>
+                    <span> You currently have {{ $messages->count() }} @if ($messages->count() == 1 ) message @else messages @endif</span>
                 </div>
                 <div class="card-body d-flex align-items-end">
                     <a href="{{ route('ura.messages.index') }}" class="btn btn-inbox">
@@ -54,6 +56,8 @@
             <div class="card p-3 h-100">
                 <div class="card-title px-3">
                     <h5 class="mb-0">Sponsorships</h5>
+                    <br>
+                    <span>Your currently have {{ $apartment_sponsored->count() }} @if ($apartment_sponsored->count() == 1 ) sponsorship @else sponsorships @endif</span>
                 </div>
                 <div class="card-body d-flex align-items-end">
                     <a href="{{ route('ura.sponsors.index') }}" class="btn btn-sponsor">
