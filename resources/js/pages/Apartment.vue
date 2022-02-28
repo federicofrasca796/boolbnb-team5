@@ -18,27 +18,7 @@
 
         <h4>About this home</h4>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-          optio praesentium libero quis ratione facilis molestias quod odit
-          reiciendis hic sed magnam deserunt. Facere, fugit dolorem. Quidem nisi
-          totam voluptates. Consectetur eligendi corrupti, ratione illum
-          delectus vitae veritatis cupiditate? Recusandae beatae blanditiis
-          aliquid, repellat illum impedit inventore, odio ipsa repellendus
-          cumque amet incidunt! Fugiat, doloremque optio. Porro libero sit
-          vitae. Quaerat deleniti laborum tempore aperiam nostrum eum cumque,
-          fugit earum. Voluptatum cupiditate consequuntur inventore rem, dolor,
-          ut cumque magnam magni atque quisquam similique esse? Voluptatum nemo
-          consectetur numquam beatae praesentium. Nostrum iste accusamus iure
-          assumenda laudantium quasi odit consequatur veritatis! Necessitatibus
-          aspernatur molestiae error voluptatibus molestias incidunt saepe a
-          corrupti nesciunt. Non, maxime. Nesciunt minus sed sunt. Error, amet
-          cupiditate? Minus explicabo alias ullam distinctio illo iusto, iste
-          voluptatibus nesciunt modi eos veritatis voluptatem asperiores
-          blanditiis et optio magni excepturi dolor ex ea dolorem nostrum
-          quisquam eum quas? Veniam, magnam. Dolore dolorem repellat quo quam
-          possimus, tempora neque quod delectus esse alias et aspernatur
-          reprehenderit ex fuga similique est ut. Velit mollitia illum minus
-          laborum porro ex sunt atque praesentium.
+          {{ apartment.description }}
         </p>
       </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Apartment;
 use App\Models\Sponsor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -41,8 +42,6 @@ class SponsorSeeder extends Seeder
             $newpackage->duration = $package['duration'];
             $newpackage->price = $package['price'];
             $newpackage->save();
-
         }
-
     }
 }

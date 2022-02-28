@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            SponsorSeeder::class,
+            UserSeeder::class,
             ApartmentSeeder::class,
+            SponsorSeeder::class,
             ServiceSeeder::class,
             ViewSeeder::class
         ]);
-
     }
 }
