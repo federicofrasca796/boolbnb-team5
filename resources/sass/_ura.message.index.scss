@@ -1,0 +1,30 @@
+.ura_message_header {
+    background-image: linear-gradient(to right, #001632ff, #e41c5bff, #2477e3ff);
+}
+.container_ura_index{
+    .table{
+        a{
+            text-decoration: none;
+            color: black;
+            &:visited {
+                color: black;
+            }
+        }
+        .bg-lightgrey {
+            background-color: lightgrey;
+        }
+    }
+}
+
+@media (min-width: 768px){
+    .container_ura_index{
+    flex: 0 0 auto;
+    width: 85%;
+} 
+}
+@media (max-width: 767px){
+    .container_ura_index{
+    flex: 0 0 auto;
+    width: 100%;
+} 
+}

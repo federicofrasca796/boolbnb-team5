@@ -13,6 +13,35 @@ use Illuminate\Support\Facades\DB;
 
 class SponsorController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+
+        $apartment_sponsored = Apartment::with('sponsors')->where('user_id', Auth::user()->id)->get();
+       
+        //ddd($apt);
+
+        
+
+        /* $sponsorships = Sponsor::where('user_id', Auth::User()->id)->paginate(5); */
+        return view('ura.sponsors.index', compact('apartment_sponsored'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Sponsor  $sponsor
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Sponsor $sponsor)
+    {
+        //
+    }
+
     public function sendPayment(Request $request)
     {
         $validatedData = $request->validate([

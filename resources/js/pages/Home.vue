@@ -61,7 +61,12 @@
             v-for="apartment in apartments_sponsored"
             :key="apartment.id"
           >
-            <div class="card overflow-hidden">
+            <div class="card position-relative">
+              <img
+                class="position-absolute sponsor-image"
+                src="../../../public/img/sposor.png"
+                alt=""
+              />
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
                   :src="'storage/' + apartment.thumbnail"
@@ -93,7 +98,7 @@
         <!-- API loaded -->
         <template v-else>
           <div class="col" v-for="apartment in apartments" :key="apartment.id">
-            <div class="card overflow-hidden">
+            <div class="card">
               <router-link :to="'/apartments/' + apartment.slug">
                 <img
                   :src="'storage/' + apartment.thumbnail"
@@ -311,6 +316,17 @@ export default {
   i {
     font-size: 20px;
     color: white;
+  }
+}
+.sponsor-image {
+  width: 100px;
+  left: -20px;
+  top: -15px;
+}
+.container-apartments {
+  img {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
   }
 }
 </style>

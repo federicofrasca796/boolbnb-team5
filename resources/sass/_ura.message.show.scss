@@ -1,0 +1,26 @@
+.container_message{
+    width: 85%;
+    height: calc(100vh - 75px);
+    .card-body {
+        font-family: $font-family-secondary;
+
+        div {
+            background-color: rgba(228, 28, 91,0.1);
+        }
+    }
+    
+      
+}
+
+@media (min-width: 768px){
+    .card-message{
+    flex: 0 0 auto;
+    width: 85%;
+} 
+}
+@media (max-width: 767px){
+    .card-message{
+    flex: 0 0 auto;
+    width: 100%;
+} 
+}

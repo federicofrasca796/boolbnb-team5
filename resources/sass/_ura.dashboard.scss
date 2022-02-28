@@ -5,7 +5,9 @@
     }
     #ura-cards {
         width: 85%;
-        .card-body {
+        .card {
+            border-radius: 1rem;
+            .card-body {
             .btn {
                 color: white;
                 text-transform: uppercase;
@@ -19,6 +21,8 @@
             .btn-sponsor {
                 background-color: #2477e3ff;
             }
+        } 
         }
+        
     }
 }
