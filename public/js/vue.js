@@ -247,6 +247,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -348,6 +350,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1317,7 +1324,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container_owner {\n  z-index: 8;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}", ""]);
+exports.push([module.i, ".container_owner {\n  z-index: 8;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.container_owner {\n  font-family: \"Josefin Sans\", sans-serif;\n  text-transform: uppercase;\n  background-color: #e41c5bff;\n}\n.container_owner a {\n  color: white;\n}\n.container_owner a:visited {\n  color: white;\n}", ""]);
 
 // exports
 
@@ -1336,7 +1343,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}", ""]);
+exports.push([module.i, "#home_main {\n  z-index: -99;\n}\n#jumbo {\n  height: 75vh;\n  background-size: cover;\n  background-position: center;\n}\n#jumbo > img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  filter: brightness(0.7);\n}\n#jumbo .search-destination {\n  width: 75%;\n}\n#jumbo .search-destination .input-group {\n  height: 70px;\n}\n#jumbo .search-destination .input-group .container-button-search {\n  padding: 0.5rem;\n}\n#jumbo .search-destination .input-group .container-button-search button {\n  padding: 0px 3rem;\n}\n#jumbo #mySearchbar .tt-search-box-input-container {\n  border: none;\n  height: 100%;\n}\n#jumbo #mySearchbar svg {\n  display: none;\n}\n#jumbo .container_search {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search #link_router {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n  height: 100%;\n}\n#jumbo .container_search button {\n  border-top-right-radius: 0.9rem;\n  border-bottom-right-radius: 0.9rem;\n}\n#jumbo .container_search .btn-raspberry {\n  background: #e41c5bff;\n}\n.bottone_goUp {\n  width: 50px;\n  height: 40px;\n  background-color: #e41c5bff;\n  position: fixed;\n  bottom: 0;\n  right: 45px;\n  text-align: center;\n  line-height: 40px;\n}\n.bottone_goUp i {\n  font-size: 20px;\n  color: white;\n}\n.sponsor-image {\n  width: 100px;\n  left: -20px;\n  top: -15px;\n}\n.container-apartments img {\n  border-top-left-radius: 2rem;\n  border-top-right-radius: 2rem;\n}", ""]);
 
 // exports
 
@@ -2691,7 +2698,7 @@ var render = function () {
                       _c(
                         "a",
                         {
-                          staticClass: "text-dark text-decoration-none",
+                          staticClass: "text-decoration-none contact-button",
                           attrs: {
                             href:
                               "http://127.0.0.1:8000/message/" +
@@ -2709,7 +2716,7 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
-      _c("section", { staticClass: "container_details m-auto" }, [
+      _c("section", { staticClass: "container_details m-auto mb-5" }, [
         _c("hr", { staticClass: "col-12 col-md-8" }),
         _vm._v(" "),
         _c("h1", { staticClass: "text-center text-md-start mt-4" }, [
@@ -2780,7 +2787,7 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-12 col-md-8 d-flex flex-wrap" },
+                { staticClass: "col-12 col-md-8 d-flex flex-wrap mb-4" },
                 _vm._l(_vm.apartment.services, function (service) {
                   return _c(
                     "div",
@@ -2947,8 +2954,16 @@ var render = function () {
                   return _c("div", { key: apartment.id, staticClass: "col" }, [
                     _c(
                       "div",
-                      { staticClass: "card overflow-hidden" },
+                      { staticClass: "card position-relative" },
                       [
+                        _c("img", {
+                          staticClass: "position-absolute sponsor-image",
+                          attrs: {
+                            src: __webpack_require__(/*! ../../../public/img/sposor.png */ "./public/img/sposor.png"),
+                            alt: "",
+                          },
+                        }),
+                        _vm._v(" "),
                         _c(
                           "router-link",
                           { attrs: { to: "/apartments/" + apartment.slug } },
@@ -2996,7 +3011,7 @@ var render = function () {
                   return _c("div", { key: apartment.id, staticClass: "col" }, [
                     _c(
                       "div",
-                      { staticClass: "card overflow-hidden" },
+                      { staticClass: "card" },
                       [
                         _c(
                           "router-link",
@@ -18639,6 +18654,17 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./public/img/sposor.png":
+/*!*******************************!*\
+  !*** ./public/img/sposor.png ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/sposor.png?1cb211fef527d7d10d22c35eec5433a6";
+
+/***/ }),
+
 /***/ "./resources/js/components/FooterComponent.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/FooterComponent.vue ***!
@@ -19061,7 +19087,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/valeriocorda/Desktop/progetto-finale/boolbnb-team5/resources/js/vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

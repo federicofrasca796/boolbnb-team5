@@ -3,10 +3,10 @@
     <!-- Apartment gallery -->
     <section class="container_img w-100 d-flex flex-wrap col-12">
       <img
-          :src="'/storage/' + apartment.thumbnail"
-          class="w-100 h-100"
-          :alt="apartment.slug"
-        />
+        :src="'/storage/' + apartment.thumbnail"
+        class="w-100 h-100"
+        :alt="apartment.slug"
+      />
     </section>
 
     <!-- Home description and contacts section -->
@@ -49,7 +49,7 @@
         <div class="card container_owner w-50 m-auto rounded-pill sticky-top">
           <div class="card-body text-center text-center">
             <a
-              class="text-dark text-decoration-none"
+              class="text-decoration-none contact-button"
               :href="'http://127.0.0.1:8000/message/' + apartment.slug"
               >Contact the owner</a
             >
@@ -59,7 +59,7 @@
     </section>
 
     <!-- Details section -->
-    <section class="container_details m-auto">
+    <section class="container_details m-auto mb-5">
       <hr class="col-12 col-md-8" />
 
       <h1 class="text-center text-md-start mt-4">All the details</h1>
@@ -89,10 +89,13 @@
     </section>
 
     <!-- Services section-->
-    <section class="container-extra-service mb-5 m-auto" v-if="this.hasServices == 1">
+    <section
+      class="container-extra-service mb-5 m-auto"
+      v-if="this.hasServices == 1"
+    >
       <h3 class="text-center text-md-start mt-4 mb-3">Extra services</h3>
 
-      <div class="col-12 col-md-8 d-flex flex-wrap">
+      <div class="col-12 col-md-8 d-flex flex-wrap mb-4">
         <div
           v-for="service in apartment.services"
           :key="service.id"
@@ -105,8 +108,7 @@
     </section>
 
     <!-- Map section -->
-    <section class="map w-100" id="map">
-    </section>
+    <section class="map w-100" id="map"></section>
 
     <div class="bottone_goUp" v-if="bottone_goUp_visible">
       <a href="#app">
@@ -128,9 +130,9 @@ export default {
       loading: true,
       api_error: false,
       bottone_goUp_visible: false,
-      center : [],
+      center: [],
       map: null,
-	  hasServices: 0,
+      hasServices: 0,
     };
   },
   mounted() {
@@ -138,8 +140,6 @@ export default {
     //parte grafica header
     this.styleHeader();
     window.addEventListener("scroll", this.createButton);
-    
-    
   },
   methods: {
     //parte grafica header
@@ -169,15 +169,15 @@ export default {
       axios
         .get("/api/apartments/" + this.$route.params.slug)
         .then((r) => {
-			//   console.log(r.data);
-			this.apartment = r.data;
-			if(this.apartment.services.length != 0){
-				this.hasServices = 1;
-			}
-			this.loading = false;
-			this.center.push(this.apartment.longitude);
-			this.center.push(this.apartment.latitude);
-			this.initilizeMap();
+          //   console.log(r.data);
+          this.apartment = r.data;
+          if (this.apartment.services.length != 0) {
+            this.hasServices = 1;
+          }
+          this.loading = false;
+          this.center.push(this.apartment.longitude);
+          this.center.push(this.apartment.latitude);
+          this.initilizeMap();
         })
         .catch((e) => {
           //   console.error(e);
@@ -185,23 +185,23 @@ export default {
         });
     },
 
-    initilizeMap(){
-    /* Create The Map */
-	const tt = window.tt;
-    var map = window.tt.map({
-		key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
-		container: "map",
-		center: this.center,
-		zoom: 13,
-    });
-	this.map = map;
-	/* Map  Controls */
-	this.map.addControl(new tt.FullscreenControl());
-	this.map.addControl(new tt.NavigationControl());
-	let marker = new tt.Marker()
-		.setLngLat(this.center) /* Coordinates here */
-		.addTo(this.map);
-    }
+    initilizeMap() {
+      /* Create The Map */
+      const tt = window.tt;
+      var map = window.tt.map({
+        key: "jkywgX4Mo9E3DalmYxabYnBOQVHFvhMj",
+        container: "map",
+        center: this.center,
+        zoom: 13,
+      });
+      this.map = map;
+      /* Map  Controls */
+      this.map.addControl(new tt.FullscreenControl());
+      this.map.addControl(new tt.NavigationControl());
+      let marker = new tt.Marker()
+        .setLngLat(this.center) /* Coordinates here */
+        .addTo(this.map);
+    },
   },
 };
 </script>
@@ -224,6 +224,17 @@ export default {
   line-height: 40px;
   i {
     font-size: 20px;
+    color: white;
+  }
+}
+.container_owner {
+  font-family: $font-family-primary;
+  text-transform: uppercase;
+  background-color: $raspberry;
+  a {
+    color: white;
+  }
+  a:visited {
     color: white;
   }
 }
