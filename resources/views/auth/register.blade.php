@@ -58,7 +58,7 @@
                                     <div class="col-md-6">
                                         <input id="date_of_birth" type="date"
                                             class="form-control @error('date_of_birth') is-invalid @enderror"
-                                            name="date_of_birth" value="{{ old('date_of_birth') }}" required
+                                            name="date_of_birth" value="{{ old('date_of_birth') }}"
                                             autocomplete="date_of_birth" autofocus min="1900-01-01"
                                             max="{{ now()->subYears(18)->toDateString('d/m/Y') }}">
                                         <small class="text-muted">Choose your date of birth</small>

@@ -79,7 +79,7 @@ class ApartmentController extends Controller
         // ddd($address, $coords);
 
         //Set variables
-        $apartments = Apartment::with(['services'])->get();
+        $apartments = Apartment::with(['services' , 'sponsors'])->get();
         $coords_arr = explode('+', $coords);
         $lat1 = $coords_arr[0];
         $lon1 = $coords_arr[1];
