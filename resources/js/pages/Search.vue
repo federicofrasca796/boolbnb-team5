@@ -168,7 +168,7 @@ export default {
       markers: [],
       layers: [],
       layer: "",
-      firstSearch: [],
+      firstSearch: null,
       counter: 1,
       searchServices: [],
       premiumApartments: [],
@@ -515,6 +515,12 @@ export default {
 
     /* Actions on searchbox Clearing */
     clear() {
+      if(this.searchung != null){
+        this.searching = null
+      }
+      else{
+        this.firstSearch = null;
+      }
       let map = this.map;
       if (this.layer != 0) {
         this.hideLayer(this.layer);
@@ -524,7 +530,7 @@ export default {
       for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].classList.contains("bg-dark")) {
           buttons[i].classList.remove("bg-dark");
-          buttons[i], classList.remove("text-white");
+          buttons[i].classList.remove("text-white");
         }
       }
       map.flyTo({
@@ -646,7 +652,7 @@ export default {
       }
       if (this.searching != null) {
         this.execute(this.searching);
-      } else {
+      }else if(this.firstSearch != null) {
         this.mainExecute(this.firstSearch);
       }
     },

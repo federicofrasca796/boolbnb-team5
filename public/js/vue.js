@@ -906,7 +906,7 @@ __webpack_require__.r(__webpack_exports__);
       markers: [],
       layers: [],
       layer: "",
-      firstSearch: [],
+      firstSearch: null,
       counter: 1,
       searchServices: [],
       premiumApartments: []
@@ -1257,6 +1257,12 @@ __webpack_require__.r(__webpack_exports__);
     clear: function clear() {
       var _this4 = this;
 
+      if (this.searchung != null) {
+        this.searching = null;
+      } else {
+        this.firstSearch = null;
+      }
+
       var map = this.map;
 
       if (this.layer != 0) {
@@ -1269,7 +1275,7 @@ __webpack_require__.r(__webpack_exports__);
       for (var i = 0; i < buttons.length; i++) {
         if (buttons[i].classList.contains("bg-dark")) {
           buttons[i].classList.remove("bg-dark");
-          buttons[i], classList.remove("text-white");
+          buttons[i].classList.remove("text-white");
         }
       }
 
@@ -1413,7 +1419,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.searching != null) {
         this.execute(this.searching);
-      } else {
+      } else if (this.firstSearch != null) {
         this.mainExecute(this.firstSearch);
       }
     }
@@ -19653,7 +19659,7 @@ Vue.component('footer-component', __webpack_require__(/*! ./components/FooterCom
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\feder\Documents\MyFolder\Boolean\final-project\boolbnb\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Ros\Desktop\boolean\boolbnb-team5\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
