@@ -11537,6 +11537,11 @@ header .search-destination .input-group .container-button-search button {
   font-family: "Josefin Sans", sans-serif;
 }
 
+#btn-back {
+  text-decoration: none;
+  color: #001632ff;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

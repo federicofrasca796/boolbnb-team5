@@ -1,20 +1,21 @@
-.container_message{
+.container_message {
     width: 85%;
     height: calc(100vh - 75px);
-    .card{
+    .card {
         width: 65%;
     }
-    
-       input{
-            &::-webkit-input-placeholder{
-                color: lightgrey;
-            }
+    input {
+        &::-webkit-input-placeholder {
+            color: lightgrey;
         }
-        button[type=submit]{
-            background-color: $raspberry;
-            font-family: 'Josefin Sans', sans-serif;
-        }
+    }
+    button[type=submit] {
+        background-color: $raspberry;
+        font-family: 'Josefin Sans', sans-serif;
+    }
 }
 
-
-
+#btn-back {
+    text-decoration: none;
+    color: $oxford-blue;
+}

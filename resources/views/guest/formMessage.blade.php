@@ -2,8 +2,12 @@
 
 @section('content')
 
-<div class="container_message m-auto  d-flex ">
-	<div class="col-12 col-md-6 px-2  h-100 d-flex align-items-center flex-column justify-content-center">
+
+<div class="container_message m-auto d-flex">
+	<div class="col-12 col-md-6 px-2 h-100 d-flex align-items-center flex-column justify-content-center">
+		<div class="w-100 ">
+			<a id="btn-back" href="{{ asset('/apartments/' . $apartment->slug) }}"><i class="fa-solid fa-arrow-left-long fa-lg fa-fw"></i></a>
+		</div>
 		<img class="w-100" src="{{asset('storage/' . $apartment->thumbnail)}}" alt="">
 	</div>
 	<div class="col-12 col-md-6 px-2 h-100 d-flex justify-content-center align-items-center flex-column">
