@@ -479,8 +479,8 @@ export default {
   display: inline-block;
   vertical-align: top;
 }
-svg path,
-svg rect {
+.tt-search-box svg path,
+.tt-search-box svg rect {
   fill: $raspberry;
 }
 
