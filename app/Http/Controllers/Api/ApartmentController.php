@@ -117,7 +117,7 @@ class ApartmentController extends Controller
     {
 
         //transform param string into array
-        $services = explode('+', $services);
+        $services = explode(',', $services);
 
         //filter db query
         $filtered = Apartment::with(['services', 'sponsors'])
