@@ -49,11 +49,11 @@
                         <div class="mb-3 d-flex flex-column align-items-start justify-content-center">
                             <label for="mail" class="form-label">Mail</label>
                             @if (Auth::check())
-                                <input required type="mail" name="mail" id="mail"
+                                <input required type="email" name="mail" id="mail"
                                     class="form-control @error('mail') is-invalid @enderror" placeholder="Type your mail"
                                     value="{{ Auth::user()->email }}">
                             @else
-                                <input required type="mail" name="mail" id="mail"
+                                <input required type="email" name="mail" id="mail"
                                     class="form-control @error('mail') is-invalid @enderror" placeholder="Type your mail"
                                     value="{{ old('mail') }}">
                             @endif

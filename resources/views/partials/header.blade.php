@@ -119,11 +119,14 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle rounded-pill" href="#" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    @if (Auth::user()->name)
-                        {{ Auth::user()->name }}
-                    @else
-                        <i class="fas fa-user"></i>
-                    @endif
+                    <span class="d-none d-md-inline">
+                        @if (Auth::user()->name)
+                            {{ Auth::user()->name }}
+                        @else
+                            <i class="fas fa-user"></i>
+                        @endif
+                    </span>
+                    <span class="d-inline d-md-none"><i class="fa-solid fa-user"></i></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
