@@ -171,12 +171,12 @@
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="is_aviable_yes">
                                 <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_yes" value="1"
-                                    required checked>
+                                    required @if ($apartment->is_aviable == 1) checked @endif>
                                 Yes
                             </label>
                             <label class="form-check-label ps-4" for="is_aviable_no">
                                 <input class="form-check-input" type="radio" name="is_aviable" id="is_aviable_no" value="0"
-                                    required>
+                                    required @if ($apartment->is_aviable == 0) checked @endif>
                                 No
                             </label>
                         </div>
