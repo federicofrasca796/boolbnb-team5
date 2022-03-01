@@ -15,7 +15,6 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        return new ApartmentResource(Apartment::OrderBy('id', 'desc')->with(['sponsors'])->has('sponsors')->get());
-
+        return new ApartmentResource(Apartment::OrderBy('id', 'desc')->with(['sponsors'])->has('sponsors')->where('is_aviable', 1)->get());
     }
 }
